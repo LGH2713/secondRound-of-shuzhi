@@ -1,0 +1,84 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.w {
+    width: 1200px;
+    margin: 0 auto;
+    /* overflow: hidden; */
+}
+
+.y {
+    width: 1200px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+i {
+    font-style: normal;
+}
+
+input {
+    outline-style: none;
+    list-style: none;
+    text-decoration: none;
+}
+
+.body_mask {
+    display: none;
+    position: absolute;
+    z-index: 400;
+    width: 100%;
+    height: 10000px;
+    background-color: #000000;
+    opacity: .2;
+}
+
+.arrow_left,
+.arrow_right {
+    cursor: pointer;
+    /* z-index: 999; */
+    width: 80px;
+    height: 120px;
+    position: absolute;
+    top: 50%;
+    /* transform: translateY(50%);
+    -webkit-transform: translateY(50%);
+    -moz-transform: translateY(50%);
+    -ms-transform: translateY(50%);
+    -o-transform: translateY(50%); */
+    text-align: center;
+    background-color: gray;
+    opacity: .5;
+}
+
+.arrow_left {
+    left: -80px;
+}
+
+.arrow_right {
+    right: -80px;
+}
+
+.icon-cheveron-left,
+.icon-cheveron-right {
+    font-size: 80px;
+    line-height: 120px;
+    color: #4e4e4e;
+}
+
+/* .footer_info a:hover, */
+.footer_info ul li:hover a,
+.footer_info ul li:hover i,
+.footer_copyright a:hover {
+    color: #31c27c;
+}
