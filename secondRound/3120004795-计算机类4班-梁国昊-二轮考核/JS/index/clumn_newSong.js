@@ -211,9 +211,6 @@ window.addEventListener('load', function() {
     }
 
 
-
-
-
     arrow(new_song,newSong_left,newSong_right);
 
     function arrow(obj1,arrow_left,arrow_right) {

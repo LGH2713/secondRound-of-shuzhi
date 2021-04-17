@@ -115,7 +115,7 @@
 }
 
 #comment,
-#login_out {
+#login_out { 
     cursor: pointer;
     line-height: 55px;
 }

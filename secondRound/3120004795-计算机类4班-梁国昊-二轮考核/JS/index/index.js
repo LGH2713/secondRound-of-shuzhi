@@ -377,12 +377,4 @@ function arrowClick(item1,item2,item3,left,right) {
 arrowClick(playlist_con,song_list_switch,song_list,song_list_left,song_list_right);
 
 
-
-
-
-    
-
-    
-
-
 })

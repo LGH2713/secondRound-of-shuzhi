@@ -80,9 +80,6 @@ window.addEventListener('load', function() {
 
 
 
-
-
-
     var mv_list__list = document.querySelectorAll('.mv_list__list');
 
     const boxWidth = mv_list__list[0].offsetWidth;//获取轮播图盒子宽度

@@ -72,9 +72,6 @@ window.addEventListener('load', function() {
 
 
 
-
-
-
     let new_disc_list = document.querySelectorAll('.new_disc_list');
 
     const boxWidth = 1220;//获取轮播图盒子宽度
