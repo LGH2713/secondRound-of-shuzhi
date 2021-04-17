@@ -1,0 +1,172 @@
+.user {
+    position: relative;
+    display: block;
+    width: 43px;
+    height: 40px;
+    float: left;
+    height: 89.6px;
+    line-height: 90px;
+    margin-right: 10px;
+    text-align: center;
+    border: 1px solid transparent;
+    right: 3px;
+}
+
+/* 
+.leave {
+    position: absolute;
+    width: 60px;
+    height: 80px;
+    top: 0;
+    left: -11px;
+    background-color: lawngreen;
+} */
+/* .user_container {
+    z-index: 1;
+    position: absolute;
+    width: 80px;
+    height: 405px;
+    top: 0;
+    left: -18px;
+    background-color: khaki;
+} */
+
+.userPic {
+    width: 50px;
+    position: absolute;
+    z-index: 2;
+    top: 14px;
+    left: -6px;
+}
+
+.userPic img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+}
+
+.user_select {
+    position: relative;
+    left: -33px;
+    z-index: 10000;
+    width: 309px;
+    height: 325px;
+    background-color: #fff;
+    overflow: hidden;
+    top: 95px;
+    /* box-shadow: 0 0 5px #c9c8c8; */
+    /* background-color: hotpink; */
+    /* zoom: inherit; */
+}
+
+.user_select_list {
+    width: 275px;
+}
+
+.user_select_con {
+    width: 100%;
+    height: 100%;
+}
+
+.userDetail {
+    width: 100%;
+    z-index: 2000;
+    position: absolute;
+    padding-top: 25px;
+    height: 80px;
+    background-color: #fff;
+}
+
+.userDetail img {
+    /* float: left; */
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+}
+
+.user_name {
+    text-align: left;
+    float: right;
+    width: 180px;
+    height: 100%;
+    line-height: 100%;
+}
+
+.user_name_con {
+    display: inline-block;
+    margin-top: 20px;
+}
+
+.user_name_con p {
+    font-size: 14px;
+    margin-top: 2px;
+}
+
+.user_select_list {
+    position: absolute;
+    bottom: 15px;
+    left: 20px;
+    height: 200px;
+}
+
+.user_select_list_item p,
+.user_select_list_item i {
+    float: left;
+}
+
+.user_select_list_item {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    text-align: left;
+    border: 1px solid transparent;
+    line-height: 32px;
+}
+
+.user_select_list_item_pay {
+    float: left;
+    /* width: 100%; */
+    font-size: 16px;
+}
+
+.user_select_list_item i {
+    position: absolute;
+    height: 30px;
+    left: 0;
+    bottom: 0;
+    font-size: 12px;
+    color: #999999;
+}
+
+.to_pay {
+    cursor: pointer;
+    margin-top: 7px;
+    margin-right: 10px;
+    width: 80px;
+    height: 35px;
+    text-align: center;
+    line-height: 35px;
+    border-radius: 2px;
+    float: right;
+    color: #ffffff;
+    background-color: #31c27c;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
+    -o-border-radius: 2px;
+}
+
+#comment,
+#login_out {
+    cursor: pointer;
+    text-align: left;
+    line-height: 50px;
+}

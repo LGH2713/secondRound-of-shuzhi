@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button>submit!</button>
+</body>
+<script>
+    const defaultUrlHeader_1 = "https://autumnfish.cn"; // 默认URL头部1
+    // let phoneUrl = defaultUrlHeader_1 + '/login/cellphone?phone=17328583319&password=171181lgh**';
+    // console.log(phoneUrl);
+
+
+    const songsUrlHeader = "http://music.163.com"; // 音乐URL头部
+    // const defaultUrlHeader = "http://musicapi.leanapp.cn"; // 默认URL头部2
+
+
+    // var aimUrl = defaultUrlHeader + '/top/song?type=96';
+    // https://music.163.com/#/song?id=1832431765
+    // var aimUrl = defaultUrlHeader + '/song/detail?ids=1318393981';
+    // var aimUrl = defaultUrlHeader + '/playlist/detail/dynamic?id=5440545862';
+    // var aimUrl = defaultUrlHeader + '/playlist/detail/dynamic?id=5440545862'
+    var aimUrl = defaultUrlHeader_1 + '/album/new?area=EA';
+
+    function AjaxRequest(url) {
+        let xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+                // alert(xhr.readyState);
+                if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
+                    let data = JSON.parse(xhr.responseText);
+                    console.log(data);
+                } else {
+                    alert("Request was unsuccessful：" + xhr.status);
+                }
+            }
+        }
+        xhr.open("GET", url, true);
+        xhr.send();
+    }
+
+    const btn = document.querySelector('button');
+    btn.addEventListener('click', function () {
+        AjaxRequest(aimUrl);
+    })
+
+    // let x = new Promise(function(resolve, reject) {
+    //     let btn = document.querySelector('button');
+
+    // }) 
+
+    // alert(10 % +50 % )
+</script>
+
+</html>

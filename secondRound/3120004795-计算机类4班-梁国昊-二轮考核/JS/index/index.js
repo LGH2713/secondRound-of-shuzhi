@@ -1,158 +1,29 @@
 window.addEventListener('load', function() {
-    // 登录框 start
-    let body = document.querySelector('body');
-    let body_mask = document.querySelector('.body_mask')
-    let mod_popup = document.querySelector('.mod_popup');
-    let top_login__link = document.querySelector('.top_login__link');
-    let popup__close = document.querySelector('.popup__close');
-    let qq_login = document.querySelector('.qq_login');
-    let wx_login = document.querySelector('.wx_login');
-    let qq = document.getElementById('qq');
-    let wx = document.getElementById('wx');
-
-
-    wx.addEventListener('click', function() {
-        wx_login.style.display = 'block';
-        qq_login.style.display = 'none';
-        wx.style.color = '#31c27c';
-        qq.style.color = '#000';
-    });
-
-    qq.addEventListener('click', function() {
-        qq_login.style.display = 'block';
-        wx_login.style.display = 'none';
-        qq.style.color = '#31c27c';
-        wx.style.color = '#000';
-    })
-
-    top_login__link.addEventListener('click', function() {
-        mod_popup.style.display = 'block';
-        body.style = "overflow-y: hidden;";// 使滚动条消失
-        body_mask.style.display = 'block';
-
-
-        let qq_ewm_login = document.querySelector('.qq_ewm_login');
-        let combine_page = document.querySelector('.combine_page');
-        let bq_1 = document.getElementById('bq_1');
-        let bq_2 = document.getElementById('bq_2');
-        let link = document.getElementById('link');
-
-
-
-        let link_1 = document.querySelector('.link_1');
-        link_1.addEventListener('click', function() {
-            qq_ewm_login.style.display = 'none';
-            bq_1.style.display = 'none';
-            combine_page.style.display = 'block';
-            bq_2.style.display = 'block';
-
-            let uin_number = document.querySelector('.uin');
-            let uin_tips = document.getElementById('uin_tips');
-            // uin_number.style.border = '1px solid #1E6FFF';
-
-            let password = document.querySelector('.password');
-            let password_tips = document.getElementById('password_tips');
-
-            if(uin_number.value.length == 0) {
-                uin_number.focus();
-            } else if(password.value.length == 0) {
-                password.focus();
-            }
-
-            input_login(uin_number, uin_tips);
-            input_login(password, password_tips);
-        });
-
-        
-        link.addEventListener('click', function() {
-            qq_ewm_login.style.display = 'block';
-            bq_1.style.display = 'block';
-            combine_page.style.display = 'none';
-            bq_2.style.display = 'none';
-        })
-
-
-
-        function input_login(obj1,obj2) {
-            obj1.addEventListener('focus', function() {
-            this.style.border = '1px solid #1E6FFF';
-            obj2.style.opacity = 0.5;
-        })
-        obj1.addEventListener('keydown', function() {
-            obj2.style.display = 'none';
-            
-            obj1.addEventListener('keyup', function() {
-                if(obj1.value.length == 0 ) {
-                    obj2.style.display = 'block';
-                }
-            })
-        })
-        obj1.addEventListener('blur', function() {
-            this.style.border = '1px solid #CBCDD1';
-            obj2.style.opacity = 1;
-            if(obj1.value.length == 0 ) {
-                obj2.style.display = 'block';
-            }
-        })
-        }
-    });
-
-    popup__close.addEventListener('click', function() {
-        mod_popup.style.display = 'none';
-        body.style = "";
-        body_mask.style.display = 'none';
-    })
-
-
-    
-
-
-    // 登录框 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    //按钮出入动画
     const song_list = document.querySelector('.song_list');
-    // const song_list_playlist__list = song_list.querySelector('.playlist__list');
     let song_list_left = song_list.querySelector('.arrow_left');
     let song_list_right = song_list.querySelector('.arrow_right');
+    var mod_index_tab = document.querySelector('.mod_index_tab');
+
+    var playlist_con = document.querySelector('.song_list').querySelector('.playlist_con');
+    var playlist__list_1 = 'playlist__list_1';
+    var song_list_switch = 'song_list_switch';
+
 
     const new_song = document.querySelector('#new_song');
     // const new_song_playlist__list = new_song.querySelector('.playlist__list');
     let new_song_left = new_song.querySelector('.arrow_left');
     let new_song_right = new_song.querySelector('.arrow_right');
+    arrow(new_song, new_song_left, new_song_right);
 
-    const recommend = document.querySelector('#recommend');
-    // const recommend_playlist__list = recommend.querySelector('.playlist__list');
-    let recommend_left = recommend.querySelector('.arrow_left');
-    let recommend_right = recommend.querySelector('.arrow_right');
+    
 
-    const mv = document.querySelector('#mv');
-    // const mv_playlist__list = mv.querySelector('.playlist__list');
-    let mv_left = mv.querySelector('.arrow_left');
-    let mv_right = mv.querySelector('.arrow_right');
+    
 
     arrow(song_list, song_list_left, song_list_right);
-    arrow(new_song, new_song_left, new_song_right);
-    arrow(recommend, recommend_left, recommend_right);
-    arrow(mv, mv_left, mv_right);
+    // arrow(new_song, new_song_left, new_song_right);
+    // arrow(recommend, recommend_left, recommend_right);
+    // arrow(mv, mv_left, mv_right);
 
     function arrow(obj1,arrow_left,arrow_right) {
         let pos = -80;
@@ -184,20 +55,341 @@ window.addEventListener('load', function() {
         
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+    var num = 0;
+    var circle = 0;
+
+    const defaultUrlHeader_2 = "http://musicapi.leanapp.cn"; // 默认URL头部2
+    var songListUrl = defaultUrlHeader_2 + '/top/playlist';
+    AjaxRequest_songList(songListUrl,song_msg,2,5);
+
+
+    mod_index_tab.children[0].style.color = '#31c27c';
+    for(let i = 0; i < mod_index_tab.children.length; i++) {
+        mod_index_tab.children[i].setAttribute('index',i);
+        mod_index_tab.children[i].addEventListener('click', function() {
+            for(let i = 0; i < mod_index_tab.children.length; i++) {
+                mod_index_tab.children[i].style.color = '#000';
+            }
+            this.style.color = '#31c27c';
+            let x = mod_index_tab.children[i].getAttribute('index');
+            playlist_con.style.left = 0;
+            switch (x) {
+                case '0':
+                    circle = 0;
+                    num = 0;
+                    songListUrl = defaultUrlHeader_2 + '/top/playlist';
+                    AjaxRequest_songList(songListUrl,song_msg,2,5);
+                    break;
+                case '1':
+                    circle = 0;
+                    num = 0;
+                    songListUrl = defaultUrlHeader_2 + '/top/playlist?&cat=流行';
+                    AjaxRequest_songList(songListUrl,song_msg,4,5);
+                    break;
+                case '2':
+                    circle = 0;
+                    num = 0;
+                    songListUrl = defaultUrlHeader_2 + '/top/playlist?&cat=华语'
+                    AjaxRequest_songList(songListUrl,song_msg,4,5);
+                    break
+                case '3':
+                    circle = 0;
+                    num = 0;
+                    songListUrl = defaultUrlHeader_2 + '/top/playlist?cat=ACG';
+                    AjaxRequest_songList(songListUrl,song_msg,4,5);
+                    break;
+                case '4':
+                    circle = 0;
+                    num = 0;
+                    songListUrl = defaultUrlHeader_2 + '/top/playlist?cat=影视原声';
+                    AjaxRequest_songList(songListUrl,song_msg,4,5);
+                    break;
+                case '5':
+                    circle = 0;
+                    num = 0;
+                    songListUrl = defaultUrlHeader_2 + '/top/playlist?&cat=清新';
+                    AjaxRequest_songList(songListUrl,song_msg,4,5);
+                    break;
+            }
+        })
+    }
+
+
+            
+
+
+
     // 歌单推荐模块 start
-    let playlist__list_1 = document.querySelector('.playlist__list_1');
-    for(let i = 0; i < 10; i++) {
-        playlist__list_1.innerHTML += '<li class="playlist__item slide__item"><div class="playlist__item_box"><div class="playlist__cover mod_cover"><a href="#" class="js_playlist"><img src="../image/u=2746384919,2327107392&fm=26&gp=0.jpg" alt=""class="playlist__pic"><i class="mod_cover__mask"></i><i class="icon-play2 f"></i></a></div><h4 class="playlist__title"><span class="playlist__title_txt"><a href="#" class="js_playlist">1111111111</a></span><div class="playlist__other">44444444</div></h4></div></li>'
-    }
+    // Ajax函数封装
+    
+    function AjaxRequest_songList(url,fn,num1,num2) {
+        let xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            // alert(xhr.readyState);
+            if(xhr.readyState == 4) {
+                if(xhr.status >= 200 && xhr.status < 300 || xhr.status == 304) {
+                    let data = JSON.parse(xhr.responseText);
+                    // console.log(data);
+                    fn(playlist_con,playlist__list_1,song_list_switch,data,num1,num2);
+                    // callback();
+                } else {
+                    alert("Request was unsuccessful：" + xhr.status);
+                }
+            }
+        }
+        xhr.open("GET", url, false);
+        xhr.send();
+    };
 
-    let playlist__item_1 = playlist__list_1.querySelectorAll('li');
-    let width = (playlist__item_1[0].offsetWidth + 20) * playlist__item_1.length;
-    let mod_slide_switch = document.querySelector('.mod_slide_switch');
-    for(let i = 0; i < Math.floor(width/1200); i++) {
-        mod_slide_switch.innerHTML += '<a><i class="slide_switch__item "></i></a>';
-    }
 
+    
+
+
+    // obj1 = playlist_con;
+    // obj2 = playlist__list_1;
+    // obj3 = mod_slide_switch;
+    function song_msg(obj1,obj2,obj3,result,num1,num2) {
+        obj1.style.left = 0;
+        obj1.innerHTML = '';
+        for(let i = 0; i < num1; i++) {
+            obj1.innerHTML += `<ul class="playlist__list_1 slide__list"></ul>`;
+        }
+
+        let j = 0;
+        let obj_2 = document.querySelectorAll(`.${obj2}`);
+        obj_2.innerHTML = '';
+        for(let i = 0; i < num1; i++) {
+            for(j = 0; j < num2; j++) {
+                obj_2[i].innerHTML += `<li class="playlist__item slide__item">
+                <div class="playlist__item_box">
+                    <div class="playlist__cover mod_cover">
+                        <a href="#" class="js_playlist">
+                            <img src=${result.playlists[i*num2 + j].coverImgUrl} alt=""
+                                class="playlist__pic">
+                            <i class="mod_cover__mask"></i>
+                            <i class="icon-play2 f"></i>
+                        </a>
+                    </div>
+                    <h4 class="playlist__title"><span class="playlist__title_txt">
+                            <a href="#" class="js_playlist">${result.playlists[i*num2 + j].name}</a></span>
+                        <div class="playlist__other">播放量：${result.playlists[i*num2 + j].playCount}</div>
+                    </h4>
+                </div>
+            </li>`
+            }
+        };
+        
+        let obj_3 = document.querySelector(`.${obj3}`);
+        obj_3.innerHTML = '';
+
+        for(let i = 0; i < num1; i++) {
+            obj_3.innerHTML += `<a><i class="slide_switch__item "></i></a>`;
+        }
+
+        // 克隆节点
+        let copy = obj_2[0].cloneNode(true);
+        obj1.appendChild(copy);
+
+        callback(obj1,obj_3);
+    };
+
+    // function song(obj1,obj2,obj3,result,num1,num2) {
+    //     obj1.style.left = 0;
+    //     obj1.innerHTML = '';
+    //     console.log(obj1.innerHTML);
+    //     for(let i = 0; i < num1; i++) {
+    //         obj1.innerHTML += `<ul class="playlist__list_1 slide__list"></ul>`;
+    //     }
+
+    //     let j = 0;
+    //     let obj_2 = document.querySelectorAll(`.${obj2}`);
+    //     obj_2.innerHTML = '';
+    //     for(let i = 0; i < num1; i++) {
+    //         for(j = 0; j < num2; j++) {
+    //             obj_2[i].innerHTML += `<li class="playlist__item slide__item">
+    //             <div class="playlist__item_box">
+    //                 <div class="playlist__cover mod_cover">
+    //                     <a href="#" class="js_playlist">
+    //                         <img src=${result.playlists[i*num2 + j].coverImgUrl} alt=""
+    //                             class="playlist__pic">
+    //                         <i class="mod_cover__mask"></i>
+    //                         <i class="icon-play2 f"></i>
+    //                     </a>
+    //                 </div>
+    //                 <h4 class="playlist__title"><span class="playlist__title_txt">
+    //                         <a href="#" class="js_playlist">${result.playlists[i*num2 + j].name}</a></span>
+    //                     <div class="playlist__other">播放量：${result.playlists[i*num2 + j].playCount}</div>
+    //                 </h4>
+    //             </div>
+    //         </li>`
+    //         }
+    //     };
+        
+    //     let obj_3 = document.querySelector(`.${obj3}`);
+    //     obj_3.innerHTML = '';
+
+    //     for(let i = 0; i < num1; i++) {
+    //         obj_3.innerHTML += `<a><i class="slide_switch__item "></i></a>`;
+    //     }
+
+    //     // 克隆节点
+    //     let copy = obj_2[0].cloneNode(true);
+    //     obj1.appendChild(copy);
+
+    //     callback(obj1,obj_3);
+    // };
     // 歌单推荐模块 end
+
+    function callback(item1,item2) {
+    let width = 1200;
+    let item_2 = item2.querySelectorAll('.slide_switch__item');
+
+    for(let i = 0; i < item_2.length; i++) {
+        item_2[i].setAttribute('index', i);
+        item_2[i].addEventListener('click', function() {
+            // 给所有小圆圈绑定事件，并将其css样式清除
+            for(var i = 0; i < item_2.length; i++) {
+                item_2[i].className = 'slide_switch__item';
+            }
+    
+            this.className = 'slide_switch__item current';//被点击的当前小圆圈变白
+    
+            var index = this.getAttribute('index');//获取当前小圆圈的索引号
+    
+            num = index;
+            circle = index;
+    
+            switch_lr(item1, -index*width);
+        })
+    }
+
+    item_2[0].className = 'slide_switch__item current';//开始先使第一个小圆圈变白
+}
+
+
+
+
+
+function circleChange() {
+    let item_2 = document.querySelector('.mod_slide_switch').querySelectorAll('.slide_switch__item');
+    for(var i = 0; i < item_2.length; i++) {
+        item_2[i].className = 'slide_switch__item';
+    }
+    item_2[circle].className = 'slide_switch__item current';
+}
+
+
+function arrowClick(item1,item2,item3,left,right) {
+    var flag = true;//节流阀关键
+    let width = item1.children[0].offsetWidth;
+    let item_2 = item3.querySelector(`.${item2}`)
+    right.addEventListener('click',function(){
+        if(flag == true) {
+            flag = false;
+
+            if(num == item1.children.length - 1) {//若走到最后一张图片的前一张图片，则将移动距离清零，并将num也归零
+                item1.style.left = 0;
+                num = 0;
+            }
+            num++;//若未走到最后一张图片，则num加一
+            switch_lr(item1,-num*width,function(){
+                flag = true;//当图片移动完全节流阀才打开（回调函数）
+            });
+    
+            circle++;//圆圈的索引号加一，保持与图片的索引号一致
+            if (circle == item1.children.length - 1) {//当走到最后一个小圆圈时，小圆圈的索引号归零
+                circle = 0;
+            }
+            circleChange();//使相应的小圆圈变白
+        }
+    })
+
+    left.addEventListener('click',function() {
+        if(flag == true) {
+            flag = false;
+            if(num == 0) {
+                num = item1.children.length - 1; 
+                item1.style.left = -num*width + 'px';
+            }
+            num --;
+            switch_lr(item1, -num*width,function() {
+                flag = true;
+            })
+    
+            circle --;
+            if(circle < 0) {
+                circle = item_2.children.length - 1;
+            }
+            circleChange();
+        }
+    })
+}
+
+arrowClick(playlist_con,song_list_switch,song_list,song_list_left,song_list_right);
+
+
+
+
+
+    
+
+    // const rankCover_con = document.querySelectorAll('.rankCover_con');
+    // for(let i = 0; i < rank_play.length; i++) {
+    //     rank_play[i].addEventListener('mouseover', function() {
+
+    //     })
+    // }
 
 
 })
