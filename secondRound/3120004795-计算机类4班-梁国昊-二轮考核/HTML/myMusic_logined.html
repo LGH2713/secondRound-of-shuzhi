@@ -9,7 +9,10 @@
     <link rel="stylesheet" href="../icomoon/style.css">
     <link rel="stylesheet" href="../CSS/base.css">
     <link rel="stylesheet" href="../CSS/index.css">
-    <link rel="stylesheet" href="../CSS/myMusic.css">
+    <link rel="stylesheet" href="../CSS/index_logined.css">
+    <link rel="stylesheet" href="../CSS/myMusic_logined.css">
+    <script src="../myMusic/myMusic.js"></script>
+    <!-- <link rel="stylesheet" href="../CSS/myMusic.css"> -->
 </head>
 
 <body>
@@ -56,7 +59,7 @@
             <div class="logo"><a href="index.html"><img src="../image/logo.png"
                         alt="QQ音乐-千万正版音乐海量无损曲库新歌热歌天天畅听的高品质音乐平台！"></a></div>
             <ul class="mod_top_nav">
-                <li class="top_nav__item"><a href="index.html" class="top_nav__link">音乐馆</a>
+                <li class="top_nav__item"><a href="index_logined.html" class="top_nav__link">音乐馆</a>
                 </li>
                 <li class="top_nav__item" style="background-color: #31c27c;"><a href="#" class="top_nav__link "
                         style="color: #ffffff;">我的音乐</a></li>
@@ -72,8 +75,25 @@
                 </div>
             </div>
             <div class="header_opt">
-                <div class="top_login__link"><a href="#">登录</a>
+                <!-- 头像框 start -->
+                <div class="user">
+                    <div class="userPic">
+                        <!-- 头像假数据 -->
+                    </div>
+                    <div class="user_container">
+                        <div class="user_select">
+                            <!-- 用户下拉菜单 -->
+                            <div class="user_select_con">
+                                <div class="userDetail">
+                                    <!-- 信息假数据 -->
+                                </div>
+                                <ul class="user_select_list">
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                <!-- 头像框 end -->
                 <div class="mod_select_vip"><a href="#">开通VIP <span class="icon-cheveron-down"></span></a>
                     <ul class="select__box">
                         <li class="select__item ">开通绿钻豪华版</li>
@@ -91,21 +111,23 @@
     </header>
     <!-- 顶部导航栏 end -->
 
-    <!-- 未登录背景 start -->
-    <div class="js_mod_profile_unlogin">
-        <div class="mod_profile_unlogin">
-            <div class="all_in">
-                <div class="section_inner">
-                    <h2 class="profile_unlogin__tit">
-                        <div class="icon_txt">私人音乐空间,听我想听的歌</div>
-                    </h2>
-                    <div class="profile_unlogin__desc">登录管理我的音乐,多终端同步</div>
-                    <a href="#" class="profile_unlogin__btn ">立即登录</a>
-                </div>
+    <!-- 已登录背景 start -->
+    <div class="myMusic">
+        <div class="mod_profile">
+            <div class="section_inneruser">
+                <div class="profile__cover_link"></div>
+                <h1 class="profile__tit"></h1>
             </div>
         </div>
+
+        <!-- 主体部分 start -->
+        <div class="main">
+            <div class="main_inner w"></div>
+        </div>
+        <!-- 主体部分 end -->
     </div>
-    <!-- 未登录背景 end -->
+    <!-- 已登录背景 end -->
+
 
 
     <!-- 底部模块 start -->

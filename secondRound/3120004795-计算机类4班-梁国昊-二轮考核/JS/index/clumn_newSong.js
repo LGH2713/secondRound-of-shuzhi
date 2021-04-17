@@ -16,6 +16,7 @@ window.addEventListener('load', function() {
     let newSongUrl = defaultUrlHeader + '/top/song?type=0';
 
     AjaxRequest_newSong(newSongUrl);
+    
 
     let mod_index_tab = new_song.querySelector('.mod_index_tab');
     mod_index_tab.children[0].style.color = '#31c27c';
@@ -90,7 +91,7 @@ window.addEventListener('load', function() {
             if(xhr.readyState == 4) {
                 if(xhr.status >= 200 && xhr.status < 300 || xhr.status == 304) {
                     let data = JSON.parse(xhr.responseText);
-                    // console.log(data);
+                    console.log(data);
                     callbacknewSong(data);
                 } else {
                     alert("Request was unsuccessful：" + xhr.status);
@@ -170,12 +171,12 @@ window.addEventListener('load', function() {
 
     function songDuring(secondTime) {
         secondTime = secondTime % 60000
-        return parseInt(secondTime / 1000) > 10 ? parseInt(secondTime / 1000) : '0' + parseInt(secondTime / 1000) ;
+        return parseInt(secondTime / 1000) >= 10 ? parseInt(secondTime / 1000) : '0' + parseInt(secondTime / 1000) ;
     }
 
     function songDuring_m(minTime) {
         minTime = minTime / 60000;
-        return parseInt(minTime / 1000) > 10 ? parseInt(minTime / 1000) : '0' + parseInt(minTime / 1000) ;
+        return parseInt(minTime) >= 10 ? parseInt(minTime) : '0' + parseInt(minTime) ;
     }
 
     function circleNow(item) {

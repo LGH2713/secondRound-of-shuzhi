@@ -18,7 +18,10 @@ window.addEventListener('load', function() {
 
     
 
-    
+    // const mv = document.querySelector('#mv');
+    // // const mv_playlist__list = mv.querySelector('.playlist__list');
+    // let mv_left = mv.querySelector('.arrow_left');
+    // let mv_right = mv.querySelector('.arrow_right');
 
     arrow(song_list, song_list_left, song_list_right);
     // arrow(new_song, new_song_left, new_song_right);
@@ -114,14 +117,9 @@ window.addEventListener('load', function() {
     AjaxRequest_songList(songListUrl,song_msg,2,5);
 
 
-    mod_index_tab.children[0].style.color = '#31c27c';
     for(let i = 0; i < mod_index_tab.children.length; i++) {
         mod_index_tab.children[i].setAttribute('index',i);
         mod_index_tab.children[i].addEventListener('click', function() {
-            for(let i = 0; i < mod_index_tab.children.length; i++) {
-                mod_index_tab.children[i].style.color = '#000';
-            }
-            this.style.color = '#31c27c';
             let x = mod_index_tab.children[i].getAttribute('index');
             playlist_con.style.left = 0;
             switch (x) {
@@ -180,7 +178,7 @@ window.addEventListener('load', function() {
             if(xhr.readyState == 4) {
                 if(xhr.status >= 200 && xhr.status < 300 || xhr.status == 304) {
                     let data = JSON.parse(xhr.responseText);
-                    // console.log(data);
+                    console.log(data);
                     fn(playlist_con,playlist__list_1,song_list_switch,data,num1,num2);
                     // callback();
                 } else {
@@ -384,12 +382,7 @@ arrowClick(playlist_con,song_list_switch,song_list,song_list_left,song_list_righ
 
     
 
-    // const rankCover_con = document.querySelectorAll('.rankCover_con');
-    // for(let i = 0; i < rank_play.length; i++) {
-    //     rank_play[i].addEventListener('mouseover', function() {
-
-    //     })
-    // }
+    
 
 
 })

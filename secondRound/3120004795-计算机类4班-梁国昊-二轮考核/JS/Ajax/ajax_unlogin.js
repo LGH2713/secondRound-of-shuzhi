@@ -178,10 +178,12 @@ popup__close.addEventListener('click', function() {
     // 1、向服务器发送Ajax请求，并获得cookie
     // 2、通过cookie继续发送别的Ajax请求
     function callback_login(data) {
-        var cookie = encodeURIComponent(data.cookie);
+        if(data) {
+            var cookie = encodeURIComponent(data.cookie);
         userCookie += cookie;
         window.localStorage.setItem('cookie', userCookie);
         window.location.href = "index_logined.html";
+        }
     }
     
     // console.log(userCookie);
@@ -196,7 +198,7 @@ popup__close.addEventListener('click', function() {
                     console.log(data);
                     callback_login(data);
                 } else {
-                    alert("Request was unsuccessful：" + xhr.status);
+                    alert("您的输入有误");
                 }
                 
             }

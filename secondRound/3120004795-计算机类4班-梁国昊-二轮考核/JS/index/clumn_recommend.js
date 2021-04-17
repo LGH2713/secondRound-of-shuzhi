@@ -36,26 +36,9 @@ window.addEventListener('load', function() {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     var r_num = 0;
     var r_circle = 0;
     let recom_switch = 'mod_slide_switch';
-
-    
-
-
 
     function creat_circle(item1,item2,item3) {
         let con = item1.querySelector(`.${item2}`);

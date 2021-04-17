@@ -1,0 +1,92 @@
+.myMusic {
+    width: 100%;
+    height: 760px;
+    background-color: darkcyan;
+}
+
+.mod_profile {
+    position: relative;
+    width: 100%;
+    height: 380px;
+    background: url(../image/bg_profile.jpg) no-repeat;
+}
+
+.profile__cover_link {
+    /* position: absolute;
+    top: 0; */
+    width: 110px;
+    height: 110px;
+    margin: 0 auto;
+}
+
+.profile__cover_link img {
+    margin-top: 70px;
+    width: 100px;
+    height: 100px;
+    border: 5px solid #ffffff;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+}
+
+.profile__tit {
+    position: relative;
+    top: 75px;
+    color: #ffffff;
+    text-align: center;
+}
+
+.profile__tit {
+    font-weight: 300;
+}
+
+.mod_user_statistic {
+    position: relative;
+    width: 200px;
+    height: 50px;
+    top: 85px;
+    color:rgba(255, 255, 255, .1);
+    margin: 0 auto;
+    text-align: center;
+    line-height: 50px;
+    font-size: 50px;
+    font-weight: 10;
+}
+
+
+.mod_user_statistic li {
+    font-size: 20px;
+    color: #ffffff;
+    font-weight: normal;
+    display: inline-block;
+}
+
+.user_statistic__item {
+    position: absolute;
+    left: 35px;
+}
+
+.mod_user_statistic li p {
+    position: relative;
+    top: -25px;
+    height: 30px;
+    font-size: 14px;
+}
+
+.user_statistic__item_last {
+    position: absolute;
+    right: 35px;
+}
+
+.main {
+    width: 100%;
+    height: 380px;
+    background-color: darkgrey;
+}
+
+.main_inner {
+    height: 100%;
+    background-color: darksalmon;
+}

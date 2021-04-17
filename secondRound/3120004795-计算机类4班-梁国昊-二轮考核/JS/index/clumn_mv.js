@@ -15,6 +15,7 @@ window.addEventListener('load', function() {
     const defaultUrlHeader = "https://autumnfish.cn/";
     let mvUrl = defaultUrlHeader + '/mv/all?limit=40';
 
+    
     AjaxRequest_mv(mvUrl);
 
     let mod_index_tab = mv.querySelector('.mod_index_tab');
@@ -96,7 +97,7 @@ window.addEventListener('load', function() {
             if(xhr.readyState == 4) {
                 if(xhr.status >= 200 && xhr.status < 300 || xhr.status == 304) {
                     let data = JSON.parse(xhr.responseText);
-                    // console.log(data);
+                    console.log(data);
                     callbackMv(data);
                 } else {
                     alert("Request was unsuccessful：" + xhr.status);

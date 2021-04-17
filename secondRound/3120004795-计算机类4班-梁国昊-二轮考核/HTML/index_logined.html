@@ -5,14 +5,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QQ音乐-千万正版音乐海量无损曲库新歌热歌天天畅听的高品质音乐平台！</title>
+    <link rel="stylesheet" href="../CSS/common.css">
     <link rel="shortcut icon" href="bitbug_favicon.ico">
     <link rel="stylesheet" href="../icomoon/style.css">
     <link rel="stylesheet" href="../CSS/base.css">
     <link rel="stylesheet" href="../CSS/index.css">
     <link rel="stylesheet" href="../CSS/index_logined.css">
+    <!-- <script src="../JS/Ajax/ajax_unlogin.js"></script> -->
     <script src="../JS/index/index.js"></script>
-    <script src="../JS/index/switch.js"></script>
+    <script src="../JS/index/clumn_newDisc.js"></script>
+    <script src="../JS/index/clumn_mv.js"></script>
+    <script src="../JS/index/clumn_newSong.js"></script>
+    <script src="../JS/index/clumn_recommend.js"></script>
+    <script src="../JS/animation/switch_lr.js"></script>
     <script src="../JS/Ajax/ajax_logined.js"></script>
+
+
+
 </head>
 
 <body>
@@ -28,6 +37,121 @@
 
 
 
+    <!-- 登陆界面 start -->
+    <div id="divdialog_0" class="mod_popup" data-aria="popup"
+        style="position: fixed;z-index: 100000;top: 116.5px;margin: 10px;left: 417px;display: none;">
+        <div class="popup">
+            <h2 class="popup__tit">
+                <a href="#" class="popup__tit_item" style="color: #31c27c;" id="qq">QQ登录</a>
+                <a href="#" class="popup__tit_item" id="wx">微信登录</a>
+            </h2>
+
+            <a href="#" class="popup__close">
+                <i>x</i>
+                <i></i>
+            </a>
+
+            <div class="popup__bd" id="dialogbox">
+                <div class="qq_login">
+                    <div class="qq_ewm_login" style="display: block;">
+                        <div class="qq_ewm">
+                            <div class="qtitle">
+                                <div class="title_0">快速安全登录</div>
+                                <div class="title_1">请使用<a href="#">QQ手机版</a>扫描二维码，<br>
+                                    安全登录，防止盗号。</div>
+                            </div>
+                            <div class="qlogin_show">
+                                <div class="qrlogin_img_out"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="combine_page" style="display: none;">
+                        <div class="page_login">
+                            <div class="qtitle">
+                                <div class="title_0">帐号密码登录</div>
+                                <div class="title_1">推荐使用<a href="#" id="link">快速安全登录</a>，防止盗号。</div>
+                            </div>
+                            <div class="login_form">
+                                <form action method="post" id="loginform">
+                                    <div class="uinArea">
+                                        <div class="inputOuter">
+                                            <label for="" class="input_tips" id="uin_tips">支持网易邮箱/手机号登录</label>
+                                            <input type="text" class="inputstyle uin" id="u">
+                                            <a href="" class="uin_del"></a>
+                                        </div>
+                                        <div class="pwdArea">
+                                            <div class="inputOuter">
+                                                <label for="" class="input_tips" id="password_tips">密码</label>
+                                                <input type="password" class="inputstyle password" id="p">
+                                            </div>
+                                        </div>
+                                        <div class="submit">
+                                            <p class="login_button">
+                                                <p class="btn">授权并登录</p>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="qq_page_accredit">
+                        <div class="lay_main">
+                            <div class="lay_accredit_con">
+                                <div class="app_site_wording"><a href="#" class="accredit_site">QQ音乐</a>将获得以下权限：</div>
+                                <div class="accredit_info">
+                                    <ul class="accredit_info_op">
+                                        <li class="select_all_li">
+                                            <input type="checkbox" class="checkbox oauth_checkbox_all"
+                                                checked='checked'>
+                                            <label for="select_all" class="oauth_item_title">全选</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" class="checkbox oauth_checkbox" checked disabled>
+                                            <label for="select_all" class="oauth_item_title">获得您的昵称、头像、性别</label>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="oauth_tips_div">
+                                    <p class="oauth_tips">授权后表明你已同意 <a href="#" class="accredit_site">QQ登录服务协议</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bottom_qlogin" id="bq_1"><a class="link_1">帐号密码登录</a> | <a href="#">注册新帐号</a> | <a
+                            href="#">意见反馈</a>
+                    </div>
+                    <div class="bottom_qlogin" id="bq_2" style="display: none;"><a class="link_2">忘了密码？</a> | <a
+                            href="#">注册新帐号</a>
+                        |
+                        <a href="#">意见反馈</a>
+                    </div>
+                </div>
+                <div class="wx_login" style="display: none;">
+                    <div class="impowerBox">
+                        <div class="panelContent">
+                            <div class="wrp_code"></div>
+                            <div class="info">
+                                <div class="status_browser">
+                                    <p class="wechat_login_in">请使用微信扫描二维码登录</p>
+                                    <p class="wechat_login_tips ">“QQ音乐”</p>
+                                    <p class="wechat_login_tips ">QQ与微信帐号的音乐资产、付费特权不互通</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="popup_download">
+            <a href="#" class="popup__download_btn">下载客户端 体验更多内容</a>
+        </div>
+    </div>
+    <!-- 登陆界面 end -->
 
 
     <!-- 返回顶部工具栏 start -->
@@ -42,13 +166,13 @@
     <!-- 顶部导航栏 start -->
     <header>
         <div class="section_inner w">
-            <div class="logo"><a href="index_logined.html"><img src="../image/logo.png"
+            <div class="logo"><a href="index.html"><img src="../image/logo.png"
                         alt="QQ音乐-千万正版音乐海量无损曲库新歌热歌天天畅听的高品质音乐平台！"></a></div>
             <ul class="mod_top_nav">
-                <li class="top_nav__item" style="background-color: #31c27c;"><a href="#" class="top_nav__link "
-                        style="color: #ffffff;">音乐馆</a>
+                <li class="top_nav__item" style="background-color: #31c27c;"><a href="../HTML/myMusic_logined.html"
+                        class="top_nav__link " style="color: #ffffff;">音乐馆</a>
                 </li>
-                <li class="top_nav__item"><a href="myMusic_logined.html" class="top_nav__link ">我的音乐</a></li>
+                <li class="top_nav__item"><a href="../HTML/myMusic_logined.html" class="top_nav__link ">我的音乐</a></li>
                 <li class="top_nav__item"><a href="#" class="top_nav__link ">客户端</a><img src="../image/mark_1.png"
                         alt=""></li>
                 <li class="top_nav__item"><a href="#" class="top_nav__link ">开放平台</a></li>
@@ -61,6 +185,7 @@
                 </div>
             </div>
             <div class="header_opt">
+                <!-- 头像框 start -->
                 <div class="user">
                     <div class="userPic">
                         <!-- 头像假数据 -->
@@ -78,30 +203,32 @@
                         </div>
                     </div>
                 </div>
-                <div class="mod_select_vip"><a href="#">开通VIP <span class="icon-cheveron-down"></span></a>
-                    <ul class="select__box">
-                        <li class="select__item ">开通绿钻豪华版</li>
-                        <li class="select__item ">开通付费包</li>
-                    </ul>
-                </div>
-                <div class="mod_select_pay"><a href="#">充值<span class="icon-cheveron-down"></span></a>
-                    <ul class="select__box">
-                        <li class="select__item ">购买乐币</li>
-                        <li class="select__item ">充值饭票</li>
-                    </ul>
-                </div>
+                <!-- 头像框 end -->
             </div>
-            <ul class="mod_top_subnav">
-                <li class="top_subnav__item"><a href="#">首页</a></li>
-                <li class="top_subnav__item"><a href="#">歌手</a></li>
-                <li class="top_subnav__item"><a href="#">新碟</a></li>
-                <li class="top_subnav__item"><a href="#">排行榜</a></li>
-                <li class="top_subnav__item"><a href="#">分类歌单</a></li>
-                <li class="top_subnav__item"><a href="#">电台</a></li>
-                <li class="top_subnav__item"><a href="#">MV</a></li>
-                <li class="top_subnav__item"><a href="#">数字专辑</a></li>
-                <li class="top_subnav__item"><a href="#">票务</a></li>
-            </ul>
+            <div class="mod_select_vip"><a href="#">开通VIP <span class="icon-cheveron-down"></span></a>
+                <ul class="select__box">
+                    <li class="select__item ">开通绿钻豪华版</li>
+                    <li class="select__item ">开通付费包</li>
+                </ul>
+            </div>
+            <div class="mod_select_pay"><a href="#">充值<span class="icon-cheveron-down"></span></a>
+                <ul class="select__box">
+                    <li class="select__item ">购买乐币</li>
+                    <li class="select__item ">充值饭票</li>
+                </ul>
+            </div>
+        </div>
+        <ul class="mod_top_subnav">
+            <li class="top_subnav__item"><a href="#">首页</a></li>
+            <li class="top_subnav__item"><a href="#">歌手</a></li>
+            <li class="top_subnav__item"><a href="#">新碟</a></li>
+            <li class="top_subnav__item"><a href="#">排行榜</a></li>
+            <li class="top_subnav__item"><a href="#">分类歌单</a></li>
+            <li class="top_subnav__item"><a href="#">电台</a></li>
+            <li class="top_subnav__item"><a href="#">MV</a></li>
+            <li class="top_subnav__item"><a href="#">数字专辑</a></li>
+            <li class="top_subnav__item"><a href="#">票务</a></li>
+        </ul>
         </div>
     </header>
     <!-- 顶部导航栏 end -->
@@ -111,27 +238,29 @@
     <!-- 歌单推荐模块 start -->
     <div class="song_list">
         <div class="mod_index" style="height: 532px;">
-            <div class="section_inner y">
+            <div class="section_inner w">
                 <div class="index__hd">
                     <h2 class="index__tit"><i>歌单推荐</i></h2>
                 </div>
                 <div class="mod_index_tab">
-                    <a href="#">歌单推荐</a>
-                    <a href="#">为你推荐</a>
-                    <a href="#">网络歌曲</a>
-                    <a href="#">经典国语</a>
-                    <a href="#">短视频热歌</a>
-                    <a href="#">官方歌单</a>
-                    <a href="#">情歌</a>
+                    <a href="javascript:;">为你推荐</a>
+                    <a href="javascript:;">流行</a>
+                    <a href="javascript:;">经典国语</a>
+                    <a href="javascript:;">ACG</a>
+                    <a href="javascript:;">影视原声</a>
+                    <a href="javascript:;">清新</a>
                 </div>
-                <div class="playlist__list">
+                <div class="playlist__list y">
                     <div class="arrow_left"> <span class="icon-cheveron-left"></span></div>
                     <div class="arrow_right"><span class="icon-cheveron-right"></span></div>
-                    <ul class="playlist__list_1 slide__list">
-                    </ul>
+                    <div class="playlist_inner">
+                        <div class="playlist_con">
+                        </div>
+                    </div>
+
+
                 </div>
-                <div class="mod_slide_switch">
-                </div>
+                <div class="mod_slide_switch song_list_switch w"></div>
             </div>
         </div>
     </div>
@@ -142,21 +271,27 @@
     <!-- 新歌发售模块 start -->
     <div id="new_song">
         <div class="mod_index">
-            <div class="section_inner">
-                <div class="index__hd w">
-                    <h2 class="index__tit"><i>新歌发售</i></h2>
+            <div class="section_inner y" style="height: 566px;">
+                <div class="index__hd">
+                    <h2 class="index__tit"><i>新歌首发</i></h2>
                 </div>
                 <div class="mod_index_tab">
-                    <a href="#">最新</a>
-                    <a href="#">内地</a>
-                    <a href="#">港台</a>
-                    <a href="#">欧美</a>
-                    <a href="#">韩国</a>
-                    <a href="#">日本</a>
+                    <a href="javascript:;">最新</a>
+                    <a href="javascript:;">华语</a>
+                    <a href="javascript:;">欧美</a>
+                    <a href="javascript:;">日本</a>
+                    <a href="javascript:;">韩国</a>
                 </div>
-                <div class="playlist__list">
+                <div class="playlist__list w" style="height: 333px;">
                     <div class="arrow_left"> <span class="icon-cheveron-left"></span></div>
                     <div class="arrow_right"><span class="icon-cheveron-right"></span></div>
+                    <div class="playlist_inner">
+                        <div class="playlist_con">
+
+                        </div>
+                    </div>
+                    <div class="mod_slide_switch w" style="position: relative; bottom: -360px;z-index: 5;">
+                    </div>
                 </div>
             </div>
         </div>
@@ -172,12 +307,33 @@
                 <div class="index__hd w">
                     <h2 class="index__tit"><i>精彩推荐</i></h2>
                 </div>
-                <div class="mod_index_tab">
-                </div>
-                <div class="playlist__list">
+                <div class="playlist__list w">
                     <div class="arrow_left"> <span class="icon-cheveron-left"></span></div>
                     <div class="arrow_right"><span class="icon-cheveron-right"></span></div>
+                    <div class="playlist_list_con y">
+                        <div class="recom_con">
+                            <ul class="recom_container">
+                                <li class="recom_container_item"><img src="../image/recom1.jpg" alt=""></li>
+                                <li class="recom_container_item"><img src="../image/recom2.jpg" alt=""></li>
+                            </ul>
+                            <ul class="recom_container">
+                                <li class="recom_container_item"><img src="../image/recom3.jpg" alt=""></li>
+                                <li class="recom_container_item"><img src="../image/recom4.jpg" alt=""></li>
+                            </ul>
+                            <ul class="recom_container">
+                                <li class="recom_container_item"><img src="../image/recom5.jpg" alt=""></li>
+                                <li class="recom_container_item"><img src="../image/recom2.jpg" alt=""></li>
+                            </ul>
+                            <ul class="recom_container">
+                                <li class="recom_container_item"><img src="../image/recom6.jpg" alt=""></li>
+                                <li class="recom_container_item"><img src="../image/recom7.jpg" alt=""></li>
+                            </ul>
+                        </div>
+                        <div class="mod_slide_switch song_list_switch w" style="position: relative;top: 270px;"></div>
+
+                    </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -185,91 +341,213 @@
 
 
     <!-- 新碟发售 start -->
-    <div id="new_album">
+    <div id="new_disc">
         <div class="mod_index">
             <div class="section_inner w">
                 <div class="index__hd">
                     <h2 class="index__tit"><i>新碟发售</i></h2>
                 </div>
                 <div class="mod_index_tab">
-                    <a href="#">内地</a>
-                    <a href="#">港台</a>
-                    <a href="#">欧美</a>
-                    <a href="#">韩国</a>
-                    <a href="#">日本</a>
-                    <a href="#">其他</a>
+                    <a href="javascript:;">推荐</a>
+                    <a href="javascript:;">华语</a>
+                    <a href="javascript:;">欧美</a>
+                    <a href="javascript:;">韩国</a>
+                    <a href="javascript:;">日本</a>
+                </div>
+                <div class="arrow_left"> <span class="icon-cheveron-left"></span></div>
+                <div class="arrow_right"><span class="icon-cheveron-right"></span></div>
+                <div class="new_disc_mod" style="overflow: hidden;">
+                    <div class="new_disc_con">
+
+                    </div>
+                    <div class="mod_slide_switch song_list_switch w" style="position: relative;top: 585px;"></div>
+
                 </div>
             </div>
         </div>
+
     </div>
     <!-- 新碟发售 end -->
 
-
-
-
+    <!-- 排行榜 start -->
     <div id="rank">
         <div class="mod_index">
             <div class="section_inner w">
                 <div class="index__hd">
                     <h2 class="index__tit"><i>排行榜</i></h2>
                 </div>
-                <div class="mod_index_tab">
+                <div class="section_inner">
+                    <ul class="toplist__list y">
+                        <li class="toplist__item" style="background: url(../image/rankBgi.jpg) 0  no-repeat;">
+                            <div class="top_list_con">
+                                <h3 class="toplist__head">巅峰榜</h3>
+                                <a href="#" class="toplist__tit">热歌</a>
+                                <div class="toplist_cover">
+                                    <div class="rankCover_con">
+                                        <p class="toplist_mod_cover">——</p>
+                                        <div class="icon-play2 rank_play"></div>
+                                    </div>
+                                </div>
+                                <ul class="toplist__songlist">
+                                    <li class="toplist__songlist_item">
+                                        <div class="toplist__songname">1 <a href="#">大风吹 (Live)</a></div>
+                                        <div class="toplist__artist"><a href="#">刘惜君/王赫野</a></div>
+                                    </li>
+                                    <li class="toplist__songlist_item">
+                                        <div class="toplist__songname">2 <a href="#">大风吹</a></div>
+                                        <div class="toplist__artist"><a href="#">王赫野</a></div>
+                                    </li>
+                                    <li class="toplist__songlist_item">
+                                        <div class="toplist__songname">3 <a href="#">踏山河</a></div>
+                                        <div class="toplist__artist"><a href="#">是七叔呢</a></div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="toplist__item" style="background: url(../image/rankBgi.jpg) -224px  no-repeat;">
+                            <div class="top_list_con">
+                                <h3 class="toplist__head">巅峰榜</h3>
+                                <a href="#" class="toplist__tit">新歌</a>
+                                <div class="toplist_cover">
+                                    <div class="rankCover_con">
+                                        <p class="toplist_mod_cover">——</p>
+                                        <div class="icon-play2 rank_play"></div>
+                                    </div>
+                                </div>
+                                <ul class="toplist__songlist">
+                                    <li class="toplist__songlist_item">
+                                        <div class="toplist__songname">1 <a href="#">奔赴星空</a></div>
+                                        <div class="toplist__artist"><a href="#">尹昔眠</a></div>
+                                    </li>
+                                    <li class="toplist__songlist_item">
+                                        <div class="toplist__songname">2 <a href="#">迷</a></div>
+                                        <div class="toplist__artist"><a href="#">蔡徐坤</a></div>
+                                    </li>
+                                    <li class="toplist__songlist_item">
+                                        <div class="toplist__songname">3 <a href="#">#0000FF</a></div>
+                                        <div class="toplist__artist"><a href="#">蔡徐坤</a></div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="toplist__item" style="background: url(../image/rankBgi.jpg) -448px  no-repeat;">
+                            <div class="top_list_con">
+                                <h3 class="toplist__head">巅峰榜</h3>
+                                <a href="#" class="toplist__tit">流行指数</a>
+                                <div class="toplist_cover">
+                                    <div class="rankCover_con">
+                                        <p class="toplist_mod_cover">——</p>
+                                        <div class="icon-play2 rank_play"></div>
+                                    </div>
+                                </div>
+                                <ul class="toplist__songlist">
+                                    <li class="toplist__songlist_item">
+                                        <div class="toplist__songname">1 <a href="#">输入法打可爱按第五 (Live)</a></div>
+                                        <div class="toplist__artist"><a href="#">米卡/高卿尘/吴宇恒/薛八一/张星特/曾涵江/鞠婧祎</a></div>
+                                    </li>
+                                    <li class="toplist__songlist_item">
+                                        <div class="toplist__songname">2 <a href="#">奔赴星空</a></div>
+                                        <div class="toplist__artist"><a href="#">尹昔眠</a></div>
+                                    </li>
+                                    <li class="toplist__songlist_item">
+                                        <div class="toplist__songname">3 <a href="#">星空剪影 (Live)</a></div>
+                                        <div class="toplist__artist"><a href="#">张碧晨</a></div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="toplist__item" style="background: url(../image/rankBgi.jpg) -672px  no-repeat;">
+                            <div class="top_list_con">
+                                <h3 class="toplist__head">巅峰榜</h3>
+                                <a href="#" class="toplist__tit">欧美</a>
+                                <div class="toplist_cover">
+                                    <div class="rankCover_con">
+                                        <p class="toplist_mod_cover">——</p>
+                                        <div class="icon-play2 rank_play"></div>
+                                    </div>
+                                </div>
+                                <ul class="toplist__songlist">
+                                    <li class="toplist__songlist_item">
+                                        <div class="toplist__songname">1 <a href="#">Love Story (Taylor's Version)
+                                                (Live)</a></div>
+                                        <div class="toplist__artist"><a href="#">Taylor Swift</a></div>
+                                    </li>
+                                    <li class="toplist__songlist_item">
+                                        <div class="toplist__songname">2 <a href="#">Stars Align</a></div>
+                                        <div class="toplist__artist"><a href="#">R3HAB/蔡依林</a></div>
+                                    </li>
+                                    <li class="toplist__songlist_item">
+                                        <div class="toplist__songname">3 <a href="#">Freedom</a></div>
+                                        <div class="toplist__artist"><a href="#">Justin Bieber/BEAM</a></div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="toplist__item" style="background: url(../image/rankBgi.jpg) -896px  no-repeat;">
+                            <div class="top_list_con">
+                                <h3 class="toplist__head">巅峰榜</h3>
+                                <a href="#" class="toplist__tit">韩国</a>
+                                <div class="toplist_cover">
+                                    <div class="rankCover_con">
+                                        <p class="toplist_mod_cover">——</p>
+                                        <div class="icon-play2 rank_play"></div>
+                                    </div>
+                                </div>
+
+                                <ul class="toplist__songlist">
+                                    <li class="toplist__songlist_item">
+                                        <div class="toplist__songname">1 <a href="#">water color</a></div>
+                                        <div class="toplist__artist"><a href="#">辉人 (휘인)</a></div>
+                                    </li>
+                                    <li class="toplist__songlist_item">
+                                        <div class="toplist__songname">2 <a href="#">Like Water</a></div>
+                                        <div class="toplist__artist"><a href="#">WENDY</a></div>
+                                    </li>
+                                    <li class="toplist__songlist_item">
+                                        <div class="toplist__songname">3 <a href="#">Tomorrow</a></div>
+                                        <div class="toplist__artist"><a href="#">灿烈 (찬열)</a></div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
-
+    <!-- 排行榜 end -->
 
     <!-- 排行榜模块 start -->
     <div id="mv">
         <div class="mod_index">
-            <div class="section_inner">
+            <div class="section_inner y" style="height: 684.93px;">
                 <div class="index__hd w">
                     <h2 class="index__tit"><i>MV</i></h2>
                 </div>
                 <div class="mod_index_tab">
-                    <a href="#">精选</a>
-                    <a href="#">内地</a>
-                    <a href="#">港台</a>
-                    <a href="#">欧美</a>
-                    <a href="#">韩国</a>
-                    <a href="#">日本</a>
+                    <a href="javascript:;">精选</a>
+                    <a href="javascript:;">内地</a>
+                    <a href="javascript:;">港台</a>
+                    <a href="javascript:;">欧美</a>
+                    <a href="javascript:;">韩国</a>
+                    <a href="javascript:;">日本</a>
                 </div>
                 <div class="playlist__list">
                     <div class="arrow_left"> <span class="icon-cheveron-left"></span></div>
                     <div class="arrow_right"><span class="icon-cheveron-right"></span></div>
+                    <div class="mod_mv mod_slide w">
+                        <div class="mv_slide__list">
+                            <div class="mv_con"></div>
+                            <div class="mod_slide_switch w" style="position: absolute; bottom: -40px;z-index: 5;">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- 排行榜模块 end -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     <!-- 底部模块 start -->
     <footer>

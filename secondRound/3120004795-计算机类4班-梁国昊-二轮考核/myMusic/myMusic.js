@@ -41,15 +41,28 @@ window.addEventListener('load', function() {
         let user_select = document.querySelector('.user_select');
         var h = 0;
 
-
-
-
         const login_out = document.querySelector('#login_out'); 
         // let userCookie = window.localStorage.getItem("cookie");
         const loginOutUrl = defaultUrlHeader_1 + '/login/status' + userCookie;
         login_out.addEventListener('click', function() {
             AjaxRequest_loginOut(loginOutUrl);
         })
+
+
+
+        const profile__cover_link = document.querySelector('.profile__cover_link');
+        profile__cover_link.innerHTML = `<img src=${data.profile.avatarUrl} alt="">`;
+
+        const profile__tit = document.querySelector('.profile__tit');
+        profile__tit.innerHTML = `<span>${data.profile.nickname}</span>`
+
+
+        const section_inneruser = document.querySelector('.section_inneruser');
+        section_inneruser.innerHTML += `<ul class="mod_user_statistic">
+        <li class="user_statistic__item">${data.bindings.length}<p>关注</p></li>
+        |
+        <li class="user_statistic__item_last">${data.profile.djStatus}<p>dj等级</p></li>
+        </ul>`
 
     }
 
@@ -85,6 +98,9 @@ window.addEventListener('load', function() {
         xhr.open("GET", url, true);
         xhr.send();
     }
+
+    
+
 
 
     function AjaxRequest_loginOut(url) {

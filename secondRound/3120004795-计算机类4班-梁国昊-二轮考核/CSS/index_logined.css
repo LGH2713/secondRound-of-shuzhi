@@ -5,41 +5,32 @@
     height: 40px;
     float: left;
     height: 89.6px;
-    line-height: 90px;
+    /* line-height: 90px; */
     margin-right: 10px;
-    text-align: center;
+    /* text-align: center; */
     border: 1px solid transparent;
     right: 3px;
 }
 
-/* 
-.leave {
-    position: absolute;
-    width: 60px;
-    height: 80px;
-    top: 0;
-    left: -11px;
-    background-color: lawngreen;
-} */
-/* .user_container {
-    z-index: 1;
-    position: absolute;
-    width: 80px;
-    height: 405px;
-    top: 0;
-    left: -18px;
-    background-color: khaki;
-} */
-
-.userPic {
-    width: 50px;
-    position: absolute;
-    z-index: 2;
-    top: 14px;
-    left: -6px;
+.user:hover .user_select_con {
+    display: block;
 }
 
-.userPic img {
+.user_select_con {
+    position: absolute;
+    display: none;
+    top: 89px;
+    left: -42px;
+    z-index: 999;
+    width: 300px;
+    height: 350px;
+    background-color: #fff;
+}
+
+.pic {
+    cursor: pointer;
+    position: absolute;
+    top: 25px;
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -49,40 +40,18 @@
     -o-border-radius: 50%;
 }
 
-.user_select {
-    position: relative;
-    left: -33px;
-    z-index: 10000;
-    width: 309px;
-    height: 325px;
-    background-color: #fff;
-    overflow: hidden;
-    top: 95px;
-    /* box-shadow: 0 0 5px #c9c8c8; */
-    /* background-color: hotpink; */
-    /* zoom: inherit; */
-}
-
-.user_select_list {
-    width: 275px;
-}
-
-.user_select_con {
-    width: 100%;
-    height: 100%;
-}
-
 .userDetail {
-    width: 100%;
-    z-index: 2000;
-    position: absolute;
-    padding-top: 25px;
-    height: 80px;
-    background-color: #fff;
+    cursor: pointer;
+    /* position: absolute; */
+    padding-top: 20px;
+    width: 85%;
+    height: 100px;
+    margin: 0 auto;
 }
 
-.userDetail img {
-    /* float: left; */
+.list_img {
+    cursor: pointer;
+    float: left;
     width: 80px;
     height: 80px;
     border-radius: 50%;
@@ -92,71 +61,52 @@
     -o-border-radius: 50%;
 }
 
-.user_name {
-    text-align: left;
-    float: right;
-    width: 180px;
-    height: 100%;
-    line-height: 100%;
-}
-
 .user_name_con {
-    display: inline-block;
-    margin-top: 20px;
-}
-
-.user_name_con p {
-    font-size: 14px;
-    margin-top: 2px;
+    cursor: pointer;
+    float: left;
+    margin-top: 14px;
+    margin-left: 20px;
 }
 
 .user_select_list {
-    position: absolute;
-    bottom: 15px;
-    left: 20px;
-    height: 200px;
+    cursor: pointer;
+    /* position: absolute; */
+    /* display: block; */
+    position: relative;
+    width: 85%;
+    height: 220px;
+    margin: 0 auto;
 }
 
-.user_select_list_item p,
-.user_select_list_item i {
-    float: left;
-}
-
-.user_select_list_item {
+.user_select_list li {
     position: relative;
     width: 100%;
-    height: 50px;
-    text-align: left;
-    border: 1px solid transparent;
-    line-height: 32px;
-}
-
-.user_select_list_item_pay {
-    float: left;
-    /* width: 100%; */
-    font-size: 16px;
+    height: 25%;
+    /* line-height: 55px; */
 }
 
 .user_select_list_item i {
-    position: absolute;
-    height: 30px;
-    left: 0;
-    bottom: 0;
     font-size: 12px;
     color: #999999;
 }
 
+.user_select_list_item_pay {
+    cursor: pointer;
+    /* width: 100%; */
+    display: block;
+}
+
 .to_pay {
     cursor: pointer;
-    margin-top: 7px;
-    margin-right: 10px;
+    position: absolute;
+    right: 0;
+    top: 5px;
     width: 80px;
     height: 35px;
     text-align: center;
     line-height: 35px;
-    border-radius: 2px;
-    float: right;
     color: #ffffff;
+    border-radius: 2px;
     background-color: #31c27c;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
@@ -167,6 +117,6 @@
 #comment,
 #login_out {
     cursor: pointer;
-    text-align: left;
-    line-height: 50px;
+    line-height: 55px;
 }
+
