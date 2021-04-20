@@ -1,0 +1,3 @@
+function lyric_lineHigh() {
+    
+}

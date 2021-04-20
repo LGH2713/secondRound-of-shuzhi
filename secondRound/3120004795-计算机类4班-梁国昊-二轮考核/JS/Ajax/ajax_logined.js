@@ -2,6 +2,7 @@ window.addEventListener('load', function() {
     const defaultUrlHeader_1 = "https://autumnfish.cn";  // 默认URL头部1
     const defaultUrlHeader_2 = "http://musicapi.leanapp.cn"; // 默认URL头部2
     let userCookie = window.localStorage.getItem("cookie");
+    console.log(userCookie);
 
     const login_status = defaultUrlHeader_1 + '/login/status' + userCookie;
     AjaxRequest_msg(login_status);

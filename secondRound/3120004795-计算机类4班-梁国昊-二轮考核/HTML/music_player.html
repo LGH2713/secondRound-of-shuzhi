@@ -4,11 +4,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>musicPlayer</title>
+    <script src="../myMusic/musicPlayer.js"></script>
+    <link rel="stylesheet" href="../CSS/base.css">
+    <link rel="stylesheet" href="../CSS/musicPlayer.css">
+    <link rel="stylesheet" href="../icomoon/style.css">
+    <script src="../myMusic/search_interface.js"></script>
+
 </head>
 
 <body>
+    <div class="app">
+        <div class="page_left_nav"></div>
 
+
+        <div class="main-container">
+            <div class="user_interface" style="display: none;">
+                <div class="user_info_content">
+                    <div class="user_info_list">
+                        <div class="user_info_name"></div>
+                        <div class="user_info_follow"><span class="follow"></span><span class="followeds"></span></div>
+                        <div class="user_info_playlist"><span class="playlist"></span></div>
+                        <div class="use_info_level"><span class="level"></span></div>
+                        <div class="user_info_logout">
+                            <i class="icon-switch"></i>
+                            <span class="logout">退出</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="user_right_list">
+                    <div class="right_select_tab_list">
+                        <div class="right_select_tab_list_item"><i class="icon-calendar"></i></div>
+                        <div class="right_select_tab_list_item"><i class="icon-history"></i></div>
+                        <div class="right_select_tab_list_item"><i class="icon-target-arrow1"></i></div>
+                        <div class="right_select_tab_list_item"><i class="icon-heart2"></i></div>
+                    </div>
+                    <div class="list_songs">
+                        <div class="list_song_box"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="search_interface">
+                <input type="text" placeholder="Search..." class="search_input">
+                <div class="search_tab">
+                    <div class="search_tab_item search_song">歌曲</div>
+                    <div class="search_tab_item search_singer">歌手</div>
+                    <div class="search_tab_item search_disc">专辑</div>
+                    <div class="search_tab_item search_playlist">歌单</div>
+                </div>
+                <div class="list_songs">
+                    <div class="list_song_box">
+                        <!-- <div class="song_item">
+                            <div class="song_order">1</div>
+                            <div class="song_item_img"><img src="../image/u=2746384919,2327107392&fm=26&gp=0.jpg"
+                                    alt=""></div>
+                            <div class="song_item_singer">A</div>
+                            <div class="song_ar">123456</div>
+                        </div>
+
+                        <div class="song_item">
+                            <div class="song_order">1</div>
+                            <div class="song_item_img"><img src="../image/u=2746384919,2327107392&fm=26&gp=0.jpg"
+                                    alt=""></div>
+                            <div class="song_item_singer">A</div>
+                            <div class="song_ar">123456</div>
+                        </div>
+
+                        <div class="song_item">
+                            <div class="song_order">1</div>
+                            <div class="song_item_img"><img src="../image/u=2746384919,2327107392&fm=26&gp=0.jpg"
+                                    alt=""></div>
+                            <div class="song_item_singer">A</div>
+                            <div class="song_ar">123456</div>
+                        </div>
+
+                        <div class="song_item">
+                            <div class="song_order">1</div>
+                            <div class="song_item_img"><img src="../image/u=2746384919,2327107392&fm=26&gp=0.jpg"
+                                    alt=""></div>
+                            <div class="song_item_singer">A</div>
+                            <div class="song_ar">123456</div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="player_container">
+            <div>
+                <div class="control_btn">
+                    <div class="inline_block"><i class="icon-previous2"></i></div>
+                    <div class="inline_block"><i class="icon-pause2"></i></div>
+                    <div class="inline_block"><i class="icon-next2"></i></div>
+                </div>
+                <div class="progress_container">
+                    <audio src="Goose house-光るなら.mp3" id="m_player" controls="controls" class="played_audio" autoplay
+                        autoplay></audio>
+                </div>
+                <div class="other_control">
+                    <div class="volume_control"> <i class="icon-volume-medium"></i></div>
+                    <div class="order_control"> <i class="icon-menu"></i></div>
+                    <div class="download_control"><i class="icon-download"></i></div>
+                    <div class="add_control"> <i style="font-size: 30px;"><strong>+</strong></i></div>
+                    <div class="now_control"> <i class="icon-list"></i></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="lyric_area">
+            <ul id="lyric_ul">
+
+            </ul>
+        </div>
+    </div>
 </body>
 
 </html>
