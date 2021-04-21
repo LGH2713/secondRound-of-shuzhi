@@ -327,6 +327,7 @@
   content: "\ea43";
 }
 .icon-circle-left:before {
+  vertical-align: -1.5px;
   content: "\ea44";
 }
 .icon-ctrl:before {

@@ -4,9 +4,13 @@ window.addEventListener('load', function() {
     const search_interface = document.querySelector('.search_interface')
     const search_input = document.querySelector('.search_input');
     let list_song_box = search_interface.querySelector('.list_song_box');
+    let player_container = document.querySelector('.player_container');
     const audio = document.querySelector('.progress_container').querySelector('audio');
     // console.log(list_song_box);
+    const lyric_area = document.querySelector('.lyric_area')
     const lyric_ul = document.querySelector('#lyric_ul');
+    const back = document.querySelector('.back');
+    const mv_btn = document.querySelector('.mv_btn');
     
 
 
@@ -21,17 +25,6 @@ window.addEventListener('load', function() {
             AjaxRequest_search(searchUrl(search_input.value));
         }
     })
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -57,7 +50,7 @@ window.addEventListener('load', function() {
             xhr.send();
     }
 
-    function AjaxRequest_lyric(url) {
+    function AjaxRequest_lyric(url,index) {
         let xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == 4) {
@@ -65,24 +58,19 @@ window.addEventListener('load', function() {
                     if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
                         let data = JSON.parse(xhr.responseText);
                         console.log(data);
-                        // let lyricArray = JSON.stringify(data.tlyric.lyric);
-                        // window.localStorage.setItem('lyric', lyricArray);
-                        // console.log(lyricArray);
-                        // alert(1)
-                        callback_lyric(data.lrc.lyric);
+                        callback_lyric(data.lrc.lyric, index);
                     } else {
                         alert("Request was unsuccessful：" + xhr.status);
                     }
                 }
             }
-            xhr.open("GET", url, true);
+            xhr.open("GET", url, false);
             xhr.send();
     }
 
-    function callback_lyric(data) {
+    function callback_lyric(data, songIndex) {
         var lines = data.split('\n');
-        console.log(lines);
-        pattern = /\[\d{2}:\d{2}.\d{3}\]/g;
+        pattern = /\[\d{2}:\d{2}.(\d{2}|\d{3})\]/g;
         result = [];
         // while (!pattern.test(lines[0])) {
         //     lines = lines.slice(1);
@@ -96,7 +84,6 @@ window.addEventListener('load', function() {
         //     }
         // }
         
-        console.log(lines);
         lines[lines.length - 1].length === 0 && lines.pop();
         lines.forEach(function (v /*数组元素值*/ , i /*元素索引*/ , a /*数组本身*/ ) {
             //提取出时间[xx:xx.xx]
@@ -105,29 +92,18 @@ window.addEventListener('load', function() {
 
                 value = v.replace(pattern, '');
 
-            // console.log('time=' + time);
             time.forEach(function (v1, i1, a1) {
                 //去掉时间里的中括号得到xx:xx.xx
                 var t = v1.slice(1, -1).split(':');
-                // console.log(parseFloat(t[1]));
                 //将结果压入最终数组
-                // console.log('value=' + value);
                 result.push([parseInt(t[0], 10) * 60 + parseFloat(t[1]), value]);
-                // console.log('result=' + result);
             });
         });
 
         result.sort(function (a, b) {
             return a[0] - b[0];
         });
-        console.log(result);
-
-
-
-
-
-
-
+        // console.log(result);
 
 
 
@@ -147,16 +123,26 @@ window.addEventListener('load', function() {
         let heigh = lyric_li[0].offsetHeight;
         console.log(heigh);
 
+        
+
+
         audio.ontimeupdate = function(e) {
-            
             for(let i = 0; i < result.length; i++) {
-                console.log(result[i][0]);
                 if(this.currentTime>result[i][0]) {
                     lyric_ul.style.transform = `translateY(${-heigh*i + 'px'})`;
-                    // lyric_li[i].style.className = 'lyric_li lineHigh'
+                    if(lyric_li[i - 1]) {
+                        console.log(lyric_li[i - 1].style.backgroundColor);
+
+                        lyric_li[i - 1].style.backgroundColor = 'rgba(255, 255, 255, 0)';
+                        lyric_li[i - 1].style.color = '#fff';
+                    } 
+                    lyric_li[i].style.backgroundColor = 'rgba(255, 255, 255, 0.4)';
+                    lyric_li[i].style.color = 'chartreuse';
                 }
             }
         }
+
+        
     }
     
     function callback_search(data) {
@@ -177,12 +163,67 @@ window.addEventListener('load', function() {
             song_item[i].setAttribute('index', i);
             song_item[i].addEventListener('click', function() {
                 let index = Number(this.getAttribute('index'));
-                audio.src = `https://music.163.com/song/media/outer/url?id=${searchData.result.songs[index].id}.mp3 `
+                audio.src = `https://music.163.com/song/media/outer/url?id=${searchData.result.songs[index].id}.mp3`;
+
+                
+
                 let lyricUrl = defaultUrlHeader_2 + '/lyric?id=' + searchData.result.songs[index].id;
-                AjaxRequest_lyric(lyricUrl);
+
+                AjaxRequest_lyric(lyricUrl,index);
+
+
+
+                let mv_con = JSON.parse(window.localStorage.getItem('search'));
+                if(mv_con.result.songs[index].mvid) {
+                    mv_btn.style.display = 'block';
+                    let mvUrl = defaultUrlHeader_2 + '/mv/url?id=' + mv_con.result.songs[index].mvid;
+                    AjaxRequest_mv(mvUrl);
+                }
             })
         }
     }
+
+    function AjaxRequest_mv(url) {
+        let xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+                // alert(xhr.readyState);
+                if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
+                    let result = JSON.parse(xhr.responseText);
+                    console.log(result);
+                    callback_mv(result.data.url)
+                } else {
+                    alert("Request was unsuccessful：" + xhr.status);
+                }
+            }
+        }
+        xhr.open("GET", url, true);
+        xhr.send();
+    }
+
+    function callback_mv(data) {
+        let video_play = document.querySelector('.video_play');
+        let main_container = document.querySelector('.main-container');
+        let video = video_play.querySelector('video');
+        mv_btn.addEventListener('click', function() {
+            main_container.style.display = 'none';
+            video_play.style.display = 'block';
+            audio.pause();
+            player_container.style.display = 'none';
+            video.src = `${data}`;
+        });
+
+        back.addEventListener('click', function() {
+            main_container.style.display = 'block';
+            video_play.style.display = 'none';
+            player_container.style.display = 'block';
+            video.pause();
+        })
+        
+    }
+
+
+
     
     function searchUrl(keywords) {
         return defaultUrlHeader + '/search?keywords=' + keywords;
