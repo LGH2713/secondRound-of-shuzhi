@@ -33,6 +33,7 @@
     // var aimUrl = defaultUrlHeader_1 + '/search/hot';
     // var aimUrl = defaultUrlHeader_1 + '/search/hot/detail';
     var aimUrl = defaultUrlHeader_1 + '/lyric?id=28272050';
+    var aimUrl = defaultUrlHeader_1 + '/comment/music?id=512377169'
 
 
 
@@ -45,15 +46,15 @@
                 // alert(xhr.readyState);
                 if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
                     let data = JSON.parse(xhr.responseText);
-                    let lyric = data.tlyric.lyric.split('\n');
-                    let result = [];
+                    // let lyric = data.tlyric.lyric.split('\n');
+                    // let result = [];
 
                     // lyric.forEach
                     console.log(data);
                     // console.log(Array.from(lyric).length);
-                    console.log(Array.from(lyric) instanceof Array);
+                    // console.log(Array.from(lyric) instanceof Array);
                     // console.log(JSON.parse(data.tlyric));
-                    callback(lyric);
+                    // callback(lyric);
                 } else {
                     alert("Request was unsuccessful：" + xhr.status);
                 }

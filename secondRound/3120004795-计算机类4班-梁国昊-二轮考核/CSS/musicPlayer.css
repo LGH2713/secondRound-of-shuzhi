@@ -156,7 +156,8 @@ body {
 
 
 /* 歌曲列表 start */
-.user_right_list {
+.user_right_list,
+.comment_interface {
     position: absolute;
     top: 2%;
     right: 1%;
@@ -185,13 +186,14 @@ body {
     line-height: 30px;
 }
 
-.list_songs {
+.list_songs,
+.list_comment {
     position: absolute;
     z-index: 5;
     width: 100%;
     height: 100%;
     overflow-y: auto;
-    background-color: rgb(212, 152, 77);
+    background-color: rgb(77, 212, 106);
     border-left: 1px solid #ffffff;
     /* overflow: scroll; */
 }
@@ -259,6 +261,57 @@ body {
 /* 歌曲列表 end */
 
 
+/* 评论列表 start */
+.hot {
+    position: absolute;
+    left: 10px;
+    top: 0;
+    font-size: 100px;
+    color: rgba(255, 255, 255, 0.3);
+    font-weight: 800;
+}
+
+.list_comment::-webkit-scrollbar {
+    display: none;
+}
+
+.list_comment_item {
+    display: flex;
+    border-radius: 10px;
+    margin-top: 20px;
+    margin-left: 10px;
+    padding: 15px 10px;
+    width: calc(100% - 60px);
+    background-color: rgba(0, 0, 0, .2);
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+}
+
+.list_comment_item:first-child {
+    margin-top: 80px;
+}
+
+.list_comment_item img{
+    float: left;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+}
+
+.comment_con {
+    float: left;
+    margin-left: 10px;
+    width: 490px;
+    background-color: aliceblue;
+}
+/* 评论列表 end */
+
 
 
 
@@ -316,8 +369,13 @@ body {
 } */
 
 .search_tab_item {
+    cursor: pointer;
+    width: 50px;
     float: left;
-    margin-right: 20px;
+    text-align: center;
+    margin-left: 5px;
+    margin-right: 15px;
+    height: 20px;
 }
 
 .search_interface .song_order {
@@ -523,6 +581,18 @@ body {
     text-align: center;
     background-color: rgba(255, 255, 255, 0.1);
     color: rgb(223, 226, 38);
+}
+
+.comment_btn {
+    position: absolute;
+    left: 50%;
+    bottom: 17%;
+    text-align: center;
+    line-height: 40px;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: rgb(99, 227, 236);
 }
 /* 歌词区域 end */
 

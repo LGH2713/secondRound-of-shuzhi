@@ -9,9 +9,29 @@ window.addEventListener('load', function() {
     // console.log(list_song_box);
     const lyric_area = document.querySelector('.lyric_area')
     const lyric_ul = document.querySelector('#lyric_ul');
-    const back = document.querySelector('.back');
+    const comment_interface = document.querySelector('.comment_interface');
+    const list_comment_box = document.querySelector('.list_comment_box');
+    // const back = document.querySelector('.back');
     const mv_btn = document.querySelector('.mv_btn');
+    const comment_btn = document.querySelector('.comment_btn');
+
+    const search_tab_item = document.querySelectorAll('.search_tab_item');
     
+    search_tab_item[0].style.color = "#fff";
+    for(let i = 0; i < search_tab_item.length; i++) {
+        search_tab_item[i].setAttribute('index', i);
+        search_tab_item[i].addEventListener('click', function() {
+            for(let k = 0; k < search_tab_item.length; k++) {
+                search_tab_item[k].style.color = "black";
+            }
+            this.style.color = "#fff";
+
+            // let index = this.getAttribute('index');
+            // switch(index) {
+            //     case'0':   
+            // }
+        })
+    }
 
 
 
@@ -179,6 +199,9 @@ window.addEventListener('load', function() {
                     let mvUrl = defaultUrlHeader_2 + '/mv/url?id=' + mv_con.result.songs[index].mvid;
                     AjaxRequest_mv(mvUrl);
                 }
+
+                let commentUrl = defaultUrlHeader_2 + `/comment/music?id=${searchData.result.songs[index].id}`;
+                AjaxRequest_comment(commentUrl);
             })
         }
     }
@@ -205,6 +228,7 @@ window.addEventListener('load', function() {
         let video_play = document.querySelector('.video_play');
         let main_container = document.querySelector('.main-container');
         let video = video_play.querySelector('video');
+        let back = document.querySelector('.back');
         mv_btn.addEventListener('click', function() {
             main_container.style.display = 'none';
             video_play.style.display = 'block';
@@ -222,7 +246,51 @@ window.addEventListener('load', function() {
         
     }
 
+    function AjaxRequest_comment(url) {
+        let xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+                // alert(xhr.readyState);
+                if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
+                    let result = JSON.parse(xhr.responseText);
+                    console.log(result);
+                    callback_comment(result)
+                } else {
+                    alert("Request was unsuccessful：" + xhr.status);
+                }
+            }
+        }
+        xhr.open("GET", url, true);
+        xhr.send();
+    }
 
+    function callback_comment(data) {
+        comment_btn.addEventListener('click', function() {
+            search_interface.style.display = 'none';
+            comment_interface.style.display = 'block';
+            list_comment_box.innerHTML = '';
+            for(let i = 0; i < data.hotComments.length; i++) {
+                list_comment_box.innerHTML += `<div class="list_comment_item">
+                <img src=${data.hotComments[i].user.avatarUrl} alt="">
+                <div class="comment_con">
+                    <div class="commenter_msg">
+                        <b>${data.hotComments[i].user.nickname}</b>
+                        <span>${data.hotComments[i].time}</span>
+                    </div>
+                    <div class="comment_text">
+                        ${data.hotComments[i].content}
+                    </div>
+                </div>
+            </div>`;
+            }
+        })
+
+        let back = document.querySelector('.back');
+        back.addEventListener('click', function() {
+            search_interface.style.display = 'block';
+            comment_interface.style.display = 'none';
+        })
+    }
 
     
     function searchUrl(keywords) {

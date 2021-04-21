@@ -123,13 +123,6 @@ window.addEventListener('load', function() {
 
     
 
-
-
-
-
-
-
-
     function AjaxRequest_follows(url) {
         let xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function () {
