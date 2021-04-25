@@ -22,6 +22,7 @@ body {
 }
 
 .nav_line {
+    z-index: 100;
     margin-left: 7px;
     margin-top: 30px;
     width: 500px;
@@ -335,7 +336,7 @@ body {
     top: 20px;
     right: 20px;
     width: 580px;
-    height: 580px;
+    height: 520px;
     border-radius: 5%;
     background-color: steelblue;
     -webkit-border-radius: 5%;
@@ -419,8 +420,86 @@ body {
 
 /* 搜索模块 end */
 
+/* 歌手搜索模块 start  */
+.list_singer_item {
+    float: left;
+    margin-left: 27px;
+    margin-top: 25px;
+    width: 250px;
+    height: 250px;
+    background-color: seagreen;
+    text-align: center;
+}
+
+.list_singer_item img {
+    width: 180px;
+    height: 180px;
+    margin-top: 20px;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+}
+
+.list_singer_item_name {
+    font-size: 20px;
+    color: #fff;
+}
+/* 歌手搜索模块 end  */
 
 
+/* 歌单搜索模块 start  */
+.list_playlist_item {
+    position: relative;
+    float: left;
+    width: 100%;
+    padding: 15px 20px;
+    border-bottom: 1px solid #999999;
+    /* background-color: aqua; */
+}
+
+.list_playlist_item img {
+    float: left;
+    width: 70px;
+    height: 70px;
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+}
+
+.list_playlist_item_name {
+    margin-left: 20px;
+    margin-top: 2px;
+    width: 60%;
+    float: left;
+    color: azure;
+    font-weight: 800;
+}
+
+.playlist_item_author {
+    margin-left: 20px;
+    margin-top: 18px;
+    float: left;
+    width: 60%;
+}
+
+.playlist_item_author span {
+    font-size: 12px;
+}
+
+.playlist_trackcount {
+    font-size: 50px;
+    float: left;
+    width: 50px;
+    height: 100%;
+    margin-left: 50px;
+    color: rgba(0, 0, 0, .2);
+    
+}
+/* 歌单搜索模块 end  */
 
 
 
@@ -537,8 +616,8 @@ body {
 .lyric_area {
     position: absolute;
     top: 3%;
-    left: 1%;
-    width: 62%;
+    left: 3%;
+    width: 60%;
     height: 90%;
     text-align: center;
     /* background-color: wheat; */

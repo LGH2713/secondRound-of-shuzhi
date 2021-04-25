@@ -138,12 +138,11 @@ popup__close.addEventListener('click', function() {
 
 
 
-    const defaultUrlHeader_1 = "https://autumnfish.cn";  // 默认URL头部1
+    const Header = "http://localhost:3000";  // 默认URL头部1
 
-    const songsUrlHeader = "http://music.163.com"; // 音乐URL头部
-    let phoneUrl = defaultUrlHeader_1 + '/login/cellphone?';
-    let emailUrl = defaultUrlHeader_1 + '/login';
-    let playlist_detail = defaultUrlHeader_1 + '/playlist/detail?uid=';
+    let phoneUrl = Header + '/login/cellphone?';
+    let emailUrl = Header + '/login';
+    let playlist_detail = Header + '/playlist/detail?uid=';
 
 
     var userCookie = '?cookie=';
@@ -159,16 +158,14 @@ popup__close.addEventListener('click', function() {
         let url = password_login();
         console.log(url);
         AjaxRequest_login(url);
-        // console.log(cookie);
-        // AjaxRequest_reFresh(login_refresh);
-        // AjaxRequest_userSubcount(user_subcount);
-        // AjaxRequest_getMsg(user_account);
         // alert(1111);
     });
 
     function password_login() {
         const u = document.getElementById('u');
         const p = document.getElementById('p');
+        window.localStorage.setItem('phone',u.value);
+        window.localStorage.setItem('password', p.value);
         let result = `${phoneUrl}phone=${u.value}&password=${p.value}`;
         // console.log(result);
         // console.log(result);
@@ -182,7 +179,8 @@ popup__close.addEventListener('click', function() {
             var cookie = encodeURIComponent(data.cookie);
         userCookie += cookie;
         window.localStorage.setItem('cookie', userCookie);
-        window.location.href = "index_logined.html";
+        window.localStorage.setItem('token', encodeURIComponent(data.token));
+        window.location.replace('music_player.html')
         }
     }
     

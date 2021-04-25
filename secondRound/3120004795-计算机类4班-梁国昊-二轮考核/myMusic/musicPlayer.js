@@ -1,7 +1,5 @@
 window.addEventListener('load', function() {
-    const defaultUrlHeader_1 = "https://autumnfish.cn";  // 默认URL头部1
-    const defaultUrlHeader_2 = "http://musicapi.leanapp.cn"; // 默认URL头部2
-    const defaultUrlHeader_3 = "https://music.163.com";
+    const Header = 'http://localhost:3000';
     var userCookie = window.localStorage.getItem("cookie");
     const user_info_content = document.querySelector('.user_info_content');
     // let user_info_list = document.querySelector('.user_info_list');
@@ -9,32 +7,61 @@ window.addEventListener('load', function() {
     // let user_info_follow = document.querySelector('.user_info_follow');
     // let user_info_playlist = document.querySelector('.user_info_playlist');
     // let use_info_level = document.querySelector('.use_info_level');
-    const user_interface = document.querySelector('.user_interface')
+    const user_interface = document.querySelector('.user_interface');
+    const search_interface = document.querySelector('.search_interface');
     const list_songs = user_interface.querySelector('.list_songs');
     const audio = document.querySelector('.progress_container').querySelector('audio');
-    var recordNum = 0;
     var scrollNum = 0;
+    const token = window.localStorage.getItem('token');
 
-    let login_status = defaultUrlHeader_1 + '/login/status' + userCookie;
+
+
     
+    let login_status = Header + '/login/status' + userCookie;
+    // let login_status = Header + '/login/status?token=' + token;
+
+    // const phone = window.localStorage.getItem('phone');
+    // const password = window.localStorage.getItem('password');
+    // let phoneUrl = Header + '/login/cellphone?phone=' + phone + '&password=' + password;
+    // AjaxRequest_login(phoneUrl);
+    // function AjaxRequest_login(url) {
+    //     let xhr = new XMLHttpRequest();
+    //     xhr.onreadystatechange = function () {
+    //         if (xhr.readyState == 4) {
+    //             // alert(xhr.readyState);
+    //             if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
+    //                 var data = JSON.parse(xhr.responseText);
+    //                 console.log(data);
+    //                 // callback_login(data);
+    //             } else {
+    //                 alert("您的输入有误");
+    //             }
+                
+    //         }
+    //     }
+    //     xhr.open("GET", url, false);
+    //     xhr.send();
+    // }
 
 
 
 
     AjaxRequest_logined(login_status);
+
+
+    
     
 
     function AjaxRequest_logined(url) {
         let xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
-                // alert(xhr.readyState);
                 if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
-                    let data = JSON.parse(xhr.responseText);
-                    console.log(data);
-                    window.localStorage.setItem('logined', data.profile.userId);
-                    if(data.profile) {
-                        callback_logined(data);
+                    let result = JSON.parse(xhr.responseText);
+                    console.log(result);
+                    window.localStorage.setItem('logined', result.data.account.id);
+                    if(result.data.profile) {
+                        callback_logined(result.data);
                     } 
                 } else {
                     alert("Request was unsuccessful：" + xhr.status);
@@ -56,30 +83,48 @@ window.addEventListener('load', function() {
 <div class="nav_line"><a href="#"><i class="icon-download"></i></a></div>
 <div class="nav_line"><a href="#"><i class="icon-cog"></i></a></div>`
 
+
+        const searchMusicBtn = document.querySelector('.searchMusic');
+        console.log(searchMusicBtn);
+        searchMusicBtn.addEventListener('click', function() {
+            user_interface.style.display = 'none'; 
+            search_interface.style.display = 'block';
+            audio.pause();
+        })
+
+        const lyric_ul = document.querySelector('#lyric_ul');
+        const pic = document.querySelector('.pic');
+        pic.addEventListener('click', function() {
+            user_interface.style.display = 'block'; 
+            search_interface.style.display = 'none';
+            lyric_ul.innerHTML = '';
+            audio.pause();
+        })
+
         user_info_name.innerHTML += `<span>${data.profile.nickname}</span>`;
 
-        const followsUrl = defaultUrlHeader_1 + `/user/follows?uid=${data.profile.userId}`;
+        const followsUrl = Header + `/user/follows?uid=${data.profile.userId}` + userCookie;
         AjaxRequest_follows(followsUrl);
 
-        const followedsUrl = defaultUrlHeader_1 + `/user/followeds?uid=${data.profile.userId}`;
+        const followedsUrl = Header + `/user/followeds?uid=${data.profile.userId}`;
         AjaxRequest_followeds(followedsUrl);
 
-        const subcountUrl = defaultUrlHeader_1 + `/user/subcount` + userCookie;
+        const subcountUrl = Header + `/user/subcount` + userCookie;
         AjaxRequest_subcount(subcountUrl);
 
-        const levelUrl = defaultUrlHeader_1 + '/user/level' + userCookie;
+        const levelUrl = Header + '/user/level' + userCookie;
         AjaxRequest_level(levelUrl);
 
         user_info_content.innerHTML += `<img src=${data.profile.avatarUrl} alt="" class="user_avatar">`;
 
         const user_info_logout = document.querySelector('.user_info_logout');
-        const logoutUrl = defaultUrlHeader_1 + '/login/status' + userCookie;
+        const logoutUrl = Header + '/login/status' + userCookie;
         user_info_logout.addEventListener('click', function() {
             AjaxRequest_loginOut(logoutUrl);
         })
 
         const userId = window.localStorage.getItem("logined");
-        const recordUrl = defaultUrlHeader_1 + `/user/record?uid=${userId}&type=1`;
+        const recordUrl = Header + `/user/record?uid=${userId}&type=1&`;
         AjaxRequest_record(recordUrl);
     }
 
@@ -251,7 +296,7 @@ window.addEventListener('load', function() {
 
     function callback_loginedOut() {
         localStorage.clear();
-        let login_refresh = defaultUrlHeader_1 + '/login/refresh' + userCookie;
+        let login_refresh = Header + '/login/refresh';
         AjaxRequest_logined(login_refresh);
         window.location.replace('../HTML/index.html');
     }
@@ -277,9 +322,10 @@ window.addEventListener('load', function() {
     }
 
     function callback_record(data) {
-        let list_song_box = user_interface.querySelector('.list_song_box');
-        for(let i = 0; i < 20; i++) {
-            list_song_box.innerHTML += `<div class="song_item">
+        let list_song_box = document.querySelector('.list_song_box');
+        list_song_box.innerHTML = '';
+        for(let i = 0; i < data.weekData.length; i++) {
+                list_song_box.innerHTML += `<div class="song_item">
             <div class="song_name">${data.weekData[i].song.name}</div>
             <div class="song_ar">${data.weekData[i].song.ar[0].name}</div>
             <div class="song_operation">
@@ -290,7 +336,6 @@ window.addEventListener('load', function() {
             <span class="play_num">1次</span>
         </div>`;
         recordNum = i + 1;
-        console.log(recordNum);
         }
 
         // let song_item_height = document.querySelectorAll('.song_item')[0].offsetHeight;
@@ -302,49 +347,32 @@ window.addEventListener('load', function() {
                     musicFlag = true;
                 });
             }
-            console.log(scrollNum);
         })
-
-        // function scroll(scrollNum, callback) {
-        //     if(list_songs.scrollTop > 0) {
-        //         list_song_box.innerHTML += `<div class="song_item">
-        //         <div class="song_name">${data.allData[12+scrollNum].song.name}</div>
-        //         <div class="song_ar">${data.allData[12+scrollNum].song.ar[0].name}</div>
-        //         <div class="song_operation">
-        //             <i class="icon-heart1"></i>
-        //             <i class="song_item_add">+</i>
-        //             <i class="icon-file_download"></i>
-        //         </div>
-        //         <span class="play_num">1次</span>
-        //         </div>`;
-                
-        //         callback&&callback();
-        //         scrollNum++;
-        //         return scrollNum;
-        //     }
-        // }
         
         let song_item = user_interface.querySelectorAll('.song_item');
-        let songArray = JSON.parse(window.localStorage.getItem('record'));
-        console.log(songArray);
+        // let songArray = JSON.parse(window.localStorage.getItem('record'));
+        // console.log(songArray);
         for(let i = 0; i < song_item.length; i++) {
             song_item[i].setAttribute('index', i);
             song_item[i].addEventListener('click', function() {
                 let index = this.getAttribute('index');
-                musicPlay(songUrl(songArray[index].song.id))
+                audio.src = audio.src = `https://music.163.com/song/media/outer/url?id=${data.weekData[index].song.id}.mp3`;
+                // musicPlay(songUrl(data.weekData[index].song.id))
             })
         }
     }
 
     
 
-    function musicPlay(url) {
-        console.log(url);
-        audio.src = url;
-        console.log(audio);
-    }
+    // function musicPlay(url) {
+    //     console.log(url);
+    //     audio.src = url;
+    //     console.log(audio);
+    // }
 
     function songUrl(songId) {
-        return defaultUrlHeader_3 + `/song/media/outer/url?id=${songId}.mp3` ; 
+        return Header + `/song/media/outer/url?id=${songId}.mp3` ; 
     }
+
+    
 })
