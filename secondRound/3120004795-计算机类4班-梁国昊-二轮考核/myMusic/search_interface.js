@@ -5,9 +5,20 @@ window.addEventListener('load', function() {
     const search_interface = document.querySelector('.search_interface')
     const search_input = document.querySelector('.search_input');
     const list_songs = document.querySelector('.list_songs');
-    var list_song_box;
+    var list_song_box = search_interface.querySelector('.list_song_box');
+    var list_singer_box = search_interface.querySelector('.list_singer_box');
+    var list_playlist_box = search_interface.querySelector('.list_playlist_box');
+    const list_singerSong_box = document.querySelector('.list_singerSong_box');
+    const list_playlistSong_box = document.querySelector('.list_playlistSong_box')
     let player_container = document.querySelector('.player_container');
     const audio = document.querySelector('.progress_container').querySelector('audio');
+    const progress_container_songName = document.querySelector('.progress_container_songName');
+    const progress_container_singerName = document.querySelector('.progress_container_singerName');
+    const progress_container_time = document.querySelector('.progress_container_time');
+    const list_songs_inner = document.querySelectorAll('.list_songs_inner');
+    // let progress_inner = document.querySelector('.progress_inner');
+    // let progressBarWidth = document.querySelector('.progress_bar').offsetWidth;
+    var songRecord = [];
 
     const lyric_area = document.querySelector('.lyric_area')
     const lyric_ul = document.querySelector('#lyric_ul');
@@ -18,11 +29,11 @@ window.addEventListener('load', function() {
     const comment_btn = document.querySelector('.comment_btn');
     const userId = window.localStorage.getItem("logined");
     const search_tab_item = document.querySelectorAll('.search_tab_item');
-    const refreshUrl = Header + '/login/refresh' + userCookie;
 
     var initSearchBtn = true;
+    var lyricDragFlag = false;
 
-
+    console.log(list_songs.getElementsByTagName('div'));
 
 
     function initSearchAjax() {
@@ -46,28 +57,6 @@ window.addEventListener('load', function() {
 
 
     
-
-    function AjaxRequest_refresh(url) {
-        let xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4) {
-                // alert(xhr.readyState);
-                if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
-                    var data = JSON.parse(xhr.responseText);
-                    console.log(data);
-                    // callback_login(data);
-                } else {
-                    alert("您的输入有误");
-                }
-                
-            }
-        }
-        xhr.open("GET", url, false);
-        xhr.send();
-    }
-
-
-    
     search_tab_item[0].style.color = "#fff";
     for(let i = 0; i < search_tab_item.length; i++) {
         search_tab_item[i].setAttribute('index', i);
@@ -78,35 +67,68 @@ window.addEventListener('load', function() {
             this.style.color = "#fff";
             let index = this.getAttribute('index');
 
-            list_songs.innerHTML = '';
             list_song_box = search_interface.querySelector('.list_song_box');
+            list_singer_box = document.querySelector('.list_singer_box');
+            list_playlist_box = document.querySelector('.list_playlist_box');
+
+            switch(index) {
+                case '0':
+                    list_song_box.style.display = 'block';
+                    list_singer_box.style.display = 'none';
+                    list_playlist_box.style.display = 'none';
+                    for(let i = 0; i < list_songs_inner.length; i++) {
+                        list_songs_inner[i].style.display = 'none';
+                    }
+                    list_song_box.style.display = 'block';
+                    AjaxRequest_search_song(searchUrl(search_input.value,'&type=1'));
+                    break;
+                case '1':
+                    list_song_box.style.display = 'none';
+                    list_singer_box.style.display = 'block';
+                    list_playlist_box.style.display = 'none';
+                    for(let i = 0; i < list_songs_inner.length; i++) {
+                        list_songs_inner[i].style.display = 'none';
+                    }
+                    list_singer_box.style.display = 'block';
+                    AjaxRequest_search_singer(searchUrl(search_input.value,'&type=100'));
+                    break;
+                case '2':
+                    list_song_box.style.display = 'none';
+                    list_singer_box.style.display = 'none';
+                    list_playlist_box.style.display = 'block';
+                    for(let i = 0; i < list_songs_inner.length; i++) {
+                        list_songs_inner[i].style.display = 'none';
+                    }
+                    list_playlist_box.style.display = 'block';
+                    AjaxRequest_search_playlist(searchUrl(search_input.value,'&type=1000'));
+                    break;
+            }
+
+            // list_songs.innerHTML = '';
             
-            // search_tab_item[0].click();
-            search_input.value = '';
-            search_input.addEventListener('keyup', function() {
-                // console.log(search_input.value);
-                if(search_input.value != '') {
-                    list_song_box.innerHTML = '';
-                    // alert(index);
+            // search_input.value = '';
 
-                    setTimeout(function() {
-                        switch(index) {
-                            case '0':
-                            AjaxRequest_search_song(searchUrl(search_input.value,'&type=1'));
-                                break;
-                            case '1':
-                                AjaxRequest_search_singer(searchUrl(search_input.value,'&type=100'));
-                                break;
-                            case '2':
-                                AjaxRequest_search_playlist(searchUrl(search_input.value,'&type=1000'));
-                                break;
-                        }
-                    }, 3000)
-                }
-            })
 
-            // search_tab_item[0].click();
+        //     search_input.addEventListener('keyup', function() {
+        //         if(search_input.value != '') {
+        //             list_song_box.innerHTML = '';
+        //             // alert(index);
 
+        //             // setTimeout(function() {
+        //             //     switch(index) {
+        //             //         case '0':
+        //             //         AjaxRequest_search_song(searchUrl(search_input.value,'&type=1'));
+        //             //             break;
+        //             //         case '1':
+        //             //             AjaxRequest_search_singer(searchUrl(search_input.value,'&type=100'));
+        //             //             break;
+        //             //         case '2':
+        //             //             AjaxRequest_search_playlist(searchUrl(search_input.value,'&type=1000'));
+        //             //             break;
+        //             //     }
+        //             // }, 1100)
+        //         }
+        //     })
             
         })
     }
@@ -119,6 +141,239 @@ window.addEventListener('load', function() {
 
 
 
+// 搜索单曲 start 
+
+    function AjaxRequest_search_song(url) {
+        let xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    // alert(xhr.readyState);
+                    if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
+                        let data = JSON.parse(xhr.responseText);
+                        console.log(data);
+                        let searchArray = JSON.stringify(data);
+                        window.localStorage.setItem('search', searchArray);
+                        callback_searchSong(data);
+                    } else {
+                        alert("Request was unsuccessful：" + xhr.status);
+                    }
+                }
+            }
+            xhr.open("GET", url, true);
+            xhr.send();
+    }
+
+    function playerTime(curTime, durTime) {
+        if(durTime) {
+            return `${curTime / 60 > 9 ? parseInt(curTime / 60) : '0' + parseInt(curTime / 60)}:${curTime % 60 > 9 ? parseInt(curTime % 60) : '0' + parseInt(curTime % 60)}/${durTime / 60 > 9 ? parseInt(durTime / 60) : '0' + parseInt(durTime / 60)}:${durTime % 60> 9 ? parseInt(durTime % 60) : '0' + parseInt(durTime % 60)}`;
+        }
+    }
+
+    function callback_searchSong(data) {
+        // list_song_box.innerHTML = '';
+        for(let i = 0; i < 20 && i < data.result.songs.length; i++) {
+            list_song_box.innerHTML += `<div class="song_item">
+        <div class="song_order">${i+1}</div>
+        <div class="song_item_img"><img src="http://p1.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg"
+                alt=""></div>
+        <div class="song_item_name">${data.result.songs[i].name}&nbsp &nbsp    ${songDetail(data.result.songs[i].alias[0])}</div>
+        <div class="song_ar">${data.result.songs[i].artists[0].name}</div>
+    </div>`
+        }
+
+        let song_item = list_song_box.querySelectorAll('.song_item');
+        let searchData = JSON.parse(window.localStorage.getItem('search'));
+        for(let i = 0; i < song_item.length; i++) {
+            song_item[i].setAttribute('index', i);
+            song_item[i].addEventListener('click', function() {
+                lyric_area.style.display = 'block';                
+                let index = Number(this.getAttribute('index'));
+                // window.localStorage.removeItem('songRecord');
+                if(window.localStorage.getItem('songRecord')) {
+                    songRecord = JSON.parse(window.localStorage.getItem('songRecord'));//解析搜索记录并用新数组保存
+                    console.log(songRecord);
+                    songRecord.push(searchData.result.songs[index]); //将点击的歌曲推入新数组
+                    songRecord = clearMore(songRecord);//数组去重
+                    window.localStorage.removeItem('songRecord');//移除原数据
+                    window.localStorage.setItem('songRecord',JSON.stringify(songRecord))//储存新数组
+                } else {
+                    songRecord.push(searchData.result.songs[index]);
+                    console.log(songRecord);
+                    window.localStorage.setItem('songRecord',JSON.stringify(songRecord))
+                }
+
+                list_record(songRecord);
+                songRecord = [];
+                
+                audio.src = `https://music.163.com/song/media/outer/url?id=${searchData.result.songs[index].id}.mp3`;
+                progress_container_songName.innerHTML = `${searchData.result.songs[index].name}`;
+                progress_container_singerName.innerHTML = `${searchData.result.songs[index].artists[0].name}`;
+
+                
+                let lyricUrl = Header + '/lyric?id=' + searchData.result.songs[index].id;
+                AjaxRequest_lyric(lyricUrl,index);
+
+
+
+                let mv_con = JSON.parse(window.localStorage.getItem('search'));
+                if(mv_con.result.songs[index].mvid) {
+                    mv_btn.style.display = 'block';
+                    let mvUrl = Header + '/mv/url?id=' + mv_con.result.songs[index].mvid;
+                    AjaxRequest_mv(mvUrl);
+                }
+
+                let commentUrl = Header + `/comment/music?id=${searchData.result.songs[index].id}`;
+                comment_btn.style.display = 'block';
+                AjaxRequest_comment(commentUrl);
+            })
+        }
+    }
+
+// 搜索单曲 end 
+
+
+
+
+
+// 搜索歌手 start 
+
+    function AjaxRequest_search_singer(url) {
+        let xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    // alert(xhr.readyState);
+                    if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
+                        let data = JSON.parse(xhr.responseText);
+                        console.log(data);
+                        // let searchArray = JSON.stringify(data);
+                        // window.localStorage.setItem('search', searchArray);
+                        callback_searchSinger(data);
+                    } else {
+                        alert("Request was unsuccessful：" + xhr.status);
+                    }
+                }
+            }
+            xhr.open("GET", url, true);
+            xhr.send();
+    }
+
+    function callback_searchSinger(data) {
+        list_singer_box.innerHTML = ' ';
+        for(let i = 0; i < 20; i++) {
+            // console.log(i);
+            list_singer_box.innerHTML += `<div class="list_singer_item">
+            <img src=${search_SingerPic(data.result.artists[i].picUrl)} alt="">
+            <div class="list_singer_item_name">${data.result.artists[i].name}</div>
+        </div>`
+        }
+
+        let list_singer_item = list_singer_box.querySelectorAll('.list_singer_item');
+        for(let i = 0; i < list_singer_item.length; i++) {
+            list_singer_item[i].setAttribute('index', i);
+            list_singer_item[i].addEventListener('click', function() {
+                let index = this.getAttribute('index');
+                let singerSongUrl = Header + `/artist/top/song?id=${data.result.artists[index].id}`;
+                list_singer_box.style.display = 'none';
+                list_singerSong_box.style.display = 'block';
+                AjaxRequest_singerSong(singerSongUrl,data.result.artists[index].name);
+            })
+        }
+    }
+
+    function songDetail(result) {
+        if(result) {
+            return result;
+        } else {
+            return '';
+        }
+    }
+
+    function search_SingerPic(result) {
+        if(result != null) {
+            return result;
+        } else {
+            return `../image/u=2746384919,2327107392&fm=26&gp=0.jpg`;
+        }
+    }
+
+    function AjaxRequest_singerSong(url,name) {
+        let xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    // alert(xhr.readyState);
+                    if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
+                        let data = JSON.parse(xhr.responseText);
+                        console.log(data);
+                        let searchArray = JSON.stringify(data);
+                        window.localStorage.setItem('singerSong', searchArray);
+                        callback_singerSong(data, name);
+                    } else {
+                        alert("Request was unsuccessful：" + xhr.status);
+                    }
+                }
+            }
+            xhr.open("GET", url, true);
+            xhr.send();
+    }
+
+    function callback_singerSong(data, name) {
+        list_singerSong_box.innerHTML = ' ';
+        for(let i = 0; i < 30; i++) {
+            list_singerSong_box.innerHTML += `<div class="song_item">
+            <div class="song_order">${i+1}</div>
+            <div class="song_item_img"><img src=${data.songs[i].al.picUrl} alt=""></div>
+            <div class="song_item_name">${data.songs[i].name}&nbsp &nbsp &nbsp   ${songDetail(data.songs[i].alia)}</div>
+            <div class="song_ar">${name}</div>
+        </div>`;
+        }
+
+        let song_item = list_singerSong_box.querySelectorAll('.song_item');
+        let singerSong = JSON.parse(window.localStorage.getItem('singerSong'));
+        console.log(singerSong);
+        for(let i = 0; i < song_item.length; i++) {
+            song_item[i].setAttribute('index', i);
+        }
+
+        for(let i = 0; i < song_item.length; i++) {
+            song_item[i].addEventListener('click', function() {
+                let index = this.getAttribute('index');
+                audio.src = `https://music.163.com/song/media/outer/url?id=${singerSong.songs[index].id}.mp3`;
+
+                if(window.localStorage.getItem('songRecord')) {
+                    songRecord = JSON.parse(window.localStorage.getItem('songRecord'));//解析搜索记录并用新数组保存
+                    console.log(songRecord);
+                    songRecord.push(data.songs[index]); //将点击的歌曲推入新数组
+                    songRecord = clearMore(songRecord);//数组去重
+                    window.localStorage.removeItem('songRecord');//移除原数据
+                    window.localStorage.setItem('songRecord',JSON.stringify(songRecord))//储存新数组
+                } else {
+                    songRecord.push(data.songs[index]);
+                    console.log(songRecord);
+                    window.localStorage.setItem('songRecord',JSON.stringify(songRecord))
+                }
+
+                list_record(songRecord);
+                songRecord = [];
+
+                let lyricUrl = Header + '/lyric?id=' + singerSong.songs[index].id;
+
+                AjaxRequest_lyric(lyricUrl,index);
+                // let mv_con = JSON.parse(window.localStorage.getItem('singerSong'));
+                if(singerSong.songs[index].mv) {
+                    mv_btn.style.display = 'block';
+                    let mvUrl = Header + '/mv/url?id=' + singerSong.songs[index].mv;
+                    AjaxRequest_mv(mvUrl);
+                }
+
+                let commentUrl = Header + `/comment/music?id=${singerSong.songs[index].id}`;
+                comment_btn.style.display = 'block';
+                AjaxRequest_comment(commentUrl);
+            
+            })
+        }
+    }
+
+// 搜索歌手 end 
 
 
 
@@ -126,6 +381,8 @@ window.addEventListener('load', function() {
 
 
 
+
+// 搜索歌单 start 
 
 // 输入搜索内容发送请求
     function AjaxRequest_search_playlist(url) {
@@ -150,17 +407,17 @@ window.addEventListener('load', function() {
 
 // 传回搜索内容渲染到页面 发送点击的歌单请求
     function callback_searchPlaylist(data) {
-        list_song_box = search_interface.querySelector('.list_song_box');
-        list_song_box.innerHTML = ' ';
+        list_playlist_box = search_interface.querySelector('.list_playlist_box');
+        list_playlist_box.innerHTML = ' ';
         for(let i = 0; i < 20; i++) {
-            list_song_box.innerHTML += `<div class="list_playlist_item">
+            list_playlist_box.innerHTML += `<div class="list_playlist_item">
             <img src=${data.result.playlists[i].coverImgUrl} alt="">
             <div class="list_playlist_item_name">${data.result.playlists[i].name}</div>
             <div class="playlist_item_author">
                 <span>By: ${data.result.playlists[i].creator.nickname}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <span>播放次数：${data.result.playlists[i].playCount}</span>
             </div>
-            <div class="playlist_trackcount">${i > 9 ? i : '0' + i}</div>
+            <div class="playlist_trackcount">${i + 1 > 9 ? i + 1 : '0' + i + 1}</div>
         </div>`
         }
 
@@ -170,12 +427,14 @@ window.addEventListener('load', function() {
             list_playlist_item[i].addEventListener('click', function() {
                 let index = this.getAttribute('index');
                 let playlistUrl = Header + '/playlist/detail?id=' + data.result.playlists[index].id;
+                for(let i = 0; i < list_songs_inner.length; i++) {
+                    list_songs_inner[i].style.display = 'none';
+                }
+                list_playlistSong_box.style.display = 'block';
                 AjaxRequest_playlist_song(playlistUrl, index);
             })
         }
     }
-
-
 
 // 发送歌单详情请求
     function AjaxRequest_playlist_song(url, index) {
@@ -234,9 +493,9 @@ window.addEventListener('load', function() {
 
 
     function callback_playlist_song_play(data) {
-        list_song_box.innerHTML = ' ';
+        list_playlistSong_box.innerHTML = ' ';
         for(let i = 0; i < data.songs.length; i++) {
-            list_song_box.innerHTML += `<div class="song_item">
+            list_playlistSong_box.innerHTML += `<div class="song_item">
             <div class="song_order">${i+1}</div>
             <div class="song_item_img"><img src=${data.songs[i].al.picUrl} alt=""></div>
             <div class="song_item_name">${data.songs[i].name}&nbsp &nbsp &nbsp   ${songDetail(data.songs[i].alia)}</div>
@@ -244,7 +503,7 @@ window.addEventListener('load', function() {
         </div>`;
         }
 
-        let song_item = list_song_box.querySelectorAll('.song_item');
+        let song_item = list_playlistSong_box.querySelectorAll('.song_item');
         for(let i = 0; i < song_item.length; i++) {
             song_item[i].setAttribute('index', i);
         }
@@ -254,6 +513,21 @@ window.addEventListener('load', function() {
                 let index = this.getAttribute('index');
                 audio.src = `https://music.163.com/song/media/outer/url?id=${data.songs[index].id}.mp3`;
 
+                if(window.localStorage.getItem('songRecord')) {
+                    songRecord = JSON.parse(window.localStorage.getItem('songRecord'));//解析搜索记录并用新数组保存
+                    console.log(songRecord);
+                    songRecord.push(data.songs[index]); //将点击的歌曲推入新数组
+                    songRecord = clearMore(songRecord);//数组去重
+                    window.localStorage.removeItem('songRecord');//移除原数据
+                    window.localStorage.setItem('songRecord',JSON.stringify(songRecord))//储存新数组
+                } else {
+                    songRecord.push(data.songs[index]);
+                    console.log(songRecord);
+                    window.localStorage.setItem('songRecord',JSON.stringify(songRecord))
+                }
+
+                list_record(songRecord);
+                songRecord = [];
 
                 let lyricUrl = Header + '/lyric?id=' + data.songs[index].id;
 
@@ -275,6 +549,9 @@ window.addEventListener('load', function() {
             })
         }
     }
+
+// 搜索歌单 end 
+
 
 
 
@@ -299,192 +576,75 @@ window.addEventListener('load', function() {
     
 
 
-    function AjaxRequest_search_song(url) {
-        let xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState == 4) {
-                    // alert(xhr.readyState);
-                    if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
-                        let data = JSON.parse(xhr.responseText);
-                        console.log(data);
-                        let searchArray = JSON.stringify(data);
-                        window.localStorage.setItem('search', searchArray);
-                        callback_searchSong(data);
-                    } else {
-                        alert("Request was unsuccessful：" + xhr.status);
-                    }
+
+
+    function clearMore(arr) {
+        var i, j, len = arr.length;
+        for(i = 0; i < len; i++) {
+            for(j = i + 1; j < len; j++) {
+                if(arr[i].id == arr[j].id) {
+                    arr.splice(j, 1);
+                    len--;
+                    j--;
                 }
             }
-            xhr.open("GET", url, true);
-            xhr.send();
+        }
+        return arr;
     }
 
-    function callback_searchSong(data) {
-        list_song_box.innerHTML = '';
-        for(let i = 0; i < 20 && i < data.result.songs.length; i++) {
-            list_song_box.innerHTML += `<div class="song_item">
-        <div class="song_order">${i+1}</div>
-        <div class="song_item_img"><img src="http://p1.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg"
-                alt=""></div>
-        <div class="song_item_name">${data.result.songs[i].name}&nbsp &nbsp    ${songDetail(data.result.songs[i].alias[0])}</div>
-        <div class="song_ar">${data.result.songs[i].artists[0].name}</div>
-    </div>`
-        }
-
-        let song_item = list_song_box.querySelectorAll('.song_item');
-        let searchData = JSON.parse(window.localStorage.getItem('search'));
-        for(let i = 0; i < song_item.length; i++) {
-            song_item[i].setAttribute('index', i);
-            song_item[i].addEventListener('click', function() {                
-                let index = Number(this.getAttribute('index'));
-                audio.src = `https://music.163.com/song/media/outer/url?id=${searchData.result.songs[index].id}.mp3`;
-
-                const recordUrl = Header + `/user/record?uid=${userId}&type=1&` + userCookie;
-                AjaxRequest_record(recordUrl);
-                AjaxRequest_refresh(refreshUrl);
-
-                
-                let lyricUrl = Header + '/lyric?id=' + searchData.result.songs[index].id;
-
-                AjaxRequest_lyric(lyricUrl,index);
-
-
-
-                let mv_con = JSON.parse(window.localStorage.getItem('search'));
-                if(mv_con.result.songs[index].mvid) {
-                    mv_btn.style.display = 'block';
-                    let mvUrl = Header + '/mv/url?id=' + mv_con.result.songs[index].mvid;
-                    AjaxRequest_mv(mvUrl);
-                }
-
-                let commentUrl = Header + `/comment/music?id=${searchData.result.songs[index].id}`;
-                comment_btn.style.display = 'block';
-                AjaxRequest_comment(commentUrl);
-            })
-        }
-    }
-
-    function AjaxRequest_search_singer(url) {
-        let xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState == 4) {
-                    // alert(xhr.readyState);
-                    if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
-                        let data = JSON.parse(xhr.responseText);
-                        console.log(data);
-                        // let searchArray = JSON.stringify(data);
-                        // window.localStorage.setItem('search', searchArray);
-                        callback_searchSinger(data);
-                    } else {
-                        alert("Request was unsuccessful：" + xhr.status);
-                    }
-                }
-            }
-            xhr.open("GET", url, true);
-            xhr.send();
-    }
-
-    function callback_searchSinger(data) {
-        list_song_box.innerHTML = ' ';
-        for(let i = 0; i < 20; i++) {
-            // console.log(i);
-            list_song_box.innerHTML += `<div class="list_singer_item">
-            <img src=${search_SingerPic(data.result.artists[i].picUrl)} alt="">
-            <div class="list_singer_item_name">${data.result.artists[i].name}</div>
-        </div>`
-        }
-
-        let list_singer_item = list_song_box.querySelectorAll('.list_singer_item');
-        for(let i = 0; i < list_singer_item.length; i++) {
-            list_singer_item[i].setAttribute('index', i);
-            list_singer_item[i].addEventListener('click', function() {
-                let index = this.getAttribute('index');
-                let singerSongUrl = Header + `/artist/top/song?id=${data.result.artists[index].id}`;
-                AjaxRequest_singerSong(singerSongUrl,data.result.artists[index].name);
-            })
-        }
-    }
-
-    function songDetail(result) {
-        if(result) {
-            return result;
+    function singerName(item) {
+        if(item) {
+            return item;
         } else {
             return '';
         }
     }
 
-    function search_SingerPic(result) {
-        if(result != null) {
-            return result;
-        } else {
-            return `../image/u=2746384919,2327107392&fm=26&gp=0.jpg`;
-        }
-    }
-
-    function callback_singerSong(data, name) {
-        list_song_box.innerHTML = ' ';
-        for(let i = 0; i < 30; i++) {
-            list_song_box.innerHTML += `<div class="song_item">
-            <div class="song_order">${i+1}</div>
-            <div class="song_item_img"><img src=${data.songs[i].al.picUrl} alt=""></div>
-            <div class="song_item_name">${data.songs[i].name}&nbsp &nbsp &nbsp   ${songDetail(data.songs[i].alia)}</div>
-            <div class="song_ar">${name}</div>
+    function list_record(data) {
+        // let data = JSON.parse(window.localStorage.getItem('songRecord'))
+        let list_song_box = document.querySelector('.list_song_box');
+        data = data.reverse();
+        list_song_box.innerHTML = '';
+        for(let i = 0; i < data.length; i++) {
+            if(data[i].artists) {
+                list_song_box.innerHTML += `<div class="song_item">
+            <div class="song_name">${data[i].name}</div>
+            <div class="song_ar">${data[i].artists[0].name}</div>
+            <div class="song_operation">
+                <i class="icon-heart1"></i>
+                <i class="song_item_add">+</i>
+                <i class="icon-file_download"></i>
+            </div>
+            
         </div>`;
+            } else {
+                list_song_box.innerHTML += `<div class="song_item">
+            <div class="song_name">${data[i].name}</div>
+            <div class="song_ar">${data[i].ar[0].name}</div>
+            <div class="song_operation">
+                <i class="icon-heart1"></i>
+                <i class="song_item_add">+</i>
+                <i class="icon-file_download"></i>
+            </div>
+            
+        </div>`;
+            }
+            
         }
 
-        let song_item = list_song_box.querySelectorAll('.song_item');
-        let singerSong = JSON.parse(window.localStorage.getItem('singerSong'));
-        console.log(singerSong);
+            
+        
+        let song_item = user_interface.querySelectorAll('.song_item');
         for(let i = 0; i < song_item.length; i++) {
             song_item[i].setAttribute('index', i);
-        }
-
-        for(let i = 0; i < song_item.length; i++) {
             song_item[i].addEventListener('click', function() {
                 let index = this.getAttribute('index');
-                audio.src = `https://music.163.com/song/media/outer/url?id=${singerSong.songs[index].id}.mp3`;
-
-
-                let lyricUrl = Header + '/lyric?id=' + singerSong.songs[index].id;
-
-                AjaxRequest_lyric(lyricUrl,index);
-
-
-
-                // let mv_con = JSON.parse(window.localStorage.getItem('singerSong'));
-                if(singerSong.songs[index].mv) {
-                    mv_btn.style.display = 'block';
-                    let mvUrl = Header + '/mv/url?id=' + singerSong.songs[index].mv;
-                    AjaxRequest_mv(mvUrl);
-                }
-
-                let commentUrl = Header + `/comment/music?id=${singerSong.songs[index].id}`;
-                comment_btn.style.display = 'block';
-                AjaxRequest_comment(commentUrl);
-            
+                audio.src = audio.src = `https://music.163.com/song/media/outer/url?id=${data[index].id}.mp3`;
+                // musicPlay(songUrl(data[index].id))
             })
         }
     }
 
-    function AjaxRequest_singerSong(url,name) {
-        let xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState == 4) {
-                    // alert(xhr.readyState);
-                    if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
-                        let data = JSON.parse(xhr.responseText);
-                        console.log(data);
-                        let searchArray = JSON.stringify(data);
-                        window.localStorage.setItem('singerSong', searchArray);
-                        callback_singerSong(data, name);
-                    } else {
-                        alert("Request was unsuccessful：" + xhr.status);
-                    }
-                }
-            }
-            xhr.open("GET", url, true);
-            xhr.send();
-    }
 
     
 
@@ -559,19 +719,23 @@ window.addEventListener('load', function() {
         }
 
         let heigh = lyric_li[0].offsetHeight;
-        console.log(heigh);
-
-        
-
-
+        let progress_inner = document.querySelector('.progress_inner');
+        let progressBarWidth = document.querySelector('.progress_bar').offsetWidth;
+        let progress_go = document.querySelector('.progress_go');
         audio.ontimeupdate = function(e) {
-            for(let i = 0; i < result.length; i++) {
-                if(this.currentTime>result[i][0]) {
-                    lyric_ul.style.transform = `translateY(${-heigh*i + 'px'})`;
-                    if(lyric_li[i - 1]) {
+            progress_container_time.innerHTML = playerTime(audio.currentTime, audio.duration);
+            progress_inner.style.left = progressBarWidth * audio.currentTime / audio.duration + 'px';
+            progress_go.style.width = progress_inner.style.left;
 
-                        lyric_li[i - 1].style.backgroundColor = 'rgba(255, 255, 255, 0)';
-                        lyric_li[i - 1].style.color = '#fff';
+            for(let i = 0; i < result.length; i++) {
+                if(this.currentTime > result[i][0]) {
+                    // lyricDrag(lyric_ul,lyric_area);
+                    if(lyricDragFlag == false) {
+                        lyric_ul.style.top = `${-heigh*i + 'px'}`;
+                    }
+                    for(let k = 0; k < lyric_li.length; k++) {
+                        lyric_li[k].style.backgroundColor = 'rgba(255, 255, 255, 0)';
+                        lyric_li[k].style.color = '#fff';
                     } 
                     lyric_li[i].style.backgroundColor = 'rgba(255, 255, 255, 0.4)';
                     lyric_li[i].style.color = 'chartreuse';
@@ -580,6 +744,33 @@ window.addEventListener('load', function() {
         }
 
         
+    }
+
+
+    function lyricDrag(item1, item2) {
+        item1.onmousedown = function(e) {
+            lyricDragFlag = true;
+
+            var dargY = item1.offsetTop -  e.clientY;
+            item2.onmousemove = function(e) {
+                let top = dargY - e.clientY;
+                if(top >= 0) {
+                    top = 0;
+                } else if(top <= -item1.offsetHeight) {
+                    top = -item1.offsetHeight
+                }
+                console.log(top);
+                item1.style.top = top + 'px';
+            }
+        }
+    
+        item2.onmouseup = function(e) {
+            this.onmousedown = null;
+            this.onmousemove = null;
+            lyricDragFlag = false;
+
+            // audio.currentTime = audio.duration * progress_inner.offsetLeft / progress_bar.offsetWidth;
+        }
     }
     
 
@@ -740,66 +931,7 @@ window.addEventListener('load', function() {
 
 
 
-
-    function AjaxRequest_record(url) {
-        let xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4) {
-                // alert(xhr.readyState);
-                if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
-                    let data = JSON.parse(xhr.responseText);
-                    console.log(data);
-                    // let songArray = JSON.stringify(data.weekData);
-                    // window.localStorage.setItem('record', songArray);
-                    callback_record(data);
-                } else {
-                    alert("Request was unsuccessful：" + xhr.status);
-                }
-            }
-        }
-        xhr.open("GET", url, true);
-        xhr.send();
-    }
-
-    function callback_record(data) {
-        let list_song_box = document.querySelector('.list_song_box');
-        list_song_box.innerHTML = '';
-        for(let i = 0; i < data.weekData.length; i++) {
-            list_song_box.innerHTML += `<div class="song_item">
-            <div class="song_name">${data.weekData[i].song.name}</div>
-            <div class="song_ar">${data.weekData[i].song.ar[0].name}</div>
-            <div class="song_operation">
-                <i class="icon-heart1"></i>
-                <i class="song_item_add">+</i>
-                <i class="icon-file_download"></i>
-            </div>
-            <span class="play_num">1次</span>
-        </div>`;
-        recordNum = i + 1;
-        }
-
-        // let song_item_height = document.querySelectorAll('.song_item')[0].offsetHeight;
-        // var musicFlag = true;
-        // list_songs.addEventListener('scroll', function() {
-        //     if(musicFlag == true) {
-        //         musicFlag = false;
-        //         scrollNum = scroll(scrollNum, function() {
-        //             musicFlag = true;
-        //         });
-        //     }
-        // })
-        
-        let song_item = user_interface.querySelectorAll('.song_item');
-        // let songArray = JSON.parse(window.localStorage.getItem('record'));
-        // console.log(songArray);
-        for(let i = 0; i < song_item.length; i++) {
-            song_item[i].setAttribute('index', i);
-            song_item[i].addEventListener('click', function() {
-                let index = this.getAttribute('index');
-                musicPlay(songUrl(data.weekData[index].song.id))
-            })
-        }
-    }
+    
     
 })
 

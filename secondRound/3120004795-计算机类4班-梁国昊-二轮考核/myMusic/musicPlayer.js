@@ -11,6 +11,17 @@ window.addEventListener('load', function() {
     const search_interface = document.querySelector('.search_interface');
     const list_songs = user_interface.querySelector('.list_songs');
     const audio = document.querySelector('.progress_container').querySelector('audio');
+    const lyric_area = document.querySelector('.lyric_area');
+    const progress_container_songName = document.querySelector('.progress_container_songName');
+    const progress_container_singerName = document.querySelector('.progress_container_singerName');
+    const progress_container_time = document.querySelector('.progress_container_time');
+    let player_container = document.querySelector('.player_container');
+    const mv_btn = document.querySelector('.mv_btn');
+    const comment_btn = document.querySelector('.comment_btn');
+    const comment_interface = document.querySelector('.comment_interface');
+    var lyricDragFlag = false;
+
+
     var scrollNum = 0;
     const token = window.localStorage.getItem('token');
 
@@ -58,7 +69,7 @@ window.addEventListener('load', function() {
             if (xhr.readyState == 4) {
                 if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
                     let result = JSON.parse(xhr.responseText);
-                    console.log(result);
+                    // console.log(result);
                     window.localStorage.setItem('logined', result.data.account.id);
                     if(result.data.profile) {
                         callback_logined(result.data);
@@ -85,11 +96,13 @@ window.addEventListener('load', function() {
 
 
         const searchMusicBtn = document.querySelector('.searchMusic');
-        console.log(searchMusicBtn);
+        // console.log(searchMusicBtn);
         searchMusicBtn.addEventListener('click', function() {
             user_interface.style.display = 'none'; 
             search_interface.style.display = 'block';
-            audio.pause();
+            lyric_area.style.display = 'block';
+            
+            // audio.pause();
         })
 
         const lyric_ul = document.querySelector('#lyric_ul');
@@ -97,8 +110,10 @@ window.addEventListener('load', function() {
         pic.addEventListener('click', function() {
             user_interface.style.display = 'block'; 
             search_interface.style.display = 'none';
-            lyric_ul.innerHTML = '';
-            audio.pause();
+            lyric_area.style.display = 'none';
+            // mv_btn.style.display = 'none';
+            // comment_btn.style.display = 'none';
+            // audio.pause();
         })
 
         user_info_name.innerHTML += `<span>${data.profile.nickname}</span>`;
@@ -123,21 +138,317 @@ window.addEventListener('load', function() {
             AjaxRequest_loginOut(logoutUrl);
         })
 
-        const userId = window.localStorage.getItem("logined");
-        const recordUrl = Header + `/user/record?uid=${userId}&type=1&`;
-        AjaxRequest_record(recordUrl);
+
+        let songRecord = JSON.parse(window.localStorage.getItem('songRecord'));
+        if(songRecord) {
+            record(songRecord);
+        }
+
+        // for(let i = 0; i < )
+        
+        // const userId = window.localStorage.getItem("logined");
+        // const recordUrl = Header + `/user/record?uid=${userId}&type=1&`;
+        // AjaxRequest_record(recordUrl);
+    }
+
+    function singerName(item) {
+        if(item) {
+            return item;
+        } else {
+            return '';
+        }
+    }
+
+    function record(data) {
+        if(data.length) {
+            data = data.reverse();
+        let list_song_box = document.querySelector('.list_song_box');
+        list_song_box.innerHTML = '';
+        for(let i = 0; i < data.length; i++) {
+            if(data[i].artists) {
+                list_song_box.innerHTML += `<div class="song_item">
+            <div class="song_name">${data[i].name}</div>
+            <div class="song_ar">${data[i].artists[0].name}</div>
+            <div class="song_operation">
+                <i class="icon-heart1"></i>
+                <i class="song_item_add">+</i>
+                <i class="icon-file_download"></i>
+            </div>
+            
+        </div>`;
+            } else {
+                list_song_box.innerHTML += `<div class="song_item">
+            <div class="song_name">${data[i].name}</div>
+            <div class="song_ar">${data[i].ar[0].name}</div>
+            <div class="song_operation">
+                <i class="icon-heart1"></i>
+                <i class="song_item_add">+</i>
+                <i class="icon-file_download"></i>
+            </div>
+            
+        </div>`;
+            }
+        recordNum = i + 1;
+        }
+        
+        let song_item = user_interface.querySelectorAll('.song_item');
+        let progress_inner = document.querySelector('.progress_inner');
+        let progressBarWidth = document.querySelector('.progress_bar').offsetWidth;
+        const progress_go = document.querySelector('.progress_go');
+
+        audio.ontimeupdate = function() {
+            progress_inner.style.left = progressBarWidth * audio.currentTime / audio.duration + 'px';
+            progress_go.style.width = progress_inner.style.left;
+        }
+
+        // let songArray = JSON.parse(window.localStorage.getItem('record'));
+        // console.log(songArray);
+        for(let i = 0; i < song_item.length; i++) {
+            song_item[i].setAttribute('index', i);
+            song_item[i].addEventListener('click', function() {
+                for(let i = 0; i < song_item.length; i++) {
+                    song_item[i].className = 'song_item';
+                }
+                this.className = 'song_item song_item_on';
+                // this.style.backgroundColor = 'white'
+                let index = this.getAttribute('index');
+                audio.src = audio.src = `https://music.163.com/song/media/outer/url?id=${data[index].id}.mp3`;
+                // musicPlay(songUrl(data.weekData[index].song.id))
+
+                progress_container_songName.innerHTML = `${data[index].name}`;
+                progress_container_singerName.innerHTML = `${data[index].artists[0].name}`;
+                
+                lyric_area.style.display = 'none';
+                let lyricUrl = Header + '/lyric?id=' + data[index].id;
+                AjaxRequest_lyric(lyricUrl,index);
+
+
+                // let mv_con = JSON.parse(window.localStorage.getItem('search'));
+                if(data[index].mvid) {
+                    mv_btn.style.display = 'block';
+                    let mvUrl = Header + '/mv/url?id=' + data[index].mvid;
+                    AjaxRequest_mv(mvUrl);
+                }
+
+                let commentUrl = Header + `/comment/music?id=${data[index].id}`;
+                comment_btn.style.display = 'block';
+                AjaxRequest_comment(commentUrl);
+            })
+        }
+
+        
+        }
+        
     }
 
 
 
     const searchMusic = document.querySelector('.searchMusic');
 
+    function AjaxRequest_lyric(url,index) {
+        let xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    // alert(xhr.readyState);
+                    if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
+                        let data = JSON.parse(xhr.responseText);
+                        console.log(data);
+                        callback_lyric(data.lrc.lyric, index);
+                    } else {
+                        alert("Request was unsuccessful：" + xhr.status);
+                    }
+                }
+            }
+            xhr.open("GET", url, false);
+            xhr.send();
+    }
+
+    function callback_lyric(data, songIndex) {
+        var lines = data.split('\n');
+        pattern = /\[\d{2}:\d{2}.(\d{2}|\d{3})\]/g;
+        result = [];
+        // while (!pattern.test(lines[0])) {
+        //     lines = lines.slice(1);
+        // };
+        // let lyric_length = lines.length;
+        // for(let i = 0; i <lyric_length; i++) {
+        //     // console.log(lines[i]);
+        //     if(pattern.test(lines[i])) {
+        //         console.log(lines[i]);
+        //         lines = lines.slice(i+1);
+        //     }
+        // }
+        
+        lines[lines.length - 1].length === 0 && lines.pop();
+        lines.forEach(function (v /*数组元素值*/ , i /*元素索引*/ , a /*数组本身*/ ) {
+            //提取出时间[xx:xx.xx]
+            var time = v.match(pattern),
+                //提取歌词
+
+                value = v.replace(pattern, '');
+
+            time.forEach(function (v1, i1, a1) {
+                //去掉时间里的中括号得到xx:xx.xx
+                var t = v1.slice(1, -1).split(':');
+                //将结果压入最终数组
+                result.push([parseInt(t[0], 10) * 60 + parseFloat(t[1]), value]);
+            });
+        });
+
+        result.sort(function (a, b) {
+            return a[0] - b[0];
+        });
+        // console.log(result);
+
+
+
+        lyric_ul.innerHTML = '';
+        
+        // let lyric = Array.from(JSON.parse(window.localStorage.getItem('lyric')).split('\n'));
+        for(let i = 0; i < result.length; i++) {
+            lyric_ul.innerHTML += `<li class="lyric_li">${result[i][1]}</li>`;
+            
+        }
+
+        let lyric_li = lyric_ul.querySelectorAll('.lyric_li');
+        for(let i = 0; i < result.length; i++) {
+            lyric_li[i].setAttribute('index', i);
+        }
+
+        // console.log(lyric_li[0]);
+        // let heigh = lyric_li[0].offsetHeight;
+        let heigh = 80;
+
+        let progress_inner = document.querySelector('.progress_inner');
+        let progressBarWidth = document.querySelector('.progress_bar').offsetWidth;
+        let progress_go = document.querySelector('.progress_go');
+        audio.ontimeupdate = function(e) {
+            progress_container_time.innerHTML = playerTime(audio.currentTime, audio.duration);
+            progress_inner.style.left = progressBarWidth * audio.currentTime / audio.duration + 'px';
+            progress_go.style.width = progress_inner.style.left;
+
+            for(let i = 0; i < result.length; i++) {
+                if(this.currentTime > result[i][0]) {
+                    // lyricDrag(lyric_ul,lyric_area);
+                    console.log(heigh,i);
+                    lyric_ul.style.top = `${-heigh*i + 'px'}`;
+                    console.log(lyric_ul.style.top);
+                    for(let k = 0; k < lyric_li.length; k++) {
+                        lyric_li[k].style.backgroundColor = 'rgba(255, 255, 255, 0)';
+                        lyric_li[k].style.color = '#fff';
+                    } 
+                    lyric_li[i].style.backgroundColor = 'rgba(255, 255, 255, 0.4)';
+                    lyric_li[i].style.color = 'chartreuse';
+                }
+            }
+        }
+
+        
+    }
+
+
+
+    function playerTime(curTime, durTime) {
+        if(durTime) {
+            return `${curTime / 60 > 9 ? parseInt(curTime / 60) : '0' + parseInt(curTime / 60)}:${curTime % 60 > 9 ? parseInt(curTime % 60) : '0' + parseInt(curTime % 60)}/${durTime / 60 > 9 ? parseInt(durTime / 60) : '0' + parseInt(durTime / 60)}:${durTime % 60> 9 ? parseInt(durTime % 60) : '0' + parseInt(durTime % 60)}`;
+        }
+    }
 
 
 
 
+    function AjaxRequest_mv(url) {
+        let xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+                // alert(xhr.readyState);
+                if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
+                    let result = JSON.parse(xhr.responseText);
+                    console.log(result);
+                    callback_mv(result.data.url)
+                } else {
+                    alert("Request was unsuccessful：" + xhr.status);
+                }
+            }
+        }
+        xhr.open("GET", url, true);
+        xhr.send();
+    }
 
+    function callback_mv(data) {
+        let video_play = document.querySelector('.video_play');
+        let main_container = document.querySelector('.main-container');
+        let video = video_play.querySelector('video');
+        let back = document.querySelector('.back');
+        mv_btn.addEventListener('click', function() {
+            main_container.style.display = 'none';
+            video_play.style.display = 'block';
+            lyric_area.style.display = 'none';
+            audio.pause();
+            player_container.style.display = 'none';
+            video.src = `${data}`;
+        });
 
+        back.addEventListener('click', function() {
+            main_container.style.display = 'block';
+            video_play.style.display = 'none';
+            player_container.style.display = 'block';
+            lyric_area.style.display = 'block';
+            video.pause();
+            video.src = '';
+        })
+        
+    }
+
+    function AjaxRequest_comment(url) {
+        let xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+                // alert(xhr.readyState);
+                if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
+                    let result = JSON.parse(xhr.responseText);
+                    console.log(result);
+                    callback_comment(result)
+                } else {
+                    alert("Request was unsuccessful：" + xhr.status);
+                }
+            }
+        }
+        xhr.open("GET", url, true);
+        xhr.send();
+    }
+
+    function callback_comment(data) {
+        comment_btn.addEventListener('click', function() {
+            search_interface.style.display = 'none';
+            comment_interface.style.display = 'block';
+            list_comment_box.innerHTML = '';
+            for(let i = 0; i < data.comments.length; i++) {
+                let time = timeSwitch(new Date(data.comments[i].time));
+                // time = time.split(' ');
+                list_comment_box.innerHTML += `<div class="list_comment_item">
+                <img src=${data.comments[i].user.avatarUrl} alt="">
+                <div class="comment_con">
+                    <div class="commenter_msg">
+                        <b>${data.comments[i].user.nickname}</b>
+                        <span>${time}</span>
+                    </div>
+                    <div class="comment_text">
+                        ${data.comments[i].content}
+                    </div>
+                </div>
+            </div>`;
+            console.log(time);
+            console.log(typeof time);
+            }
+        })
+
+        let back = document.querySelector('.back');
+        back.addEventListener('click', function() {
+            search_interface.style.display = 'block';
+            comment_interface.style.display = 'none';
+        })
+    }
 
 
 
@@ -175,7 +486,7 @@ window.addEventListener('load', function() {
                 // alert(xhr.readyState);
                 if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
                     let data = JSON.parse(xhr.responseText);
-                    console.log(data);
+                    // console.log(data);
                     window.localStorage.setItem('follows', data);
                     callback_follows(data);
                 } else {
@@ -203,7 +514,7 @@ window.addEventListener('load', function() {
                 // alert(xhr.readyState);
                 if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
                     let data = JSON.parse(xhr.responseText);
-                    console.log(data);
+                    // console.log(data);
                     window.localStorage.setItem('followeds', data);
                     callback_followeds(data);
                 } else {
@@ -229,7 +540,7 @@ window.addEventListener('load', function() {
                 // alert(xhr.readyState);
                 if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
                     let data = JSON.parse(xhr.responseText);
-                    console.log(data);
+                    // console.log(data);
                     window.localStorage.setItem('subcount', data);
                     callback_subcount(data);
                 } else {
@@ -258,7 +569,7 @@ window.addEventListener('load', function() {
                 // alert(xhr.readyState);
                 if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
                     let data = JSON.parse(xhr.responseText);
-                    console.log(data);
+                    // console.log(data);
                     window.localStorage.setItem('level', data);
                     callback_level(data);
                 } else {
@@ -283,7 +594,7 @@ window.addEventListener('load', function() {
                 // alert(xhr.readyState);
                 if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
                     let data = JSON.parse(xhr.responseText);
-                    console.log(data);
+                    // console.log(data);
                     callback_loginedOut();
                 } else {
                     alert("Request was unsuccessful：" + xhr.status);
@@ -295,7 +606,8 @@ window.addEventListener('load', function() {
     }
 
     function callback_loginedOut() {
-        localStorage.clear();
+        window.localStorage.clear();
+        // window.localStorage.removeItem('cookie');
         let login_refresh = Header + '/login/refresh';
         AjaxRequest_logined(login_refresh);
         window.location.replace('../HTML/index.html');
@@ -321,46 +633,7 @@ window.addEventListener('load', function() {
         xhr.send();
     }
 
-    function callback_record(data) {
-        let list_song_box = document.querySelector('.list_song_box');
-        list_song_box.innerHTML = '';
-        for(let i = 0; i < data.weekData.length; i++) {
-                list_song_box.innerHTML += `<div class="song_item">
-            <div class="song_name">${data.weekData[i].song.name}</div>
-            <div class="song_ar">${data.weekData[i].song.ar[0].name}</div>
-            <div class="song_operation">
-                <i class="icon-heart1"></i>
-                <i class="song_item_add">+</i>
-                <i class="icon-file_download"></i>
-            </div>
-            <span class="play_num">1次</span>
-        </div>`;
-        recordNum = i + 1;
-        }
-
-        // let song_item_height = document.querySelectorAll('.song_item')[0].offsetHeight;
-        var musicFlag = true;
-        list_songs.addEventListener('scroll', function() {
-            if(musicFlag == true) {
-                musicFlag = false;
-                scrollNum = scroll(scrollNum, function() {
-                    musicFlag = true;
-                });
-            }
-        })
-        
-        let song_item = user_interface.querySelectorAll('.song_item');
-        // let songArray = JSON.parse(window.localStorage.getItem('record'));
-        // console.log(songArray);
-        for(let i = 0; i < song_item.length; i++) {
-            song_item[i].setAttribute('index', i);
-            song_item[i].addEventListener('click', function() {
-                let index = this.getAttribute('index');
-                audio.src = audio.src = `https://music.163.com/song/media/outer/url?id=${data.weekData[index].song.id}.mp3`;
-                // musicPlay(songUrl(data.weekData[index].song.id))
-            })
-        }
-    }
+    
 
     
 

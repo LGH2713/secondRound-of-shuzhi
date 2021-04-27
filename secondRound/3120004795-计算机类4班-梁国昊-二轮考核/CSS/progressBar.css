@@ -1,0 +1,76 @@
+.progress_container {
+    width: 55%;
+    height: 80%;
+    /* background-color: silver; */
+    text-align: center;
+    line-height:71px;
+}
+
+.progress_bar {
+    position: relative;
+    display: inline-block;
+    width: 80%;
+    height: 5px;
+    background-color: skyblue;
+}
+
+.progress_inner {
+    position: absolute;
+    top: -2px;
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+}
+
+.progress_go {
+    position: absolute;
+    width: 0;
+    height: 5px;
+    background-color: orange;
+}
+
+.record_detail {
+    position: absolute;
+    top: 19px;
+    left: 300px;
+    height: 20px;
+
+}
+
+.progress_container_songName,
+.progress_container_singerName,
+.progress_container_time {
+    color: #ffffff;
+    height: 20px;
+    user-select: none;
+}
+
+.progress_container_songName,
+.progress_container_singerName {
+    float: left;
+}
+
+.progress_container_songName {
+    margin-right: 20px;
+    font-size: 20px;
+    top: -20px;
+    left: 85px;
+}
+
+.progress_container_singerName {
+    top: -20px;
+    left: 170px;
+    margin-top: 5px;
+}
+
+.progress_container_time {
+    position: absolute;
+
+    top: -20px;
+    right: 85px;
+}

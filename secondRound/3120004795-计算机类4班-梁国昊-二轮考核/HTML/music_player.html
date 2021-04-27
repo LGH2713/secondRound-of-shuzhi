@@ -9,9 +9,12 @@
     <link rel="stylesheet" href="../CSS/base.css">
     <link rel="stylesheet" href="../CSS/musicPlayer.css">
     <link rel="stylesheet" href="../icomoon/style.css">
+    <link rel="stylesheet" href="../CSS/progressBar.css">
     <script src="../myMusic/musicPlayer.js"></script>
     <script src="../myMusic/search_interface.js"></script>
     <script src="../myMusic/playerStyle.js"></script>
+
+
 
 </head>
 
@@ -37,10 +40,15 @@
                 </div>
                 <div class="user_right_list">
                     <div class="right_select_tab_list" style="display: block;">
-                        <div class="right_select_tab_list_item"><i class="icon-calendar"></i></div>
-                        <div class="right_select_tab_list_item"><i class="icon-history"></i></div>
-                        <div class="right_select_tab_list_item"><i class="icon-target-arrow1"></i></div>
-                        <div class="right_select_tab_list_item"><i class="icon-heart2"></i></div>
+                        <div class="right_select_tab_list_item"><i class="icon-calendar">
+                                <p>最近常听</p>
+                            </i></div>
+                        <div class="right_select_tab_list_item"><i class="icon-target-arrow">
+                                <p>关注</p>
+                            </i></div>
+                        <div class="right_select_tab_list_item"><i class="icon-heart2">
+                                <p>心动歌曲</p>
+                            </i></div>
                     </div>
                     <div class="list_songs" style="display: block;">
                         <div class="list_song_box"></div>
@@ -58,7 +66,22 @@
                     <div class="search_tab_item search_playlist">歌单</div>
                 </div>
                 <div class="list_songs">
-                    <div class="list_song_box">
+                    <div class="list_song_box list_songs_inner" style="display: block;">
+                        <div class="song_item">
+                            <div class="song_order">1</div>
+                            <div class="song_item_img"><img src="../image/u=2746384919,2327107392&fm=26&gp=0.jpg"
+                                    alt=""></div>
+                            <div class="song_item_name">A</div>
+                            <div class="song_ar">123456</div>
+                        </div>
+                    </div>
+
+                    <div class="list_singer_box list_songs_inner" style="display: none;">
+                        <div class="list_singer_item">
+                            <img src="../image/u=2746384919,2327107392&fm=26&gp=0.jpg" alt="">
+                            <div class="list_singer_item_name">YUI</div>
+                        </div>
+
                         <!-- <div class="song_item">
                             <div class="song_order">1</div>
                             <div class="song_item_img"><img src="../image/u=2746384919,2327107392&fm=26&gp=0.jpg"
@@ -66,14 +89,20 @@
                             <div class="song_item_name">A</div>
                             <div class="song_ar">123456</div>
                         </div> -->
+                    </div>
+
+                    <div class="list_singerSong_box list_songs_inner" style="display: none;">
+                        <div class="song_item">
+                            <div class="song_order">1</div>
+                            <div class="song_item_img"><img src="../image/u=2746384919,2327107392&fm=26&gp=0.jpg"
+                                    alt=""></div>
+                            <div class="song_item_name">A</div>
+                            <div class="song_ar">123456</div>
+                        </div>
+                    </div>
 
 
-                        <!-- <div class="list_singer_item">
-                            <img src="../image/u=2746384919,2327107392&fm=26&gp=0.jpg" alt="">
-                            <div class="list_singer_item_name">YUI</div>
-                        </div> -->
-
-
+                    <div class="list_playlist_box list_songs_inner" style="display: none;">
                         <div class="list_playlist_item">
                             <img src="../image/u=2746384919,2327107392&fm=26&gp=0.jpg" alt="">
                             <div class="list_playlist_item_name">妖精的尾巴</div>
@@ -83,9 +112,22 @@
                             </div>
                             <div class="playlist_trackcount">1</div>
                         </div>
-
                     </div>
+
+                    <div class="list_playlistSong_box list_songs_inner" style="display: none;">
+                        <div class="song_item">
+                            <div class="song_order">1</div>
+                            <div class="song_item_img"><img src="../image/u=2746384919,2327107392&fm=26&gp=0.jpg"
+                                    alt=""></div>
+                            <div class="song_item_name">A</div>
+                            <div class="song_ar">123456</div>
+                        </div>
+                    </div>
+
                 </div>
+
+
+
             </div>
 
             <div class="comment_interface" style="display: none;">
@@ -156,9 +198,18 @@
                     <div class="inline_block pauseOrNot"><i class="icon-pause2"></i></div>
                     <div class="inline_block"><i class="icon-next2"></i></div>
                 </div>
+                <div class="record_detail">
+                    <div class="progress_container_songName"></div>
+                    <div class="progress_container_singerName"></div>
+                </div>
                 <div class="progress_container">
-                    <audio src="Goose house-光るなら.mp3" id="m_player" controls="controls" class="played_audio" autoplay
-                        autoplay></audio>
+
+                    <div class="progress_container_time"></div>
+                    <div class="progress_bar">
+                        <div class="progress_inner"></div>
+                        <div class="progress_go"></div>
+                    </div>
+                    <audio src="" id="m_player" class="played_audio" autoplay autoplay></audio>
                 </div>
                 <div class="other_control">
                     <div class="volume_control"> <i class="icon-volume-medium"></i></div>
@@ -171,17 +222,17 @@
         </div>
 
         <div class="lyric_area">
-
+            <div class="mv_btn" style="display: none;">MV</div>
+            <div class="comment_btn" style="display: none;">评论</div>
             <ul id="lyric_ul">
             </ul>
         </div>
 
         <div class="video_play" style="display: none;">
-            <video src="goodFriends.mp4" controlswidth="900" height="650" controls='controls'></video>
+            <video src="goodFriends.mp4" controlswidth="900" height="650" controls='controls' autoplay autoplay></video>
         </div>
 
-        <div class="mv_btn" style="display: none;">MV</div>
-        <div class="comment_btn" style="display: none;">评论</div>
+
     </div>
 </body>
 
