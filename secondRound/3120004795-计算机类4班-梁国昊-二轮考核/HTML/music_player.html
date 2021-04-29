@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="../CSS/musicPlayer.css">
     <link rel="stylesheet" href="../icomoon/style.css">
     <link rel="stylesheet" href="../CSS/progressBar.css">
+    <link rel="stylesheet" href="../CSS/now_playlist.css">
+    <!-- <script src="../myMusic/"></script> -->
+    <script src="../myMusic/playing_list.js"></script>
     <script src="../myMusic/musicPlayer.js"></script>
     <script src="../myMusic/search_interface.js"></script>
     <script src="../myMusic/playerStyle.js"></script>
@@ -73,6 +76,14 @@
                                     alt=""></div>
                             <div class="song_item_name">A</div>
                             <div class="song_ar">123456</div>
+                            <!-- <span class="playBtn"><i class="icon-play2"></i></span> -->
+                            <div class="song_operation" style="right: 12px;">
+                                <i class="icon-play2 playBtn"></i>
+                                <i class="icon-heart1"></i>
+                                <i class="song_item_add">+</i>
+                                <i class="icon-file_download"></i>
+                            </div>
+                            <!-- <span class="song_item_plus">+</span> -->
                         </div>
                     </div>
 
@@ -194,22 +205,23 @@
         <div class="player_container">
             <div>
                 <div class="control_btn">
-                    <div class="inline_block"><i class="icon-previous2"></i></div>
+                    <div class="inline_block previousBtn"><i class="icon-previous2"></i></div>
                     <div class="inline_block pauseOrNot"><i class="icon-pause2"></i></div>
-                    <div class="inline_block"><i class="icon-next2"></i></div>
+                    <div class="inline_block nextBtn"><i class="icon-next2"></i></div>
                 </div>
                 <div class="record_detail">
                     <div class="progress_container_songName"></div>
                     <div class="progress_container_singerName"></div>
                 </div>
                 <div class="progress_container">
-
                     <div class="progress_container_time"></div>
                     <div class="progress_bar">
                         <div class="progress_inner"></div>
                         <div class="progress_go"></div>
                     </div>
-                    <audio src="" id="m_player" class="played_audio" autoplay autoplay></audio>
+                    <div class="audio_player">
+                        <audio src="" id="m_player" class="played_audio" autoplay autoplay></audio>
+                    </div>
                 </div>
                 <div class="other_control">
                     <div class="volume_control"> <i class="icon-volume-medium"></i></div>
@@ -233,6 +245,32 @@
         </div>
 
 
+        <div class="now_playlist">
+            <div class="now_playListBtn"><i class="icon-music-notes"></i></div>
+            <div class="now_playlist_hd">
+                <p><i class="icon-music"></i> 播放列表</p>
+                <div class="playing_all"><i class="icon-play2"></i> 播放全部</div>
+                <div class="delete_all"><i class="icon-trash-can2"></i></div>
+            </div>
+            <div class="now_playlist_bd">
+                <ul class="playing_list">
+                    <!-- <li class="playing_list_item">
+                        <span class="playing_list_item_num">1</span>
+                        <div class="playing_list_item_img"><img src="../image/u=2746384919,2327107392&fm=26&gp=0.jpg"
+                                alt=""></div>
+                        <div class="playing_list_item_msg">
+                            <div class="playing_list_item_song">
+                                <div class="playing_list_item_songDetail">全息图 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 钢之炼金术师op2
+                                </div>
+                            </div>
+                            <span class="playing_list_item_singer">Nico</span>
+                        </div>
+                        <div class="delete_one"><i class=" icon-cancel-circle""></i></div>
+                    </li> -->
+
+                </ul>
+            </div>
+        </div>
     </div>
 </body>
 

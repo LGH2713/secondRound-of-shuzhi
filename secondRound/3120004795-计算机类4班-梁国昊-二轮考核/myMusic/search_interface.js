@@ -33,7 +33,7 @@ window.addEventListener('load', function() {
     var initSearchBtn = true;
     var lyricDragFlag = false;
 
-    console.log(list_songs.getElementsByTagName('div'));
+    // console.log(list_songs.getElementsByTagName('div'));
 
 
     function initSearchAjax() {
@@ -171,21 +171,27 @@ window.addEventListener('load', function() {
 
     function callback_searchSong(data) {
         // list_song_box.innerHTML = '';
-        for(let i = 0; i < 20 && i < data.result.songs.length; i++) {
+        for(let i = 0; i < data.result.songs.length && i < 20; i++) {
             list_song_box.innerHTML += `<div class="song_item">
         <div class="song_order">${i+1}</div>
         <div class="song_item_img"><img src="http://p1.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg"
                 alt=""></div>
         <div class="song_item_name">${data.result.songs[i].name}&nbsp &nbsp    ${songDetail(data.result.songs[i].alias[0])}</div>
         <div class="song_ar">${data.result.songs[i].artists[0].name}</div>
+        <div class="song_operation" style="right: 12px;">
+                                <i class="icon-play2 playBtn"></i>
+                                <i class="icon-heart1"></i>
+                                <i class="song_item_add">+</i>
+                                <i class="icon-file_download"></i>
+                            </div>
     </div>`
         }
 
-        let song_item = list_song_box.querySelectorAll('.song_item');
+        let playBtn = list_song_box.querySelectorAll('.playBtn');
         let searchData = JSON.parse(window.localStorage.getItem('search'));
-        for(let i = 0; i < song_item.length; i++) {
-            song_item[i].setAttribute('index', i);
-            song_item[i].addEventListener('click', function() {
+        for(let i = 0; i < playBtn.length; i++) {
+            playBtn[i].setAttribute('index', i);
+            playBtn[i].addEventListener('click', function() {
                 lyric_area.style.display = 'block';                
                 let index = Number(this.getAttribute('index'));
                 // window.localStorage.removeItem('songRecord');
@@ -324,20 +330,29 @@ window.addEventListener('load', function() {
             <div class="song_item_img"><img src=${data.songs[i].al.picUrl} alt=""></div>
             <div class="song_item_name">${data.songs[i].name}&nbsp &nbsp &nbsp   ${songDetail(data.songs[i].alia)}</div>
             <div class="song_ar">${name}</div>
+            <div class="song_operation" style="right: 12px;">
+                                <i class="icon-play2 playBtn"></i>
+                                <i class="icon-heart1"></i>
+                                <i class="song_item_add">+</i>
+                                <i class="icon-file_download"></i>
+                            </div>
         </div>`;
         }
 
-        let song_item = list_singerSong_box.querySelectorAll('.song_item');
+        let playBtn = list_singerSong_box.querySelectorAll('.playBtn');
         let singerSong = JSON.parse(window.localStorage.getItem('singerSong'));
         console.log(singerSong);
-        for(let i = 0; i < song_item.length; i++) {
-            song_item[i].setAttribute('index', i);
+        for(let i = 0; i < playBtn.length; i++) {
+            playBtn[i].setAttribute('index', i);
         }
 
-        for(let i = 0; i < song_item.length; i++) {
-            song_item[i].addEventListener('click', function() {
+        for(let i = 0; i < playBtn.length; i++) {
+            playBtn[i].addEventListener('click', function() {
                 let index = this.getAttribute('index');
                 audio.src = `https://music.163.com/song/media/outer/url?id=${singerSong.songs[index].id}.mp3`;
+
+                progress_container_songName.innerHTML = `${data.songs[index].name}`;
+                progress_container_singerName.innerHTML = `${singerName(data, index)}`;
 
                 if(window.localStorage.getItem('songRecord')) {
                     songRecord = JSON.parse(window.localStorage.getItem('songRecord'));//解析搜索记录并用新数组保存
@@ -500,18 +515,28 @@ window.addEventListener('load', function() {
             <div class="song_item_img"><img src=${data.songs[i].al.picUrl} alt=""></div>
             <div class="song_item_name">${data.songs[i].name}&nbsp &nbsp &nbsp   ${songDetail(data.songs[i].alia)}</div>
             <div class="song_ar">${data.songs[i].ar[0].name}</div>
+            <div class="song_operation" style="right: 12px;">
+                                <i class="icon-play2 playBtn"></i>
+                                <i class="icon-heart1"></i>
+                                <i class="song_item_add">+</i>
+                                <i class="icon-file_download"></i>
+                            </div>
         </div>`;
         }
 
-        let song_item = list_playlistSong_box.querySelectorAll('.song_item');
-        for(let i = 0; i < song_item.length; i++) {
-            song_item[i].setAttribute('index', i);
+        let playBtn = list_playlistSong_box.querySelectorAll('.playBtn');
+        for(let i = 0; i < playBtn.length; i++) {
+            playBtn[i].setAttribute('index', i);
         }
 
-        for(let i = 0; i < song_item.length; i++) {
-            song_item[i].addEventListener('click', function() {
+        for(let i = 0; i < playBtn.length; i++) {
+            playBtn[i].addEventListener('click', function() {
                 let index = this.getAttribute('index');
                 audio.src = `https://music.163.com/song/media/outer/url?id=${data.songs[index].id}.mp3`;
+
+
+                progress_container_songName.innerHTML = `${data.songs[index].name}`;
+                progress_container_singerName.innerHTML = `${singerName(data, index)}`;
 
                 if(window.localStorage.getItem('songRecord')) {
                     songRecord = JSON.parse(window.localStorage.getItem('songRecord'));//解析搜索记录并用新数组保存
@@ -592,13 +617,15 @@ window.addEventListener('load', function() {
         return arr;
     }
 
-    function singerName(item) {
-        if(item) {
-            return item;
-        } else {
-            return '';
-        }
-    }
+    // function singerName(item, index) {
+    //     if(item[index].ar) {
+    //         return item[index].ar[0].name;
+    //     } else if(item[index].artists) {
+    //         return item[index].artists[0].name;
+    //     } else {
+    //         return '佚名';
+    //     }
+    // }
 
     function list_record(data) {
         // let data = JSON.parse(window.localStorage.getItem('songRecord'))
@@ -611,6 +638,7 @@ window.addEventListener('load', function() {
             <div class="song_name">${data[i].name}</div>
             <div class="song_ar">${data[i].artists[0].name}</div>
             <div class="song_operation">
+                <i class="icon-play2 playBtn"></i>
                 <i class="icon-heart1"></i>
                 <i class="song_item_add">+</i>
                 <i class="icon-file_download"></i>
@@ -622,6 +650,7 @@ window.addEventListener('load', function() {
             <div class="song_name">${data[i].name}</div>
             <div class="song_ar">${data[i].ar[0].name}</div>
             <div class="song_operation">
+                <i class="icon-play2 playBtn"></i>
                 <i class="icon-heart1"></i>
                 <i class="song_item_add">+</i>
                 <i class="icon-file_download"></i>
@@ -633,15 +662,41 @@ window.addEventListener('load', function() {
         }
 
             
-        
-        let song_item = user_interface.querySelectorAll('.song_item');
-        for(let i = 0; i < song_item.length; i++) {
-            song_item[i].setAttribute('index', i);
-            song_item[i].addEventListener('click', function() {
+        let playBtn = user_interface.querySelectorAll('.playBtn');
+        for(let i = 0; i < playBtn.length; i++) {
+            playBtn[i].setAttribute('index', i);
+            playBtn[i].addEventListener('click', function() {
                 let index = this.getAttribute('index');
                 audio.src = audio.src = `https://music.163.com/song/media/outer/url?id=${data[index].id}.mp3`;
                 // musicPlay(songUrl(data[index].id))
             })
+        }
+
+        let playing_list = [];
+        let song_item_add = user_interface.querySelectorAll('.song_item_add')
+        for(let i = 0; i < song_item_add.length; i++) {
+            // 放入当前播放列表 start
+            song_item_add[i].setAttribute('index', i);
+            song_item_add[i].addEventListener('click', function() {
+                let index = this.getAttribute('index');
+                if(window.localStorage.getItem('playing_list')) {
+                    playing_list = JSON.parse(window.localStorage.getItem('playing_list'));//解析搜索记录并用新数组保存
+                    console.log(playing_list);
+                    playing_list.push(data[index]); //将点击的歌曲推入新数组
+                    playing_list = clearMore(playing_list);//数组去重
+                    window.localStorage.removeItem('playing_list');//移除原数据
+                    window.localStorage.setItem('playing_list',JSON.stringify(playing_list))//储存新数组
+                } else {
+                    playing_list.push(data[index]);
+                    console.log(playing_list);
+                    window.localStorage.setItem('playing_list',JSON.stringify(playing_list))
+                }
+                console.log(data[index]);
+
+                // AjaxRequest_playingList
+                AjaxRequest_playingList(playingUrl(idFun()));
+            })
+            // 放入当前列表 end 
         }
     }
 
@@ -921,7 +976,17 @@ window.addEventListener('load', function() {
 
 
 
-
+    function singerName(item, index) {
+        if(item.songs) {
+            return item.songs[index].ar[0].name;
+        } else if(item[index].ar) {
+            return item[index].ar[0].name;
+        } else if(item[index].artists) {
+            return item[index].artists[0].name;
+        } else {
+            return '佚名';
+        }
+    }
 
 
 

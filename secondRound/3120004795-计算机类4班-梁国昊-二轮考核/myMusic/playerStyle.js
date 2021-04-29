@@ -1,12 +1,73 @@
 window.addEventListener('load', function() {
     const user_info_content = document.querySelector('.user_info_content');
+    const user_right_list = document.querySelector('.user_right_list');
     const now_control = document.querySelector('.now_control');
     const lyric_area = document.querySelector('.lyric_area');
+    const list_songs = document.querySelector('.list_songs');
+    const now_playlist = document.querySelector('.now_playlist');
+    const now_playListBtn = document.querySelector('.now_playListBtn');
     var back;
     const audio = document.querySelector('.progress_container').querySelector('audio');
     const pause = document.querySelector('.pauseOrNot');
     const pause_icon = pause.querySelector('i');
     var flag = false;
+    var now_playListBtn_flag = false;
+    // var songRecord = (JSON.parse(window.localStorage.getItem('songRecord'))).reverse();
+    
+    // console.log(window.sessionStorage.getItem('recordIndex'));
+
+    // audio.ontimeupdate = function() {
+    //     // alert(window.sessionStorage.getItem('recordIndex'))
+    //     var index = parseInt(window.sessionStorage.getItem('recordIndex'));
+    //     if(audio.ended() && index < songRecord.length) {
+    //         audio.src = `https://music.163.com/song/media/outer/url?id=${songRecord[index + 1].id}.mp3`;
+    //         window.sessionStorage.removeItem('recordIndex');
+    //         window.sessionStorage.setItem('recordIndex', index + 1)
+    //     } else {
+    //         audio.pause();
+    //         window.sessionStorage.removeItem('recordIndex');
+    //         window.sessionStorage.setItem('recordIndex', index)
+    //     }
+    // }
+
+    now_playlist.addEventListener('mouseover', function() {
+        now_playListBtn.className = 'now_playListBtn_c now_playListBtn'
+    })
+
+    now_playlist.addEventListener('mouseout', function() {
+        now_playListBtn.className = ' now_playListBtn'
+    })
+
+    now_playListBtn.addEventListener('click', function() {
+        var step;
+        if(now_playListBtn_flag == false) {
+            step = -42;
+            let timer = setInterval(function(){
+                if(step == 0) {
+                    clearInterval(timer);
+                    now_playListBtn_flag = true;
+                }
+                step += 1;
+                now_playlist.style.right = `${step}%`;
+            },5)
+        } else {
+            step = 0;
+            let timer = setInterval(function(){
+                if(step <= -42) {
+                    clearInterval(timer);
+                    now_playListBtn_flag = false;
+                }
+                step -= 1;
+                now_playlist.style.right = `${step}%`;
+            },5)
+        }
+        
+    });
+    
+
+
+
+
     pause.addEventListener('click', function() {
         if(flag == false) {
             audio.pause();
@@ -25,6 +86,7 @@ window.addEventListener('load', function() {
         lyric_area.style.display = 'block';
         back = document.querySelector('.back');
         back.onclick = function() {
+            list_songs.style.display = 'none';
             user_info_content.style.display = 'block';
             lyric_area.style.display = 'none';
             back = null;

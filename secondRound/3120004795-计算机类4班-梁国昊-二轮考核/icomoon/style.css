@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?2axmrc');
-  src:  url('fonts/icomoon.eot?2axmrc#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?2axmrc') format('truetype'),
-    url('fonts/icomoon.woff?2axmrc') format('woff'),
-    url('fonts/icomoon.svg?2axmrc#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?sotway');
+  src:  url('fonts/icomoon.eot?sotway#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?sotway') format('truetype'),
+    url('fonts/icomoon.woff?sotway') format('woff'),
+    url('fonts/icomoon.svg?sotway#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -25,33 +25,11 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-bar-graph:before {
-  content: "\e92c";
+.icon-edit:before {
+  content: "\e942";
 }
-.icon-music-playlist:before {
-  content: "\e92d";
-}
-.icon-playlist:before {
-  content: "\e92f";
-}
-.icon-download:before {
-  content: "\e930";
-}
-.icon-music-artist:before {
-  content: "\e927";
-}
-.icon-cheveron-up:before {
-  content: "\e90a";
-}
-.icon-cheveron-right:before {
-  content: "\e90b";
-}
-.icon-cheveron-left:before {
-  content: "\e90c";
-}
-.icon-cheveron-down:after {
-  font-size: 20px;
-  content: "\e90d";
+.icon-music:before {
+  content: "\e93e";
 }
 .icon-search:before {
   content: "\e931";
@@ -77,11 +55,59 @@
 .icon-autorenew:before {
   content: "\e909";
 }
+.icon-bar-graph:before {
+  content: "\e92c";
+}
+.icon-music-notes:before {
+  content: "\e93a";
+}
+.icon-headphones1:before {
+  content: "\e93b";
+}
+.icon-music-playlist:before {
+  content: "\e92d";
+}
+.icon-playlist:before {
+  content: "\e92f";
+}
+.icon-download:before {
+  content: "\e930";
+}
+.icon-music-artist:before {
+  content: "\e927";
+}
+.icon-cheveron-up:before {
+  content: "\e90a";
+}
+.icon-cheveron-right:before {
+  content: "\e90b";
+}
+.icon-cheveron-left:before {
+  content: "\e90c";
+}
+.icon-cheveron-down:before {
+  content: "\e90d";
+}
+.icon-edit1:before {
+  content: "\e943";
+}
 .icon-heart3:before {
   content: "\e92b";
 }
 .icon-monitor1:before {
   content: "\e925";
+}
+.icon-music2:before {
+  content: "\e93f";
+}
+.icon-songs:before {
+  content: "\e93f";
+}
+.icon-audio:before {
+  content: "\e93f";
+}
+.icon-music3:before {
+  content: "\e93c";
 }
 .icon-star:before {
   content: "\e939";
@@ -100,6 +126,18 @@
 }
 .icon-display:before {
   content: "\e922";
+}
+.icon-trash-can:before {
+  content: "\e944";
+}
+.icon-trash-can1:before {
+  content: "\e945";
+}
+.icon-trash-can2:before {
+  content: "\e946";
+}
+.icon-trash-can3:before {
+  content: "\e947";
 }
 .icon-clipboard-edit:before {
   content: "\e917";
@@ -136,6 +174,27 @@
 }
 .icon-target-arrow1:before {
   content: "\e937";
+}
+.icon-headphones:before {
+  content: "\e940";
+}
+.icon-music1:before {
+  content: "\e940";
+}
+.icon-song:before {
+  content: "\e940";
+}
+.icon-sound:before {
+  content: "\e940";
+}
+.icon-listen:before {
+  content: "\e940";
+}
+.icon-music4:before {
+  content: "\e941";
+}
+.icon-song1:before {
+  content: "\e941";
 }
 .icon-heart2:before {
   content: "\e92a";
@@ -203,6 +262,12 @@
 .icon-fire:before {
   content: "\e9a9";
 }
+.icon-bin:before {
+  content: "\e9ac";
+}
+.icon-bin2:before {
+  content: "\e9ad";
+}
 .icon-switch:before {
   content: "\e9b6";
 }
@@ -232,6 +297,12 @@
 }
 .icon-heart-broken:before {
   content: "\e9db";
+}
+.icon-cancel-circle:before {
+  content: "\ea0d";
+}
+.icon-cross:before {
+  content: "\ea0f";
 }
 .icon-play2:before {
   content: "\ea15";

@@ -19,6 +19,7 @@ window.addEventListener('load', function() {
     const mv_btn = document.querySelector('.mv_btn');
     const comment_btn = document.querySelector('.comment_btn');
     const comment_interface = document.querySelector('.comment_interface');
+    var playing_list = [];
     var lyricDragFlag = false;
 
 
@@ -94,12 +95,11 @@ window.addEventListener('load', function() {
 <div class="nav_line"><a href="#"><i class="icon-download"></i></a></div>
 <div class="nav_line"><a href="#"><i class="icon-cog"></i></a></div>`
 
-
         const searchMusicBtn = document.querySelector('.searchMusic');
-        // console.log(searchMusicBtn);
         searchMusicBtn.addEventListener('click', function() {
             user_interface.style.display = 'none'; 
             search_interface.style.display = 'block';
+            list_songs.style.display = 'block';
             lyric_area.style.display = 'block';
             
             // audio.pause();
@@ -111,6 +111,7 @@ window.addEventListener('load', function() {
             user_interface.style.display = 'block'; 
             search_interface.style.display = 'none';
             lyric_area.style.display = 'none';
+            user_info_content.display = 'block';
             // mv_btn.style.display = 'none';
             // comment_btn.style.display = 'none';
             // audio.pause();
@@ -143,33 +144,31 @@ window.addEventListener('load', function() {
         if(songRecord) {
             record(songRecord);
         }
-
-        // for(let i = 0; i < )
-        
-        // const userId = window.localStorage.getItem("logined");
-        // const recordUrl = Header + `/user/record?uid=${userId}&type=1&`;
-        // AjaxRequest_record(recordUrl);
     }
 
-    function singerName(item) {
-        if(item) {
-            return item;
+    function singerName(item, index) {
+        if(item[index].ar) {
+            return item[index].ar[0].name;
+        } else if(item[index].artists) {
+            return item[index].artists[0].name;
         } else {
-            return '';
+            return '佚名';
         }
     }
 
     function record(data) {
         if(data.length) {
             data = data.reverse();
+            console.log(data);
         let list_song_box = document.querySelector('.list_song_box');
         list_song_box.innerHTML = '';
-        for(let i = 0; i < data.length; i++) {
+        for(let i = 0; i < data.length && i < 60; i++) {
             if(data[i].artists) {
                 list_song_box.innerHTML += `<div class="song_item">
             <div class="song_name">${data[i].name}</div>
             <div class="song_ar">${data[i].artists[0].name}</div>
             <div class="song_operation">
+                <i class="icon-play2 playBtn"></i>
                 <i class="icon-heart1"></i>
                 <i class="song_item_add">+</i>
                 <i class="icon-file_download"></i>
@@ -181,6 +180,7 @@ window.addEventListener('load', function() {
             <div class="song_name">${data[i].name}</div>
             <div class="song_ar">${data[i].ar[0].name}</div>
             <div class="song_operation">
+                <i class="icon-play2 playBtn"></i>
                 <i class="icon-heart1"></i>
                 <i class="song_item_add">+</i>
                 <i class="icon-file_download"></i>
@@ -191,7 +191,9 @@ window.addEventListener('load', function() {
         recordNum = i + 1;
         }
         
+        
         let song_item = user_interface.querySelectorAll('.song_item');
+        let playBtn = user_interface.querySelectorAll('.playBtn')
         let progress_inner = document.querySelector('.progress_inner');
         let progressBarWidth = document.querySelector('.progress_bar').offsetWidth;
         const progress_go = document.querySelector('.progress_go');
@@ -203,20 +205,25 @@ window.addEventListener('load', function() {
 
         // let songArray = JSON.parse(window.localStorage.getItem('record'));
         // console.log(songArray);
+        let song_item_add = user_interface.querySelectorAll('.song_item_add')
         for(let i = 0; i < song_item.length; i++) {
-            song_item[i].setAttribute('index', i);
-            song_item[i].addEventListener('click', function() {
+            playBtn[i].setAttribute('index', i);
+            playBtn[i].addEventListener('click', function() {
                 for(let i = 0; i < song_item.length; i++) {
                     song_item[i].className = 'song_item';
                 }
-                this.className = 'song_item song_item_on';
+                song_item[i].className = 'song_item song_item_on';
                 // this.style.backgroundColor = 'white'
                 let index = this.getAttribute('index');
                 audio.src = audio.src = `https://music.163.com/song/media/outer/url?id=${data[index].id}.mp3`;
-                // musicPlay(songUrl(data.weekData[index].song.id))
+                if(window.sessionStorage.getItem('recordIndex')) {
+                    window.sessionStorage.removeItem('recordIndex');
+                } else {
+                    window.sessionStorage.setItem('recordIndex', index);
+                }
 
                 progress_container_songName.innerHTML = `${data[index].name}`;
-                progress_container_singerName.innerHTML = `${data[index].artists[0].name}`;
+                progress_container_singerName.innerHTML = `${singerName(data, index)}`;
                 
                 lyric_area.style.display = 'none';
                 let lyricUrl = Header + '/lyric?id=' + data[index].id;
@@ -234,6 +241,32 @@ window.addEventListener('load', function() {
                 comment_btn.style.display = 'block';
                 AjaxRequest_comment(commentUrl);
             })
+
+        }
+
+        for(let i = 0; i < song_item.length; i++) {
+            // 放入当前播放列表 start
+            song_item_add[i].setAttribute('index', i);
+            song_item_add[i].addEventListener('click', function() {
+                let index = this.getAttribute('index');
+                if(window.localStorage.getItem('playing_list')) {
+                    playing_list = JSON.parse(window.localStorage.getItem('playing_list'));//解析搜索记录并用新数组保存
+                    console.log(playing_list);
+                    playing_list.push(data[index]); //将点击的歌曲推入新数组
+                    playing_list = clearMore(playing_list);//数组去重
+                    window.localStorage.removeItem('playing_list');//移除原数据
+                    window.localStorage.setItem('playing_list',JSON.stringify(playing_list))//储存新数组
+                } else {
+                    playing_list.push(data[index]);
+                    console.log(playing_list);
+                    window.localStorage.setItem('playing_list',JSON.stringify(playing_list))
+                }
+                console.log(data[index]);
+
+                // AjaxRequest_playingList
+                AjaxRequest_playingList(playingUrl(idFun()));
+            })
+            // 放入当前列表 end 
         }
 
         
@@ -241,7 +274,19 @@ window.addEventListener('load', function() {
         
     }
 
-
+    function clearMore(arr) {
+        var i, j, len = arr.length;
+        for(i = 0; i < len; i++) {
+            for(j = i + 1; j < len; j++) {
+                if(arr[i].id == arr[j].id) {
+                    arr.splice(j, 1);
+                    len--;
+                    j--;
+                }
+            }
+        }
+        return arr;
+    }
 
     const searchMusic = document.querySelector('.searchMusic');
 
@@ -327,12 +372,22 @@ window.addEventListener('load', function() {
             progress_inner.style.left = progressBarWidth * audio.currentTime / audio.duration + 'px';
             progress_go.style.width = progress_inner.style.left;
 
+            // var index = parseInt(window.sessionStorage.getItem('recordIndex'));
+            // if(audio.ended && index < songRecord.length) {
+            //     audio.src = `https://music.163.com/song/media/outer/url?id=${songRecord[index + 1].id}.mp3`;
+            //     window.sessionStorage.removeItem('recordIndex');
+            //     window.sessionStorage.setItem('recordIndex', index + 1)
+            // } else {
+            //     audio.pause();
+            //     window.sessionStorage.removeItem('recordIndex');
+            //     window.sessionStorage.setItem('recordIndex', index)
+            // }
+
             for(let i = 0; i < result.length; i++) {
                 if(this.currentTime > result[i][0]) {
                     // lyricDrag(lyric_ul,lyric_area);
-                    console.log(heigh,i);
                     lyric_ul.style.top = `${-heigh*i + 'px'}`;
-                    console.log(lyric_ul.style.top);
+                    // console.log(lyric_ul.style.top);
                     for(let k = 0; k < lyric_li.length; k++) {
                         lyric_li[k].style.backgroundColor = 'rgba(255, 255, 255, 0)';
                         lyric_li[k].style.color = '#fff';
@@ -606,8 +661,8 @@ window.addEventListener('load', function() {
     }
 
     function callback_loginedOut() {
-        window.localStorage.clear();
-        // window.localStorage.removeItem('cookie');
+        // window.localStorage.clear();
+        window.localStorage.removeItem('cookie');
         let login_refresh = Header + '/login/refresh';
         AjaxRequest_logined(login_refresh);
         window.location.replace('../HTML/index.html');
