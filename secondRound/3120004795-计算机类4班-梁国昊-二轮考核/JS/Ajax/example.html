@@ -111,6 +111,17 @@
         console.log(result);
     }
 
+    function getRandom(start, end, fixed) {
+        console.log(start, end);
+        let differ = end - start;
+        let random = Math.random();
+        return (start + differ * random).toFixed(fixed);
+    }
+
+    getRandom = function () {}
+
+    console.log(getRandom(0, 5, 0));
+
     // let x = new Promise(function(resolve, reject) {
     //     let btn = document.querySelector('button');
 

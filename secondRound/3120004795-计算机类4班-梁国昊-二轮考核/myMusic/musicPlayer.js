@@ -146,20 +146,11 @@ window.addEventListener('load', function() {
         }
     }
 
-    function singerName(item, index) {
-        if(item[index].ar) {
-            return item[index].ar[0].name;
-        } else if(item[index].artists) {
-            return item[index].artists[0].name;
-        } else {
-            return '佚名';
-        }
-    }
+
 
     function record(data) {
         if(data.length) {
             data = data.reverse();
-            console.log(data);
         let list_song_box = document.querySelector('.list_song_box');
         list_song_box.innerHTML = '';
         for(let i = 0; i < data.length && i < 60; i++) {
@@ -372,16 +363,6 @@ window.addEventListener('load', function() {
             progress_inner.style.left = progressBarWidth * audio.currentTime / audio.duration + 'px';
             progress_go.style.width = progress_inner.style.left;
 
-            // var index = parseInt(window.sessionStorage.getItem('recordIndex'));
-            // if(audio.ended && index < songRecord.length) {
-            //     audio.src = `https://music.163.com/song/media/outer/url?id=${songRecord[index + 1].id}.mp3`;
-            //     window.sessionStorage.removeItem('recordIndex');
-            //     window.sessionStorage.setItem('recordIndex', index + 1)
-            // } else {
-            //     audio.pause();
-            //     window.sessionStorage.removeItem('recordIndex');
-            //     window.sessionStorage.setItem('recordIndex', index)
-            // }
 
             for(let i = 0; i < result.length; i++) {
                 if(this.currentTime > result[i][0]) {
@@ -401,13 +382,6 @@ window.addEventListener('load', function() {
         
     }
 
-
-
-    function playerTime(curTime, durTime) {
-        if(durTime) {
-            return `${curTime / 60 > 9 ? parseInt(curTime / 60) : '0' + parseInt(curTime / 60)}:${curTime % 60 > 9 ? parseInt(curTime % 60) : '0' + parseInt(curTime % 60)}/${durTime / 60 > 9 ? parseInt(durTime / 60) : '0' + parseInt(durTime / 60)}:${durTime % 60> 9 ? parseInt(durTime % 60) : '0' + parseInt(durTime % 60)}`;
-        }
-    }
 
 
 
