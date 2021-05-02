@@ -1,7 +1,8 @@
 window.addEventListener('load', function() {
     const Header = 'http://localhost:3000';
     var userCookie = window.localStorage.getItem("cookie");
-    const user_info_content = document.querySelector('.user_info_content');
+    var user_info_content = document.querySelector('.user_info_content');
+    const user_right_list = document.querySelector('.user_right_list');
     // let user_info_list = document.querySelector('.user_info_list');
     const user_info_name = document.querySelector('.user_info_name');
     // let user_info_follow = document.querySelector('.user_info_follow');
@@ -27,42 +28,9 @@ window.addEventListener('load', function() {
     const token = window.localStorage.getItem('token');
 
 
-
     
     let login_status = Header + '/login/status' + userCookie;
-    // let login_status = Header + '/login/status?token=' + token;
-
-    // const phone = window.localStorage.getItem('phone');
-    // const password = window.localStorage.getItem('password');
-    // let phoneUrl = Header + '/login/cellphone?phone=' + phone + '&password=' + password;
-    // AjaxRequest_login(phoneUrl);
-    // function AjaxRequest_login(url) {
-    //     let xhr = new XMLHttpRequest();
-    //     xhr.onreadystatechange = function () {
-    //         if (xhr.readyState == 4) {
-    //             // alert(xhr.readyState);
-    //             if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
-    //                 var data = JSON.parse(xhr.responseText);
-    //                 console.log(data);
-    //                 // callback_login(data);
-    //             } else {
-    //                 alert("您的输入有误");
-    //             }
-                
-    //         }
-    //     }
-    //     xhr.open("GET", url, false);
-    //     xhr.send();
-    // }
-
-
-
-
     AjaxRequest_logined(login_status);
-
-
-    
-    
 
     function AjaxRequest_logined(url) {
         let xhr = new XMLHttpRequest();
@@ -70,7 +38,7 @@ window.addEventListener('load', function() {
             if (xhr.readyState == 4) {
                 if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
                     let result = JSON.parse(xhr.responseText);
-                    // console.log(result);
+                    console.log(result);
                     window.localStorage.setItem('logined', result.data.account.id);
                     if(result.data.profile) {
                         callback_logined(result.data);
@@ -85,38 +53,60 @@ window.addEventListener('load', function() {
     }
 
     function callback_logined(data) {
+        
         const page_left_nav = document.querySelector('.page_left_nav');
         page_left_nav.innerHTML += `<div class="nav_line pic" style="margin-left: 4px;"><img
         src=${data.profile.avatarUrl} alt=""></div>
 <div class="nav_line searchMusic"><a href="#"><i class="icon-search1"></i></a></div>
-<div class="nav_line"><a href="#"><i class="icon-music-playlist"></i></a></div>
+<div class="nav_line myplaylistBtn"><a href="#"><i class="icon-music-playlist"></i></a></div>
 <div class="nav_line"><a href="#"><i class="icon-star"></i></a></div>
 <div class="nav_line"><a href="#"><i class="icon-stats-bars2"></i></a></div>
 <div class="nav_line"><a href="#"><i class="icon-download"></i></a></div>
 <div class="nav_line"><a href="#"><i class="icon-cog"></i></a></div>`
 
+        myPlaylistFun();
+
+        let now_playlist = document.querySelector('.now_playlist');
+        const pic = document.querySelector('.pic');
+        const myplaylist_interface = document.querySelector('.myplaylist_interface');
+        const myplaylist_con = document.querySelector('.myplaylist_con');
+        const myplaylist_song_con = myplaylist_interface.querySelector('.myplaylist_song_con');
         const searchMusicBtn = document.querySelector('.searchMusic');
-        searchMusicBtn.addEventListener('click', function() {
+        searchMusicBtn.onclick = function() {
+            now_playlist.onmouseover = null;
+            now_playlist.onmouseout = null;
+            myplaylist_interface.style.display = 'none';
             user_interface.style.display = 'none'; 
             search_interface.style.display = 'block';
             list_songs.style.display = 'block';
             lyric_area.style.display = 'block';
-            
+            now_playlist_appear(search_interface)
             // audio.pause();
-        })
+        }
 
-        const lyric_ul = document.querySelector('#lyric_ul');
-        const pic = document.querySelector('.pic');
-        pic.addEventListener('click', function() {
+        pic.onclick = function() {
+            user_info_content = document.querySelector('.user_info_content');
             user_interface.style.display = 'block'; 
             search_interface.style.display = 'none';
+            myplaylist_interface.style.display = 'none';
             lyric_area.style.display = 'none';
             user_info_content.display = 'block';
-            // mv_btn.style.display = 'none';
-            // comment_btn.style.display = 'none';
-            // audio.pause();
+            now_playlist_appear(user_right_list);
+        }
+
+        const myplaylistBtn = document.querySelector('.myplaylistBtn');
+        myplaylistBtn.addEventListener('click', function() {
+            myplaylist_interface.style.display = 'block';
+            myplaylist_con.style.display = 'block';
+            myplaylist_song_con.style.display = 'none';
+            user_interface.style.display = 'none'; 
+            search_interface.style.display = 'none';
+            lyric_area.style.display = 'none';
         })
 
+        pic.onclick();
+
+        
         user_info_name.innerHTML += `<span>${data.profile.nickname}</span>`;
 
         const followsUrl = Header + `/user/follows?uid=${data.profile.userId}` + userCookie;
@@ -196,7 +186,7 @@ window.addEventListener('load', function() {
 
         // let songArray = JSON.parse(window.localStorage.getItem('record'));
         // console.log(songArray);
-        let song_item_add = user_interface.querySelectorAll('.song_item_add')
+        var song_item_add = user_interface.querySelectorAll('.song_item_add')
         for(let i = 0; i < song_item.length; i++) {
             playBtn[i].setAttribute('index', i);
             playBtn[i].addEventListener('click', function() {
@@ -232,52 +222,14 @@ window.addEventListener('load', function() {
                 comment_btn.style.display = 'block';
                 AjaxRequest_comment(commentUrl);
             })
-
         }
-
-        for(let i = 0; i < song_item.length; i++) {
-            // 放入当前播放列表 start
-            song_item_add[i].setAttribute('index', i);
-            song_item_add[i].addEventListener('click', function() {
-                let index = this.getAttribute('index');
-                if(window.localStorage.getItem('playing_list')) {
-                    playing_list = JSON.parse(window.localStorage.getItem('playing_list'));//解析搜索记录并用新数组保存
-                    console.log(playing_list);
-                    playing_list.push(data[index]); //将点击的歌曲推入新数组
-                    playing_list = clearMore(playing_list);//数组去重
-                    window.localStorage.removeItem('playing_list');//移除原数据
-                    window.localStorage.setItem('playing_list',JSON.stringify(playing_list))//储存新数组
-                } else {
-                    playing_list.push(data[index]);
-                    console.log(playing_list);
-                    window.localStorage.setItem('playing_list',JSON.stringify(playing_list))
-                }
-                console.log(data[index]);
-
-                // AjaxRequest_playingList
-                AjaxRequest_playingList(playingUrl(idFun()));
-            })
-            // 放入当前列表 end 
-        }
-
-        
+        window.localStorage.setItem('addNeed', JSON.stringify(data));
+        addSongs();
         }
         
     }
 
-    function clearMore(arr) {
-        var i, j, len = arr.length;
-        for(i = 0; i < len; i++) {
-            for(j = i + 1; j < len; j++) {
-                if(arr[i].id == arr[j].id) {
-                    arr.splice(j, 1);
-                    len--;
-                    j--;
-                }
-            }
-        }
-        return arr;
-    }
+
 
     const searchMusic = document.querySelector('.searchMusic');
 
@@ -569,7 +521,7 @@ window.addEventListener('load', function() {
                 // alert(xhr.readyState);
                 if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
                     let data = JSON.parse(xhr.responseText);
-                    // console.log(data);
+                    console.log(data);
                     window.localStorage.setItem('subcount', data);
                     callback_subcount(data);
                 } else {
@@ -636,7 +588,10 @@ window.addEventListener('load', function() {
 
     function callback_loginedOut() {
         // window.localStorage.clear();
+        window.localStorage.removeItem('playlistInit');
         window.localStorage.removeItem('cookie');
+        window.localStorage.removeItem('playing_list');
+        window.localStorage.removeItem('myplaylists');
         let login_refresh = Header + '/login/refresh';
         AjaxRequest_logined(login_refresh);
         window.location.replace('../HTML/index.html');

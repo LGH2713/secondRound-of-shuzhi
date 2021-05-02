@@ -286,13 +286,7 @@ window.addEventListener('load', function() {
         }
     }
 
-    function songDetail(result) {
-        if(result) {
-            return result;
-        } else {
-            return '';
-        }
-    }
+
 
     function search_SingerPic(result) {
         if(result != null) {
@@ -436,10 +430,20 @@ window.addEventListener('load', function() {
         </div>`
         }
 
+        let playlist_control = document.querySelector('.playlist_control');
+        
         let list_playlist_item = document.querySelectorAll('.list_playlist_item');
         for(let i = 0; i < list_playlist_item.length; i++) {
             list_playlist_item[i].setAttribute('index', i);
             list_playlist_item[i].addEventListener('click', function() {
+
+                playlist_control.style.display = 'block';
+                let add_all = document.querySelector('.add_all');
+                add_all.addEventListener('click', function() {
+                    // a();
+                    myPlaylistFun();
+                })
+
                 let index = this.getAttribute('index');
                 let playlistUrl = Header + '/playlist/detail?id=' + data.result.playlists[index].id;
                 for(let i = 0; i < list_songs_inner.length; i++) {
@@ -460,8 +464,19 @@ window.addEventListener('load', function() {
                     if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
                         let data = JSON.parse(xhr.responseText);
                         console.log(data);
+                        var myplaylists_arr = [];
+                        if(JSON.parse(window.localStorage.getItem('myplaylists'))) {
+                            myplaylists_arr = JSON.parse(window.localStorage.getItem('myplaylists'));
+                            myplaylists_arr.push(data.playlist);
+                            window.localStorage.removeItem('myplaylists');
+                            window.localStorage.setItem('myplaylists', JSON.stringify(myplaylists_arr));
+                            console.log(data.playlist.trackIds);
+                        } else {
+                            myplaylists_arr.push(data.playlist);
+                            window.localStorage.removeItem('myplaylists');
+                            window.localStorage.setItem('myplaylists', JSON.stringify(myplaylists_arr));
+                        }
                         
-                        console.log(data.playlist.trackIds);
                         let playlistSongPlayUrl = Header + '/song/detail?ids=' + playlist_songs(data.playlist.trackIds);
                         console.log(playlistSongPlayUrl);
                         AjaxRequest_playlist_song_detail(playlistSongPlayUrl)
@@ -474,17 +489,6 @@ window.addEventListener('load', function() {
             xhr.send();
     }
 
-
-    function playlist_songs(item) {
-        let result = '';
-        for(let i = 0; i < item.length; i++) {
-            result += item[i].id;
-            if(i < item.length - 1) {
-                result += ',';
-            }
-        }
-        return result;
-    }
 
     // 发送具体歌曲请求
     function AjaxRequest_playlist_song_detail(url) {
@@ -910,8 +914,6 @@ window.addEventListener('load', function() {
                     </div>
                 </div>
             </div>`;
-            console.log(time);
-            console.log(typeof time);
             }
         })
 

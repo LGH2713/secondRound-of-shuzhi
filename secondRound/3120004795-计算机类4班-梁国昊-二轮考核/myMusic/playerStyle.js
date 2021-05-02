@@ -1,12 +1,13 @@
 window.addEventListener('load', function() {
+    const main_container = document.querySelector('.main-container');
     const user_info_content = document.querySelector('.user_info_content');
-    const user_right_list = document.querySelector('.user_right_list');
     const now_control = document.querySelector('.now_control');
     const lyric_area = document.querySelector('.lyric_area');
     const list_songs = document.querySelector('.list_songs');
     const now_playlist = document.querySelector('.now_playlist');
     const now_playListBtn = document.querySelector('.now_playListBtn');
     var back;
+    
     const audio = document.querySelector('.progress_container').querySelector('audio');
     const pause = document.querySelector('.pauseOrNot');
     const pause_icon = pause.querySelector('i');
@@ -81,16 +82,11 @@ window.addEventListener('load', function() {
         
     })
 
+    var user_interface = document.querySelector('.user_interface');
     now_control.addEventListener('click', function() {
-        user_info_content.style.display = 'none';
+        user_interface.style.display = 'none';
         lyric_area.style.display = 'block';
-        back = document.querySelector('.back');
-        back.onclick = function() {
-            list_songs.style.display = 'none';
-            user_info_content.style.display = 'block';
-            lyric_area.style.display = 'none';
-            back = null;
-        }
+        
     })
 
     
@@ -151,3 +147,22 @@ window.addEventListener('load', function() {
     // 歌词拖拽控制 end 
 
 })
+
+function songDetail(result) {
+    if(result) {
+        return result;
+    } else {
+        return '';
+    }
+}
+
+function playlist_songs(item) {
+    let result = '';
+    for(let i = 0; i < item.length; i++) {
+        result += item[i].id;
+        if(i < item.length - 1) {
+            result += ',';
+        }
+    }
+    return result;
+}

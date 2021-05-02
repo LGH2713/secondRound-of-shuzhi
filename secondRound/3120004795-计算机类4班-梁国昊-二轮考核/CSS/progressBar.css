@@ -11,7 +11,7 @@
     display: inline-block;
     width: 80%;
     height: 5px;
-    background-color: skyblue;
+    background-color: #999999c0;
 }
 
 .progress_inner {
@@ -19,7 +19,7 @@
     top: -2px;
     width: 10px;
     height: 10px;
-    background-color: red;
+    background-color: rgb(218, 214, 214);
     border-radius: 50%;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
@@ -31,7 +31,7 @@
     position: absolute;
     width: 0;
     height: 5px;
-    background-color: orange;
+    background-color: #ffffff;
 }
 
 .record_detail {

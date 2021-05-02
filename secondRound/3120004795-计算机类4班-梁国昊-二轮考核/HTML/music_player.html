@@ -13,9 +13,12 @@
     <link rel="stylesheet" href="../CSS/now_playlist.css">
     <!-- <script src="../myMusic/"></script> -->
     <script src="../myMusic/playing_list.js"></script>
-    <script src="../myMusic/musicPlayer.js"></script>
-    <script src="../myMusic/search_interface.js"></script>
     <script src="../myMusic/playerStyle.js"></script>
+    <script src="../myMusic/myPlaylist.js"></script>
+
+    <script src="../myMusic/musicPlayer.js"></script>
+    <script src="../myMusic/myPlaylist.js"></script>
+    <script src="../myMusic/search_interface.js"></script>
 
 
 
@@ -62,6 +65,10 @@
 
             <div class="search_interface" style="display: none;">
                 <input type="text" placeholder="Search..." class="search_input">
+                <div class="playlist_control">
+                    <div class="add_all"><i class="icon-playlist"></i></div>
+                    <div class="play_all"><i class="icon-music1"></i></div>
+                </div>
                 <div class="search_tab">
                     <div class="search_tab_item search_song">歌曲</div>
                     <div class="search_tab_item search_singer">歌手</div>
@@ -70,21 +77,19 @@
                 </div>
                 <div class="list_songs">
                     <div class="list_song_box list_songs_inner" style="display: block;">
-                        <div class="song_item">
+                        <!-- <div class="song_item">
                             <div class="song_order">1</div>
                             <div class="song_item_img"><img src="../image/u=2746384919,2327107392&fm=26&gp=0.jpg"
                                     alt=""></div>
                             <div class="song_item_name">A</div>
                             <div class="song_ar">123456</div>
-                            <!-- <span class="playBtn"><i class="icon-play2"></i></span> -->
                             <div class="song_operation" style="right: 12px;">
                                 <i class="icon-play2 playBtn"></i>
                                 <i class="icon-heart1"></i>
                                 <i class="song_item_add">+</i>
                                 <i class="icon-file_download"></i>
                             </div>
-                            <!-- <span class="song_item_plus">+</span> -->
-                        </div>
+                        </div> -->
                     </div>
 
                     <div class="list_singer_box list_songs_inner" style="display: none;">
@@ -103,18 +108,18 @@
                     </div>
 
                     <div class="list_singerSong_box list_songs_inner" style="display: none;">
-                        <div class="song_item">
+                        <!-- <div class="song_item">
                             <div class="song_order">1</div>
                             <div class="song_item_img"><img src="../image/u=2746384919,2327107392&fm=26&gp=0.jpg"
                                     alt=""></div>
                             <div class="song_item_name">A</div>
                             <div class="song_ar">123456</div>
-                        </div>
+                        </div> -->
                     </div>
 
 
                     <div class="list_playlist_box list_songs_inner" style="display: none;">
-                        <div class="list_playlist_item">
+                        <!-- <div class="list_playlist_item">
                             <img src="../image/u=2746384919,2327107392&fm=26&gp=0.jpg" alt="">
                             <div class="list_playlist_item_name">妖精的尾巴</div>
                             <div class="playlist_item_author">
@@ -122,17 +127,17 @@
                                 <span>播放次数：</span>
                             </div>
                             <div class="playlist_trackcount">1</div>
-                        </div>
+                        </div> -->
                     </div>
 
                     <div class="list_playlistSong_box list_songs_inner" style="display: none;">
-                        <div class="song_item">
+                        <!-- <div class="song_item">
                             <div class="song_order">1</div>
                             <div class="song_item_img"><img src="../image/u=2746384919,2327107392&fm=26&gp=0.jpg"
                                     alt=""></div>
                             <div class="song_item_name">A</div>
                             <div class="song_ar">123456</div>
-                        </div>
+                        </div> -->
                     </div>
 
                 </div>
@@ -199,6 +204,25 @@
                     </div>
                 </div>
             </div>
+
+            <div class="myplaylist_interface">
+                <div class="myplaylist_con" style="display: block;">
+
+                </div>
+
+                <div class="myplaylist_song_con" style="display: none;">
+                    <!-- <div class="myplaylist_song_item">
+                        <div class="myplaylist_song_order">1</div>
+                        <div class="myplaylist_song_item_img"><img src="../image/u=2746384919,2327107392&fm=26&gp=0.jpg"
+                                alt="">
+                        </div>
+                        <div class="myplaylist_song_item_name">A</div>
+                        <div class="myplaylist_song_ar">123456</div>
+
+                    </div> -->
+                </div>
+            </div>
+
         </div>
 
 
@@ -246,7 +270,10 @@
 
 
         <div class="now_playlist">
-            <div class="now_playListBtn"><i class="icon-music-notes"></i></div>
+            <div class="now_playlist_img">
+                <div class="now_playListBtn"><i class="icon-music-notes"></i></div>
+            </div>
+
             <div class="now_playlist_hd">
                 <p><i class="icon-music"></i> 播放列表</p>
                 <div class="playing_all"><i class="icon-play2"></i> 播放全部</div>
@@ -255,15 +282,18 @@
             <div class="now_playlist_bd">
                 <ul class="playing_list">
                     <!-- <li class="playing_list_item">
-                        <span class="playing_list_item_num">1</span>
-                        <div class="playing_list_item_img"><img src="../image/u=2746384919,2327107392&fm=26&gp=0.jpg"
-                                alt=""></div>
-                        <div class="playing_list_item_msg">
-                            <div class="playing_list_item_song">
-                                <div class="playing_list_item_songDetail">全息图 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 钢之炼金术师op2
+                        <div class="playing_list_item_con">
+                            <span class="playing_list_item_num">1</span>
+                            <div class="playing_list_item_img"><img
+                                    src="../image/u=2746384919,2327107392&fm=26&gp=0.jpg" alt=""></div>
+                            <div class="playing_list_item_msg">
+                                <div class="playing_list_item_song">
+                                    <div class="playing_list_item_songDetail">全息图 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        钢之炼金术师op2
+                                    </div>
                                 </div>
+                                <span class="playing_list_item_singer">Nico</span>
                             </div>
-                            <span class="playing_list_item_singer">Nico</span>
                         </div>
                         <div class="delete_one"><i class=" icon-cancel-circle""></i></div>
                     </li> -->
@@ -271,6 +301,8 @@
                 </ul>
             </div>
         </div>
+
+
     </div>
 </body>
 
