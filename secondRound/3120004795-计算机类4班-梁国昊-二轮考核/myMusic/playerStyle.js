@@ -13,23 +13,6 @@ window.addEventListener('load', function() {
     const pause_icon = pause.querySelector('i');
     var flag = false;
     var now_playListBtn_flag = false;
-    // var songRecord = (JSON.parse(window.localStorage.getItem('songRecord'))).reverse();
-    
-    // console.log(window.sessionStorage.getItem('recordIndex'));
-
-    // audio.ontimeupdate = function() {
-    //     // alert(window.sessionStorage.getItem('recordIndex'))
-    //     var index = parseInt(window.sessionStorage.getItem('recordIndex'));
-    //     if(audio.ended() && index < songRecord.length) {
-    //         audio.src = `https://music.163.com/song/media/outer/url?id=${songRecord[index + 1].id}.mp3`;
-    //         window.sessionStorage.removeItem('recordIndex');
-    //         window.sessionStorage.setItem('recordIndex', index + 1)
-    //     } else {
-    //         audio.pause();
-    //         window.sessionStorage.removeItem('recordIndex');
-    //         window.sessionStorage.setItem('recordIndex', index)
-    //     }
-    // }
 
     now_playlist.addEventListener('mouseover', function() {
         now_playListBtn.className = 'now_playListBtn_c now_playListBtn'
@@ -100,6 +83,9 @@ window.addEventListener('load', function() {
 
     progress_inner.onmousedown = function(e) {
         var dragX = e.clientX - progress_inner.offsetLeft;
+        let dragFlag = 1;
+        window.localStorage.removeItem('dragFlag');
+        window.localStorage.setItem('dragFlag', dragFlag);
         progress_container.onmousemove = function(e) {
             let left = e.clientX - dragX;
             if(left <= 0) {
@@ -115,36 +101,40 @@ window.addEventListener('load', function() {
     progress_container.onmouseup = function(e) {
         this.onmousedown = null;
         this.onmousemove = null;
+        let dragFlag = 0;
+        window.localStorage.removeItem('dragFlag');
+        window.localStorage.removeItem('dragFlag', dragFlag);
         audio.currentTime = audio.duration * progress_inner.offsetLeft / progress_bar.offsetWidth;
     }
     // 进度条控制 end
 
-    // 歌词拖拽控制 start 
-    // const lyric_area = document.querySelector('.lyric_area');
-    const lyric_ul = document.querySelector('#lyric_ul');
-    function lyricDrag(item1, item2) {
-        item1.onmousedown = function(e) {
-            var dargY = item1.offsetTop -  e.clientY;
-            item2.onmousemove = function(e) {
-                let top = dargY - e.clientY;
-                if(top >= 0) {
-                    top = 0;
-                } else if(top <= -item1.offsetHeight) {
-                    top = -item1.offsetHeight
-                }
-                console.log(top);
-                item1.style.top = top + 'px';
-            }
-        }
+    // // 歌词拖拽控制 start 
+    // // const lyric_area = document.querySelector('.lyric_area');
     
-        item2.onmouseup = function(e) {
-            this.onmousedown = null;
-            this.onmousemove = null;
-            // audio.currentTime = audio.duration * progress_inner.offsetLeft / progress_bar.offsetWidth;
-        }
-    }
+    // function lyricDrag() {
+    //     const lyric_area = document.querySelector('.lyric_area');
+    //     const lyric_ul = document.querySelector('#lyric_ul');
+    //     lyric_area.onmousedown = function(e) {
+    //         var dargY = item1.offsetTop -  e.clientY;
+    //         lyric_ul.onmousemove = function(e) {
+    //             let top = dargY - e.clientY;
+    //             if(top >= 0) {
+    //                 top = 0;
+    //             } else if(top <= -item1.offsetHeight) {
+    //                 top = -item1.offsetHeight
+    //             }
+    //             item1.style.top = top + 'px';
+    //         }
+    //     }
     
-    // 歌词拖拽控制 end 
+    //     item2.onmouseup = function(e) {
+    //         this.onmousedown = null;
+    //         this.onmousemove = null;
+    //         // audio.currentTime = audio.duration * progress_inner.offsetLeft / progress_bar.offsetWidth;
+    //     }
+    // }
+    
+    // // 歌词拖拽控制 end 
 
 })
 

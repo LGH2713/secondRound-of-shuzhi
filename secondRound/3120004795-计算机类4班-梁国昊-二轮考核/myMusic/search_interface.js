@@ -974,10 +974,6 @@ window.addEventListener('load', function() {
     }
 
 
-
-
-
-
     function singerName(item, index) {
         if(item.songs) {
             return item.songs[index].ar[0].name;
@@ -989,16 +985,5 @@ window.addEventListener('load', function() {
             return '佚名';
         }
     }
-
-
-
-
-
-
-
-
-
-    
-    
 })
 

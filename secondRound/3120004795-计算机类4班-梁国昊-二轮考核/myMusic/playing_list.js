@@ -569,6 +569,7 @@ function addSongs() {
 function clickAdd(item) {
     let playing_list = [];
     let data = JSON.parse(window.localStorage.getItem('addNeed'));
+    // console.log(data);
     let index = item.getAttribute('index');
     if(window.localStorage.getItem('playing_list')) {
         playing_list = JSON.parse(window.localStorage.getItem('playing_list'));//解析搜索记录并用新数组保存

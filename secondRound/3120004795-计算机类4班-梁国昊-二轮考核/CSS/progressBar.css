@@ -56,6 +56,11 @@
 }
 
 .progress_container_songName {
+    width: 150px;
+    height: 25px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
     margin-right: 20px;
     font-size: 20px;
     top: -20px;

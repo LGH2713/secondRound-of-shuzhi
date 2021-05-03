@@ -15,7 +15,7 @@
     <script src="../myMusic/playing_list.js"></script>
     <script src="../myMusic/playerStyle.js"></script>
     <script src="../myMusic/myPlaylist.js"></script>
-
+    <script src="../myMusic/flippedMusic.js"></script>
     <script src="../myMusic/musicPlayer.js"></script>
     <script src="../myMusic/myPlaylist.js"></script>
     <script src="../myMusic/search_interface.js"></script>
@@ -57,7 +57,20 @@
                             </i></div>
                     </div>
                     <div class="list_songs" style="display: block;">
-                        <div class="list_song_box"></div>
+                        <div class="list_song_box" style="display: block;"></div>
+                        <div class="flipped" style="background-color: rgb(48, 59, 59);display: none;">
+                            <div class="song_item">
+                                <div class="song_name">${data[i].name}</div>
+                                <div class="song_ar">${data[i].artists[0].name}</div>
+                                <div class="song_operation">
+                                    <i class="icon-play2 playBtn"></i>
+                                    <i class="song_item_add">+</i>
+                                    <i class="icon-file_download"></i>
+                                    <i class="icon-cancel-circle"></i>
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
 
                 </div>

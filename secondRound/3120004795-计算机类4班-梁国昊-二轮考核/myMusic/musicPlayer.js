@@ -22,6 +22,7 @@ window.addEventListener('load', function() {
     const comment_interface = document.querySelector('.comment_interface');
     var playing_list = [];
     var lyricDragFlag = false;
+    window.localStorage.setItem('dragFlag', '0');
 
 
     var scrollNum = 0;
@@ -134,14 +135,34 @@ window.addEventListener('load', function() {
         if(songRecord) {
             record(songRecord);
         }
+
+        const right_select_tab_list_item = document.querySelectorAll('.right_select_tab_list_item');
+        let list_song_box = document.querySelector('.list_song_box');
+        let flipped = document.querySelector('.flipped');
+        for(let i = 0; i < right_select_tab_list_item.length; i++) {
+            right_select_tab_list_item[i].setAttribute('index', i);
+            right_select_tab_list_item[i].addEventListener('click', function() {
+                let index = this.getAttribute('index');
+                switch(parseInt(index)) {
+                    case 0:
+                        list_song_box.style.display = 'block';
+                        flipped.style.display = 'none';
+                        break;
+                    case 2:
+                        list_song_box.style.display = 'none';
+                        flipped.style.display = 'block';
+                        break;
+                }
+            })
+        }
     }
 
 
 
     function record(data) {
+        let list_song_box = document.querySelector('.list_song_box');
         if(data.length) {
             data = data.reverse();
-        let list_song_box = document.querySelector('.list_song_box');
         list_song_box.innerHTML = '';
         for(let i = 0; i < data.length && i < 60; i++) {
             if(data[i].artists) {
@@ -150,7 +171,7 @@ window.addEventListener('load', function() {
             <div class="song_ar">${data[i].artists[0].name}</div>
             <div class="song_operation">
                 <i class="icon-play2 playBtn"></i>
-                <i class="icon-heart1"></i>
+                <i class="icon-heart1 song_item_flipped"></i>
                 <i class="song_item_add">+</i>
                 <i class="icon-file_download"></i>
             </div>
@@ -162,7 +183,7 @@ window.addEventListener('load', function() {
             <div class="song_ar">${data[i].ar[0].name}</div>
             <div class="song_operation">
                 <i class="icon-play2 playBtn"></i>
-                <i class="icon-heart1"></i>
+                <i class="icon-heart1 song_item_flipped"></i>
                 <i class="song_item_add">+</i>
                 <i class="icon-file_download"></i>
             </div>
@@ -173,12 +194,13 @@ window.addEventListener('load', function() {
         }
         
         
-        let song_item = user_interface.querySelectorAll('.song_item');
-        let playBtn = user_interface.querySelectorAll('.playBtn')
+        let song_item = list_song_box.querySelectorAll('.song_item');
+        let playBtn = list_song_box.querySelectorAll('.playBtn')
         let progress_inner = document.querySelector('.progress_inner');
         let progressBarWidth = document.querySelector('.progress_bar').offsetWidth;
         const progress_go = document.querySelector('.progress_go');
 
+        
         audio.ontimeupdate = function() {
             progress_inner.style.left = progressBarWidth * audio.currentTime / audio.duration + 'px';
             progress_go.style.width = progress_inner.style.left;
@@ -224,7 +246,10 @@ window.addEventListener('load', function() {
             })
         }
         window.localStorage.setItem('addNeed', JSON.stringify(data));
+        
         addSongs();
+
+        flippedSongs();
         }
         
     }
@@ -311,8 +336,12 @@ window.addEventListener('load', function() {
         let progressBarWidth = document.querySelector('.progress_bar').offsetWidth;
         let progress_go = document.querySelector('.progress_go');
         audio.ontimeupdate = function(e) {
+            // let lyric_ul = document.querySelector('.lyric_ul');
+            console.log(lyric_ul.style.top);
             progress_container_time.innerHTML = playerTime(audio.currentTime, audio.duration);
-            progress_inner.style.left = progressBarWidth * audio.currentTime / audio.duration + 'px';
+            if(parseInt(window.localStorage.getItem('dragFlag')) != 1) {
+                progress_inner.style.left = progressBarWidth * audio.currentTime / audio.duration + 'px';
+            }
             progress_go.style.width = progress_inner.style.left;
 
 
