@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="../icomoon/style.css">
     <link rel="stylesheet" href="../CSS/progressBar.css">
     <link rel="stylesheet" href="../CSS/now_playlist.css">
+    <link rel="stylesheet" href="../CSS/volume_control.css">
     <!-- <script src="../myMusic/"></script> -->
     <script src="../myMusic/playing_list.js"></script>
     <script src="../myMusic/playerStyle.js"></script>
@@ -219,6 +220,7 @@
             </div>
 
             <div class="myplaylist_interface">
+                <div class="myplaylist_playAll"><i class="icon-music1"></i> &nbsp; 播放全部</div>
                 <div class="myplaylist_con" style="display: block;">
 
                 </div>
@@ -261,7 +263,15 @@
                     </div>
                 </div>
                 <div class="other_control">
-                    <div class="volume_control"> <i class="icon-volume-medium"></i></div>
+                    <div class="volume_control">
+                        <i class="icon-volume-medium volume_control_icon"></i>
+                        <div class="volume_control_box">
+                            <div class="volume_progress_bar">
+                                <div class="volume_progress_inner"></div>
+                                <div class="volume_progress_go"></div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="order_control"> <i class="icon-menu module"></i></div>
                     <div class="download_control"><i class="icon-download"></i></div>
                     <div class="add_control"> <i style="font-size: 30px;"><strong>+</strong></i></div>

@@ -42,6 +42,16 @@ function myPlaylistFun() {
     for(let i = 0; i < list_playlist_item.length; i++) {
         list_playlist_item[i].setAttribute('index', i);
         list_playlist_item[i].addEventListener('click', function() {
+            const myplaylist_interface = document.querySelector('.myplaylist_interface');
+            let myplaylist_playAll = myplaylist_interface.querySelector('.myplaylist_playAll');
+            myplaylist_playAll.style.display = 'block';
+            myplaylist_interface.addEventListener('mouseover', function() {
+                myplaylist_playAll.style.opacity = 1;
+            })
+            myplaylist_interface.addEventListener('mouseout', function() {
+                myplaylist_playAll.style.opacity = 1;
+            })
+
             let index = this.getAttribute('index');
             myplaylist_con.style.display = 'none';
             myplaylist_song_con.style.display = 'block';
@@ -76,6 +86,12 @@ function AjaxRequest_myplaylist_song_detail(url) {
                     let data = JSON.parse(xhr.responseText);
                     console.log(data);
                     // window.localStorage.setItem('playlistSongs', data);
+                    let myplaylist_playAll = document.querySelector('.myplaylist_playAll');
+                    myplaylist_playAll.addEventListener('click', function() {
+                        window.localStorage.removeItem('playing_list');
+                        window.localStorage.setItem('playing_list', JSON.stringify(data.songs));
+                        AjaxRequest_playingList(playingUrl(idFun()));
+                    })
                     callback_myplaylist_song_play(data);
                 } else {
                     alert("Request was unsuccessful：" + xhr.status);

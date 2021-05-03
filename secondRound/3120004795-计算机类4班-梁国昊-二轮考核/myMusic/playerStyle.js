@@ -82,6 +82,7 @@ window.addEventListener('load', function() {
     const progress_go = document.querySelector('.progress_go');
 
     progress_inner.onmousedown = function(e) {
+        // console.log(`e.clientX = ${e.clientX};progress_inner.offsetLeft = ${progress_inner.offsetLeft}`);
         var dragX = e.clientX - progress_inner.offsetLeft;
         let dragFlag = 1;
         window.localStorage.removeItem('dragFlag');
@@ -108,35 +109,54 @@ window.addEventListener('load', function() {
     }
     // 进度条控制 end
 
-    // // 歌词拖拽控制 start 
-    // // const lyric_area = document.querySelector('.lyric_area');
+    // 音量控制 start
+    const volume_control = document.querySelector('.volume_control');
     
-    // function lyricDrag() {
-    //     const lyric_area = document.querySelector('.lyric_area');
-    //     const lyric_ul = document.querySelector('#lyric_ul');
-    //     lyric_area.onmousedown = function(e) {
-    //         var dargY = item1.offsetTop -  e.clientY;
-    //         lyric_ul.onmousemove = function(e) {
-    //             let top = dargY - e.clientY;
-    //             if(top >= 0) {
-    //                 top = 0;
-    //             } else if(top <= -item1.offsetHeight) {
-    //                 top = -item1.offsetHeight
-    //             }
-    //             item1.style.top = top + 'px';
-    //         }
-    //     }
-    
-    //     item2.onmouseup = function(e) {
-    //         this.onmousedown = null;
-    //         this.onmousemove = null;
-    //         // audio.currentTime = audio.duration * progress_inner.offsetLeft / progress_bar.offsetWidth;
-    //     }
-    // }
-    
-    // // 歌词拖拽控制 end 
+    const volume_control_box = document.querySelector('.volume_control_box');
+    const volume_progress_bar = document.querySelector('.volume_progress_bar');
+    const volume_progress_inner = document.querySelector('.volume_progress_inner');
+    // let audio = document.querySelector('audio');
+    const volume_progress_go = document.querySelector('.volume_progress_go');
+
+    volume_progress_inner.style.bottom = '42%';
+    volume_progress_go.style.height = '58%';
+    audio.volume = 0.5;
+
+    volume_progress_inner.onmousedown = function(e) {
+        volume_control_box.onmousemove = function(e) {
+            volume_progress_inner.style.bottom = (positionNum(volume_progress_bar, e)) + 'px';
+            audio.volume = positionNum(volume_progress_bar, e) / volume_progress_bar.offsetHeight;
+            volume_progress_go.style.height = (100 - (audio.volume) * 100) + '%';
+        }
+    }
+
+    volume_control_box.onmouseup = function() {
+        this.onmousemove = null;
+        this.onmousedown = null;
+    }
+    // 音量控制 end 
 
 })
+
+function positionNum(item1, item2) {
+    const volume_control_icon = document.querySelector('.volume_control_icon');
+    let num1 = item1.getBoundingClientRect().y + item1.offsetHeight;
+    let num2 = item2.clientY
+    if(num1 - num2 <= 0) {
+        volume_control_icon.className = 'icon-volume-mute volume_control_icon';
+        return 0;
+    } else if(num1 - num2 >= item1.offsetHeight) {
+        volume_control_icon.className = 'icon-volume-high volume_control_icon';
+        return item1.offsetHeight;
+    } else {
+        if((num1 - num2) / num1 >= 0.04) {
+            volume_control_icon.className = 'icon-volume-medium volume_control_icon'
+        } else if((num1 - num2) / num1 < 0.04) {
+            volume_control_icon.className = 'icon-volume-low volume_control_icon'
+        }
+        return num1 - num2;
+    }
+}
 
 function songDetail(result) {
     if(result) {

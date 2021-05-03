@@ -97,6 +97,8 @@ window.addEventListener('load', function() {
 
         const myplaylistBtn = document.querySelector('.myplaylistBtn');
         myplaylistBtn.addEventListener('click', function() {
+            let myplaylist_playAll = myplaylist_interface.querySelector('.myplaylist_playAll');
+            myplaylist_playAll.style.display = 'none';
             myplaylist_interface.style.display = 'block';
             myplaylist_con.style.display = 'block';
             myplaylist_song_con.style.display = 'none';
