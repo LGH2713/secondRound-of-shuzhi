@@ -208,7 +208,7 @@
 .playing_list_item_num {
     position: absolute;
     top: 6px;
-    left: 26px;
+    left: 0;
     font-size: 50px;
     font-weight: 600;
     color: rgba(255, 255, 255, 0.575);

@@ -441,8 +441,9 @@ window.addEventListener('load', function() {
                 let add_all = document.querySelector('.add_all');
                 add_all.addEventListener('click', function() {
                     // a();
-                    myPlaylistFun();
+                    myPlaylistFun();//将搜索结果导入我的歌单
                 })
+
 
                 let index = this.getAttribute('index');
                 let playlistUrl = Header + '/playlist/detail?id=' + data.result.playlists[index].id;
@@ -500,6 +501,13 @@ window.addEventListener('load', function() {
                         let data = JSON.parse(xhr.responseText);
                         console.log(data);
                         // window.localStorage.setItem('playlistSongs', data);
+                        let play_all = document.querySelector('.play_all');
+                        play_all.addEventListener('click', function() {
+                            // alert(1);
+                            window.localStorage.removeItem('playing_list');
+                            window.localStorage.setItem('playing_list', JSON.stringify(data.songs));
+                            AjaxRequest_playingList(playingUrl(idFun()));
+                        })
                         callback_playlist_song_play(data);
                     } else {
                         alert("Request was unsuccessful：" + xhr.status);
@@ -585,24 +593,6 @@ window.addEventListener('load', function() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
 
 
 

@@ -7,6 +7,7 @@ function idFun() {
     let ids = ''
     if(window.localStorage.getItem('playing_list')) {
         let playing_list = JSON.parse(window.localStorage.getItem('playing_list'));
+        console.log(playing_list);
         for(let i = 0; i < playing_list.length; i++) {
             ids += playing_list[i].id;
             if(i < playing_list.length - 1) {
@@ -17,6 +18,39 @@ function idFun() {
     return ids;
 }
 
+function addSongs() {
+    let user_interface = document.querySelector('.user_interface');
+    let song_item = user_interface.querySelectorAll('.song_item');
+    var song_item_add = user_interface.querySelectorAll('.song_item_add')
+        for(let i = 0; i < song_item.length; i++) {
+            // 放入当前播放列表 start
+            song_item_add[i].setAttribute('index', i);
+            song_item_add[i].addEventListener('click', function() {
+                clickAdd(song_item_add[i]);
+            })
+            // 放入当前列表 end 
+        }
+}
+
+function clickAdd(item) {
+    let playing_list = [];
+    let data = JSON.parse(window.localStorage.getItem('addNeed'));
+    // console.log(data);
+    let index = item.getAttribute('index');
+    if(window.localStorage.getItem('playing_list')) {
+        playing_list = JSON.parse(window.localStorage.getItem('playing_list'));//解析搜索记录并用新数组保存
+        playing_list.push(data[index]); //将点击的歌曲推入新数组
+        playing_list = clearMore(playing_list);//数组去重
+        window.localStorage.removeItem('playing_list');//移除原数据
+        window.localStorage.setItem('playing_list',JSON.stringify(playing_list))//储存新数组
+    } else {
+        playing_list.push(data[index]);
+        window.localStorage.setItem('playing_list',JSON.stringify(playing_list))
+    }
+    AjaxRequest_playingList(playingUrl(idFun()));
+}
+
+// 当前播放列表发送请求
 function AjaxRequest_playingList(url) {
     let xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
@@ -55,6 +89,7 @@ function isAr(item) {
     }
 }
 
+// 当前播放列表回调函数
 function callback_playingList(data) {
     var playing_list = document.querySelector('.playing_list');
     let delete_all = document.querySelector('.delete_all');
@@ -182,6 +217,7 @@ function callback_playingList(data) {
     
 }
 
+// 删除当前播放列表中的任意一首歌
 function delete_oneFun() {
     var delete_one = document.querySelectorAll('.delete_one');
     var playing_list_item_con = document.querySelectorAll('.playing_list_item_con');
@@ -262,6 +298,7 @@ function delete_oneFun() {
     
 }
 
+// 切换上一首下一首
 function switchSong(module) {
     const Header = 'http://localhost:3000';
     const audio = document.querySelector('audio');
@@ -271,10 +308,10 @@ function switchSong(module) {
     let nowPlaying = JSON.parse(window.localStorage.getItem('nowPlaying'));
     var now_index = parseInt(window.localStorage.getItem('now_index'));
 
-    var playing_list_item = document.querySelectorAll('.playing_list_item');
-    var playing_list_item_num = document.querySelectorAll('.playing_list_item_num');
-    var playing_list_item_img = document.querySelectorAll('.playing_list_item_img');
-    var playing_list_item_msg = document.querySelectorAll('.playing_list_item_msg');
+    
+    
+    
+    
 
     previousBtn.onclick = function() {
         
@@ -290,6 +327,11 @@ function switchSong(module) {
                 now_index = nowPlaying.length - 1;
             }
         }
+
+        var playing_list_item = document.querySelectorAll('.playing_list_item');
+        var playing_list_item_num = document.querySelectorAll('.playing_list_item_num');
+        var playing_list_item_img = document.querySelectorAll('.playing_list_item_img');
+        var playing_list_item_msg = document.querySelectorAll('.playing_list_item_msg');
 
         window.localStorage.setItem('now_index', now_index)
 
@@ -332,6 +374,10 @@ function switchSong(module) {
         window.localStorage.setItem('now_index', now_index)
 
 
+        var playing_list_item = document.querySelectorAll('.playing_list_item');
+        var playing_list_item_num = document.querySelectorAll('.playing_list_item_num');
+        var playing_list_item_img = document.querySelectorAll('.playing_list_item_img');
+        var playing_list_item_msg = document.querySelectorAll('.playing_list_item_msg');
         for(let i = 0; i < playing_list_item.length; i++) {
             playing_list_item[i].className = 'playing_list_item';
             playing_list_item_num[i].className = 'playing_list_item_num';
@@ -358,6 +404,7 @@ function switchSong(module) {
     }
 }
 
+// 将歌曲基本信息渲染到进度条上
 function player_con(data, index) {
     let progress_container_songName = document.querySelector('.progress_container_songName');
     let progress_container_singerName = document.querySelector('.progress_container_singerName');
@@ -365,6 +412,7 @@ function player_con(data, index) {
     progress_container_singerName.innerHTML = `${singerName(data, index)}`;
 }
 
+// 判断歌手名字是否存在
 function singerName(item, index) {
     index = parseInt(index);
     if(item.songs) {
@@ -387,8 +435,7 @@ function singerName(item, index) {
 }
 
 
-
-
+// 歌词发送请求
 function AjaxRequest_playingListLyric(url, module) {
     let xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function () {
@@ -407,6 +454,7 @@ function AjaxRequest_playingListLyric(url, module) {
         xhr.send();
 }
 
+// 歌词回调函数
 function callback_playingListLyric(data, module) {
     const audio = document.querySelector('audio');
     var lines = data.split('\n');
@@ -496,6 +544,8 @@ function callback_playingListLyric(data, module) {
     
 } 
 
+
+//获取范围内的随机数
 function getRandom(start, end, fixed) {
     console.log(start, end);
     let differ = end - start;
@@ -503,6 +553,7 @@ function getRandom(start, end, fixed) {
     return (start + differ * random).toFixed(fixed);
 }
 
+//列表播放
 function list_playing() {
     const Header = 'http://localhost:3000';
     const user_interface = document.querySelector('.user_interface');
@@ -525,6 +576,7 @@ function list_playing() {
 
 }
 
+//随机播放
 function random_playing() {
     const Header = 'http://localhost:3000';
     const user_interface = document.querySelector('.user_interface');
@@ -536,12 +588,14 @@ function random_playing() {
     AjaxRequest_playingListLyric(lyricUrl, 'random');
 }
 
+//进度条上方播放时间变化
 function playerTime(curTime, durTime) {
     if(durTime) {
         return `${curTime / 60 > 9 ? parseInt(curTime / 60) : '0' + parseInt(curTime / 60)}:${curTime % 60 > 9 ? parseInt(curTime % 60) : '0' + parseInt(curTime % 60)}/${durTime / 60 > 9 ? parseInt(durTime / 60) : '0' + parseInt(durTime / 60)}:${durTime % 60> 9 ? parseInt(durTime % 60) : '0' + parseInt(durTime % 60)}`;
     }
 }
 
+//当前播放列表的显示与隐藏
 function now_playlist_appear(item) {
     let now_playlist = document.querySelector('.now_playlist');
     now_playlist.onmouseover = function() {
@@ -552,38 +606,7 @@ function now_playlist_appear(item) {
     };
 }
 
-function addSongs() {
-    let user_interface = document.querySelector('.user_interface');
-    let song_item = user_interface.querySelectorAll('.song_item');
-    var song_item_add = user_interface.querySelectorAll('.song_item_add')
-        for(let i = 0; i < song_item.length; i++) {
-            // 放入当前播放列表 start
-            song_item_add[i].setAttribute('index', i);
-            song_item_add[i].addEventListener('click', function() {
-                clickAdd(song_item_add[i]);
-            })
-            // 放入当前列表 end 
-        }
-}
-
-function clickAdd(item) {
-    let playing_list = [];
-    let data = JSON.parse(window.localStorage.getItem('addNeed'));
-    // console.log(data);
-    let index = item.getAttribute('index');
-    if(window.localStorage.getItem('playing_list')) {
-        playing_list = JSON.parse(window.localStorage.getItem('playing_list'));//解析搜索记录并用新数组保存
-        playing_list.push(data[index]); //将点击的歌曲推入新数组
-        playing_list = clearMore(playing_list);//数组去重
-        window.localStorage.removeItem('playing_list');//移除原数据
-        window.localStorage.setItem('playing_list',JSON.stringify(playing_list))//储存新数组
-    } else {
-        playing_list.push(data[index]);
-        window.localStorage.setItem('playing_list',JSON.stringify(playing_list))
-    }
-    AjaxRequest_playingList(playingUrl(idFun()));
-}
-
+//数组查重
 function clearMore(arr) {
     var i, j, len = arr.length;
     for(i = 0; i < len; i++) {
