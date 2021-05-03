@@ -1,4 +1,4 @@
-window.addEventListener('load', function() {
+function clumn_recommend() {
     const recommend = document.querySelector('#recommend');
     let recommend_left = recommend.querySelector('.arrow_left');
     let recommend_right = recommend.querySelector('.arrow_right');
@@ -146,62 +146,4 @@ window.addEventListener('load', function() {
             }
         })
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-        // let item_2 = recommend.querySelector(`mod_slide_switch`)
-        // recommend_right.addEventListener('click',function(){
-        //     if(r_flag == true) {
-        //         r_flag = false;
-    
-        //         if(r_num == recom_con.children.length - 1) {//若走到最后一张图片的前一张图片，则将移动距离清零，并将num也归零
-        //             recom_con.style.left = 0;
-        //             r_num = 0;
-        //         }
-        //         r_num++;//若未走到最后一张图片，则num加一
-        //         switch_lr(recom_con,-r_num*width,function(){
-        //             r_flag = true;//当图片移动完全节流阀才打开（回调函数）
-        //         });
-        
-        //         r_circle++;//圆圈的索引号加一，保持与图片的索引号一致
-        //         if (r_circle == recom_con.children.length - 1) {//当走到最后一个小圆圈时，小圆圈的索引号归零
-        //             r_circle = 0;
-        //         }
-        //         circleChange();//使相应的小圆圈变白
-        //     }
-        // })
-    
-        // recommend_left.addEventListener('click',function() {
-        //     if(r_flag == true) {
-        //         r_flag = false;
-        //         if(r_num == 0) {
-        //             r_num = recom_con.children.length - 1; 
-        //             recom_con.style.left = -r_num*width + 'px';
-        //         }
-        //         r_num --;
-        //         switch_lr(recom_con, -r_num*width,function() {
-        //             r_flag = true;
-        //         })
-        
-        //         r_circle --;
-        //         if(r_circle < 0) {
-        //             r_circle = item_2.children.length - 1;
-        //         }
-        //         circleChange();
-        //     }
-        // })
-
-
-
-
-})
+}

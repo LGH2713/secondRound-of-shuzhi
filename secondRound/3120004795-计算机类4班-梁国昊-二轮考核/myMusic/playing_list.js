@@ -378,7 +378,7 @@ function switchSong(module) {
         var playing_list_item_num = document.querySelectorAll('.playing_list_item_num');
         var playing_list_item_img = document.querySelectorAll('.playing_list_item_img');
         var playing_list_item_msg = document.querySelectorAll('.playing_list_item_msg');
-        for(let i = 0; i < playing_list_item.length; i++) {
+        for(let i = 0; i < nowPlaying.length; i++) {
             playing_list_item[i].className = 'playing_list_item';
             playing_list_item_num[i].className = 'playing_list_item_num';
             playing_list_item_img[i].className = 'playing_list_item_img';

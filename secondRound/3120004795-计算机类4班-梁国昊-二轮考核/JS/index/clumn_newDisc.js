@@ -1,4 +1,4 @@
-window.addEventListener('load', function() {
+function clumn_newDisc() {
     const new_disc = document.querySelector('#new_disc');
     const new_disc_con = document.querySelector('.new_disc_con');
     
@@ -268,4 +268,4 @@ window.addEventListener('load', function() {
         item[circle].className = 'slide_switch__item current';
     }
 
-})
+}

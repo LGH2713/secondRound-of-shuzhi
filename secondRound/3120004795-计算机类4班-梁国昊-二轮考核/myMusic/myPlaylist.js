@@ -1,11 +1,17 @@
 function dataConcat(arr1, arr2) {
     console.log(arr1, arr2);
     let result = [];
-    for(let i = 0; i < arr1.length; i++) {
-        result.push(arr1[i].playlist);
-    }
-    for(let i = 0; i < arr2.length; i++) {
-        result.push(arr2[i]);
+    if(arr2) {
+        for(let i = 0; i < arr1.length; i++) {
+            result.push(arr1[i].playlist);
+        }
+        for(let i = 0; i < arr2.length; i++) {
+            result.push(arr2[i]);
+        }
+    } else {
+        for(let i = 0; i < arr1.length; i++) {
+            result.push(arr1[i].playlist);
+        }
     }
     clearMore(result);
     return result;
@@ -34,7 +40,7 @@ function myPlaylistFun() {
             <span>By: ${myplaylists_data[i].creator.nickname}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <span>播放次数：${myplaylists_data[i].playCount}</span>
         </div>
-        <div class="playlist_trackcount">${i + 1 > 9 ? i + 1 : '0' + i + 1}</div>
+        <div class="playlist_trackcount">${i + 1}</div>
     </div>`
     }
 

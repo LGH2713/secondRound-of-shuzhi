@@ -108,6 +108,8 @@ window.addEventListener('load', function() {
         })
 
         pic.onclick();
+        AjaxRequest_flippedList(flippedUrl(idFun_f()));
+        
 
         
         user_info_name.innerHTML += `<span>${data.profile.nickname}</span>`;
@@ -619,10 +621,10 @@ window.addEventListener('load', function() {
 
     function callback_loginedOut() {
         // window.localStorage.clear();
-        window.localStorage.removeItem('playlistInit');
+        // window.localStorage.removeItem('playlistInit');
         window.localStorage.removeItem('cookie');
         window.localStorage.removeItem('playing_list');
-        window.localStorage.removeItem('myplaylists');
+        // window.localStorage.removeItem('myplaylists');
         let login_refresh = Header + '/login/refresh';
         AjaxRequest_logined(login_refresh);
         window.location.replace('../HTML/index.html');

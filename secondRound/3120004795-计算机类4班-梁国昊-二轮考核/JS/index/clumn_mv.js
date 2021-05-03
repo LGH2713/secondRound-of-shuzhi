@@ -1,4 +1,4 @@
-window.addEventListener('load', function() {
+function clumn_mv() {
     const mv = document.querySelector('#mv');
     const mv_con = document.querySelector('.mv_con');
     
@@ -273,4 +273,4 @@ window.addEventListener('load', function() {
         item[circle].className = 'slide_switch__item current';
     }
 
-})
+}

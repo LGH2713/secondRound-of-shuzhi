@@ -1,4 +1,4 @@
-window.addEventListener('load', function() {
+function clumn_newSong() {
     const new_song = document.querySelector('#new_song');
     let playlist_con = new_song.querySelector('.playlist_con');
     
@@ -311,4 +311,4 @@ window.addEventListener('load', function() {
         }
         item[circle].className = 'slide_switch__item current';
     }
-})
+}

@@ -180,7 +180,7 @@ popup__close.addEventListener('click', function() {
         userCookie += cookie;
         window.localStorage.setItem('cookie', userCookie);
         window.localStorage.setItem('token', encodeURIComponent(data.token));
-        window.location.replace('music_player.html')
+        window.location.replace('index_logined.html')
         }
     }
     

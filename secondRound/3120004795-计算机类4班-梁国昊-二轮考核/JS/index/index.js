@@ -64,15 +64,18 @@ window.addEventListener('load', function() {
 
 
 
-
-
-
-
-
-
-
-
-
+    let body = document.querySelector('body');
+    body.onscroll = function() {
+        // console.log(window.pageYOffset);
+        let height = window.pageYOffset;
+        if(window.pageYOffset > 200 && window.pageYOffset <= 1200) {
+            clumn_newSong();
+        } else if(window.pageYOffset > 1200 && window.pageYOffset <= 2700) {
+            clumn_newDisc();
+        } else if(window.pageYOffset > 2700) {
+            clumn_mv();
+        }
+    }
 
 
 
@@ -112,8 +115,8 @@ window.addEventListener('load', function() {
     var num = 0;
     var circle = 0;
 
-    const defaultUrlHeader_2 = "http://musicapi.leanapp.cn"; // 默认URL头部2
-    var songListUrl = defaultUrlHeader_2 + '/top/playlist';
+    const playingHeader = 'http://localhost:3000';// 默认URL头部2
+    var songListUrl = playingHeader + '/top/playlist';
     AjaxRequest_songList(songListUrl,song_msg,2,5);
 
 
@@ -126,37 +129,37 @@ window.addEventListener('load', function() {
                 case '0':
                     circle = 0;
                     num = 0;
-                    songListUrl = defaultUrlHeader_2 + '/top/playlist';
+                    songListUrl = playingHeader + '/top/playlist';
                     AjaxRequest_songList(songListUrl,song_msg,2,5);
                     break;
                 case '1':
                     circle = 0;
                     num = 0;
-                    songListUrl = defaultUrlHeader_2 + '/top/playlist?&cat=流行';
+                    songListUrl = playingHeader + '/top/playlist?&cat=流行';
                     AjaxRequest_songList(songListUrl,song_msg,4,5);
                     break;
                 case '2':
                     circle = 0;
                     num = 0;
-                    songListUrl = defaultUrlHeader_2 + '/top/playlist?&cat=华语'
+                    songListUrl = playingHeader + '/top/playlist?&cat=华语'
                     AjaxRequest_songList(songListUrl,song_msg,4,5);
                     break
                 case '3':
                     circle = 0;
                     num = 0;
-                    songListUrl = defaultUrlHeader_2 + '/top/playlist?cat=ACG';
+                    songListUrl = playingHeader + '/top/playlist?cat=ACG';
                     AjaxRequest_songList(songListUrl,song_msg,4,5);
                     break;
                 case '4':
                     circle = 0;
                     num = 0;
-                    songListUrl = defaultUrlHeader_2 + '/top/playlist?cat=影视原声';
+                    songListUrl = playingHeader + '/top/playlist?cat=影视原声';
                     AjaxRequest_songList(songListUrl,song_msg,4,5);
                     break;
                 case '5':
                     circle = 0;
                     num = 0;
-                    songListUrl = defaultUrlHeader_2 + '/top/playlist?&cat=清新';
+                    songListUrl = playingHeader + '/top/playlist?&cat=清新';
                     AjaxRequest_songList(songListUrl,song_msg,4,5);
                     break;
             }

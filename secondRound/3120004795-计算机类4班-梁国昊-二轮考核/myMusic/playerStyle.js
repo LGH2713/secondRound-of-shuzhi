@@ -110,7 +110,7 @@ window.addEventListener('load', function() {
     // 进度条控制 end
 
     // 音量控制 start
-    const volume_control = document.querySelector('.volume_control');
+    // const volume_control = document.querySelector('.volume_control');
     
     const volume_control_box = document.querySelector('.volume_control_box');
     const volume_progress_bar = document.querySelector('.volume_progress_bar');

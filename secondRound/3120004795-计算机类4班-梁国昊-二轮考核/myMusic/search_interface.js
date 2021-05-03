@@ -581,6 +581,7 @@ window.addEventListener('load', function() {
 
                 let commentUrl = Header + `/comment/music?id=${data.songs[index].id}`;
                 comment_btn.style.display = 'block';
+                
                 AjaxRequest_comment(commentUrl);
             
             })
@@ -847,6 +848,14 @@ window.addEventListener('load', function() {
         let video = video_play.querySelector('video');
         let back = document.querySelector('.back');
         mv_btn.addEventListener('click', function() {
+            //返回键的显示
+            let back = document.querySelector('.back');
+            back.style.display = 'block';
+            back.onclick = function() {
+                back.style.display = 'none';
+            }
+            //返回键的显示
+            
             main_container.style.display = 'none';
             video_play.style.display = 'block';
             lyric_area.style.display = 'none';
@@ -886,6 +895,15 @@ window.addEventListener('load', function() {
 
     function callback_comment(data) {
         comment_btn.addEventListener('click', function() {
+            //返回键的显示
+            let back = document.querySelector('.back');
+            back.style.display = 'block';
+            back.onclick = function() {
+                back.style.display = 'none';
+            }
+            //返回键的显示
+
+
             search_interface.style.display = 'none';
             comment_interface.style.display = 'block';
             list_comment_box.innerHTML = '';

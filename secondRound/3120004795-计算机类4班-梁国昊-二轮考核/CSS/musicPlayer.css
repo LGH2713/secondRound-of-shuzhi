@@ -418,7 +418,8 @@ body {
     float: left;
     margin-left: 10px;
     width: 490px;
-    background-color: aliceblue;
+    color: #faf9f9;
+    /* background-color: aliceblue; */
 }
 /* 评论列表 end */
 
@@ -832,6 +833,7 @@ body {
 .back {
     cursor: pointer;
     position: absolute;
+    display: none;
     z-index: 9999;
     right: -7.4%;
     bottom: 40px;
