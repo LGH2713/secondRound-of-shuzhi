@@ -1,8 +1,10 @@
+// 歌曲详情请求地址转换函数
 function playingUrl(ids) {
     let playingHeader = 'http://localhost:3000';
     return playingHeader + '/song/detail?ids=' + ids;
 }
 
+// 歌曲详情请求地址转换函数
 function idFun() {
     let ids = ''
     if(window.localStorage.getItem('playing_list')) {
@@ -18,24 +20,80 @@ function idFun() {
     return ids;
 }
 
-function addSongs() {
+//点击加入当前播放列表
+function addSongs(module) {
+    let search_interface = document.querySelector('.search_interface');
     let user_interface = document.querySelector('.user_interface');
-    let song_item = user_interface.querySelectorAll('.song_item');
-    var song_item_add = user_interface.querySelectorAll('.song_item_add')
+
+    if(module == 'user') {
+        let song_item = user_interface.querySelectorAll('.song_item');
+        var song_item_add = user_interface.querySelectorAll('.song_item_add')
         for(let i = 0; i < song_item.length; i++) {
             // 放入当前播放列表 start
             song_item_add[i].setAttribute('index', i);
             song_item_add[i].addEventListener('click', function() {
-                clickAdd(song_item_add[i]);
+                clickAdd(song_item_add[i], module);
             })
             // 放入当前列表 end 
         }
+    } else if (module == 'searchSongs') {
+        let list_song_box = search_interface.querySelector('.list_song_box');
+        let song_item = list_song_box.querySelectorAll('.song_item');
+        var song_item_add = list_song_box.querySelectorAll('.song_item_add')
+        for(let i = 0; i < song_item.length; i++) {
+            // 放入当前播放列表 start
+            song_item_add[i].setAttribute('index', i);
+            song_item_add[i].addEventListener('click', function() {
+                clickAdd(song_item_add[i], module);
+            })
+            // 放入当前列表 end 
+        }
+    } else if(module == 'searchSingerSongs') {
+        let list_singerSong_box = search_interface.querySelector('.list_singerSong_box');
+        let song_item = list_singerSong_box.querySelectorAll('.song_item');
+        var song_item_add = list_singerSong_box.querySelectorAll('.song_item_add')
+        for(let i = 0; i < song_item.length; i++) {
+            // 放入当前播放列表 start
+            song_item_add[i].setAttribute('index', i);
+            song_item_add[i].addEventListener('click', function() {
+                clickAdd(song_item_add[i], module);
+            })
+            // 放入当前列表 end 
+        }
+    } else if(module == 'searchPlaylistSongs') {
+        let list_playlistSong_box = search_interface.querySelector('.list_playlistSong_box');
+        let song_item = list_playlistSong_box.querySelectorAll('.song_item');
+        var song_item_add = list_playlistSong_box.querySelectorAll('.song_item_add')
+        for(let i = 0; i < song_item.length; i++) {
+            // 放入当前播放列表 start
+            song_item_add[i].setAttribute('index', i);
+            song_item_add[i].addEventListener('click', function() {
+                clickAdd(song_item_add[i], module);
+            })
+            // 放入当前列表 end 
+        }
+    }
 }
 
-function clickAdd(item) {
+// 点击后数据处理函数
+function clickAdd(item, module) {
     let playing_list = [];
-    let data = JSON.parse(window.localStorage.getItem('addNeed'));
-    // console.log(data);
+    var data;
+    switch(module) {
+        case 'user':
+            data = JSON.parse(window.localStorage.getItem('addNeed'));
+            break;
+        case 'searchSongs':
+            data = JSON.parse(window.localStorage.getItem('search')).result.songs;
+            break;
+        case 'searchSingerSongs':
+            data = JSON.parse(window.localStorage.getItem('singerSong')).songs;
+            break;
+        case 'searchPlaylistSongs':
+            data = JSON.parse(window.localStorage.getItem('playlistSongs')).songs;
+            break;
+    }
+    
     let index = item.getAttribute('index');
     if(window.localStorage.getItem('playing_list')) {
         playing_list = JSON.parse(window.localStorage.getItem('playing_list'));//解析搜索记录并用新数组保存
@@ -91,6 +149,7 @@ function isAr(item) {
 
 // 当前播放列表回调函数
 function callback_playingList(data) {
+    const Header = 'http://localhost:3000';
     var playing_list = document.querySelector('.playing_list');
     let delete_all = document.querySelector('.delete_all');
     const playing_all = document.querySelector('.playing_all');
@@ -116,6 +175,7 @@ function callback_playingList(data) {
     }
 
 
+    // 每次点击播放时歌曲盒子样式变化
     var playing_songs = JSON.parse(window.localStorage.getItem('playing_list'));
     let playing_list_item = document.querySelectorAll('.playing_list_item');
     let playing_list_item_con = document.querySelectorAll('.playing_list_item_con');
@@ -146,6 +206,19 @@ function callback_playingList(data) {
             AjaxRequest_playingListLyric(lyricUrl, 'list');
             audio.src = `https://music.163.com/song/media/outer/url?id=${playing_songs[index].id}.mp3`;
             player_con(playing_songs, index);
+
+            // if(mv_con.result.songs[index].mvid) {
+            //         mv_btn.style.display = 'block';
+            //         let mvUrl = Header + '/mv/url?id=' + mv_con.result.songs[index].mvid;
+            //         AjaxRequest_mv(mvUrl);
+            // }
+
+            let comment_btn = document.querySelector('.comment_btn'); 
+            comment_btn.style.display = 'block';
+            comment_btn.onclick = function() {
+                let commentUrl = Header + `/comment/music?id=${playing_songs[index].id}`;
+                AjaxRequest_comment(commentUrl);
+            }
         })
 
     }
@@ -176,17 +249,18 @@ function callback_playingList(data) {
     order_control.setAttribute('moduleBtn', 'list');
 
 
-    const Header = 'http://localhost:3000';
+    
     let nowPlaying = JSON.parse(window.localStorage.getItem('nowPlaying'));
     let user_interface = document.querySelector('.user_interface');
     var lyric_area = document.querySelector('.lyric_area');
     playing_all.addEventListener('click', function() {
         user_interface.style.display = 'none';
         lyric_area.style.display = 'block';
-        window.localStorage.setItem('now_index', '0')
+        window.localStorage.setItem('now_index', '0')//设置当前播放第一首
         let lyricUrl = Header + '/lyric?id=' + nowPlaying[0].id
         AjaxRequest_playingListLyric(lyricUrl, 'list');
         audio.src = `https://music.163.com/song/media/outer/url?id=${nowPlaying[0].id}.mp3`;
+        
     })
 
 
@@ -307,11 +381,6 @@ function switchSong(module) {
     const playing_list = document.querySelector('.playing_list');
     let nowPlaying = JSON.parse(window.localStorage.getItem('nowPlaying'));
     var now_index = parseInt(window.localStorage.getItem('now_index'));
-
-    
-    
-    
-    
 
     previousBtn.onclick = function() {
         
@@ -434,7 +503,6 @@ function singerName(item, index) {
     }
 }
 
-
 // 歌词发送请求
 function AjaxRequest_playingListLyric(url, module) {
     let xhr = new XMLHttpRequest();
@@ -532,10 +600,8 @@ function callback_playingListLyric(data, module) {
             if(this.currentTime > result[i][0]) {
                 lyric_ul.style.top = `${-heigh*i + 'px'}`;
                 for(let k = 0; k < lyric_li.length; k++) {
-                    // lyric_li[k].style.backgroundColor = 'rgba(255, 255, 255, 0)';
                     lyric_li[k].style.color = '#333';
                 } 
-                // lyric_li[i].style.backgroundColor = 'rgba(255, 255, 255, 0.4)';
                 lyric_li[i].style.color = ' rgba(19, 2, 250, 0.603)';
             }
         }
@@ -620,3 +686,4 @@ function clearMore(arr) {
     }
     return arr;
 }
+

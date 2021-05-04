@@ -4,7 +4,6 @@ window.addEventListener('load', function() {
     const user_interface = document.querySelector('.user_interface');
     const search_interface = document.querySelector('.search_interface')
     const search_input = document.querySelector('.search_input');
-    const list_songs = document.querySelector('.list_songs');
     var list_song_box = search_interface.querySelector('.list_song_box');
     var list_singer_box = search_interface.querySelector('.list_singer_box');
     var list_playlist_box = search_interface.querySelector('.list_playlist_box');
@@ -16,34 +15,35 @@ window.addEventListener('load', function() {
     const progress_container_singerName = document.querySelector('.progress_container_singerName');
     const progress_container_time = document.querySelector('.progress_container_time');
     const list_songs_inner = document.querySelectorAll('.list_songs_inner');
-    // let progress_inner = document.querySelector('.progress_inner');
-    // let progressBarWidth = document.querySelector('.progress_bar').offsetWidth;
     var songRecord = [];
 
     const lyric_area = document.querySelector('.lyric_area')
     const lyric_ul = document.querySelector('#lyric_ul');
     const comment_interface = document.querySelector('.comment_interface');
     const list_comment_box = document.querySelector('.list_comment_box');
-    // const back = document.querySelector('.back');
     const mv_btn = document.querySelector('.mv_btn');
     const comment_btn = document.querySelector('.comment_btn');
-    const userId = window.localStorage.getItem("logined");
     const search_tab_item = document.querySelectorAll('.search_tab_item');
 
     var initSearchBtn = true;
-    var lyricDragFlag = false;
 
-    // console.log(list_songs.getElementsByTagName('div'));
 
 
     function initSearchAjax() {
         search_input.value = '';
             search_input.addEventListener('keyup', function() {
+                list_song_box.style.display = 'block';
+                list_singer_box.style.display = 'none';
+                list_playlist_box.style.display = 'none';
+                for(let i = 0; i < search_tab_item.length; i++) {
+                    search_tab_item[i].style.color = 'black';
+                }
+                search_tab_item[0].style.color = "#fff";
                 if(search_input.value != '') {
                     list_song_box.innerHTML = '';
                     setTimeout(function(){
                         AjaxRequest_search_song(searchUrl(search_input.value,'&type=1'));
-                    }, 1000)
+                    }, 700)
                 }
             })
         initSearchBtn = false;
@@ -103,32 +103,6 @@ window.addEventListener('load', function() {
                     AjaxRequest_search_playlist(searchUrl(search_input.value,'&type=1000'));
                     break;
             }
-
-            // list_songs.innerHTML = '';
-            
-            // search_input.value = '';
-
-
-        //     search_input.addEventListener('keyup', function() {
-        //         if(search_input.value != '') {
-        //             list_song_box.innerHTML = '';
-        //             // alert(index);
-
-        //             // setTimeout(function() {
-        //             //     switch(index) {
-        //             //         case '0':
-        //             //         AjaxRequest_search_song(searchUrl(search_input.value,'&type=1'));
-        //             //             break;
-        //             //         case '1':
-        //             //             AjaxRequest_search_singer(searchUrl(search_input.value,'&type=100'));
-        //             //             break;
-        //             //         case '2':
-        //             //             AjaxRequest_search_playlist(searchUrl(search_input.value,'&type=1000'));
-        //             //             break;
-        //             //     }
-        //             // }, 1100)
-        //         }
-        //     })
             
         })
     }
@@ -180,7 +154,7 @@ window.addEventListener('load', function() {
         <div class="song_ar">${data.result.songs[i].artists[0].name}</div>
         <div class="song_operation" style="right: 12px;">
                                 <i class="icon-play2 playBtn"></i>
-                                <i class="icon-heart1"></i>
+                                <i class="icon-heart1 song_item_flipped"></i>
                                 <i class="song_item_add">+</i>
                                 <i class="icon-file_download"></i>
                             </div>
@@ -197,7 +171,6 @@ window.addEventListener('load', function() {
                 // window.localStorage.removeItem('songRecord');
                 if(window.localStorage.getItem('songRecord')) {
                     songRecord = JSON.parse(window.localStorage.getItem('songRecord'));//解析搜索记录并用新数组保存
-                    console.log(songRecord);
                     songRecord.push(searchData.result.songs[index]); //将点击的歌曲推入新数组
                     songRecord = clearMore(songRecord);//数组去重
                     window.localStorage.removeItem('songRecord');//移除原数据
@@ -226,6 +199,8 @@ window.addEventListener('load', function() {
                     mv_btn.style.display = 'block';
                     let mvUrl = Header + '/mv/url?id=' + mv_con.result.songs[index].mvid;
                     AjaxRequest_mv(mvUrl);
+                } else {
+                    mv_btn.style.display = 'none';
                 }
 
                 let commentUrl = Header + `/comment/music?id=${searchData.result.songs[index].id}`;
@@ -233,6 +208,8 @@ window.addEventListener('load', function() {
                 AjaxRequest_comment(commentUrl);
             })
         }
+        addSongs('searchSongs');
+        flippedSongs('searchSongs');
     }
 
 // 搜索单曲 end 
@@ -326,7 +303,7 @@ window.addEventListener('load', function() {
             <div class="song_ar">${name}</div>
             <div class="song_operation" style="right: 12px;">
                                 <i class="icon-play2 playBtn"></i>
-                                <i class="icon-heart1"></i>
+                                <i class="icon-heart1 song_item_flipped"></i>
                                 <i class="song_item_add">+</i>
                                 <i class="icon-file_download"></i>
                             </div>
@@ -372,6 +349,8 @@ window.addEventListener('load', function() {
                     mv_btn.style.display = 'block';
                     let mvUrl = Header + '/mv/url?id=' + singerSong.songs[index].mv;
                     AjaxRequest_mv(mvUrl);
+                } else {
+                    mv_btn.style.display = 'none';
                 }
 
                 let commentUrl = Header + `/comment/music?id=${singerSong.songs[index].id}`;
@@ -380,6 +359,9 @@ window.addEventListener('load', function() {
             
             })
         }
+
+        addSongs('searchSingerSongs');
+        flippedSongs('searchSingerSongs');
     }
 
 // 搜索歌手 end 
@@ -500,7 +482,7 @@ window.addEventListener('load', function() {
                     if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
                         let data = JSON.parse(xhr.responseText);
                         console.log(data);
-                        // window.localStorage.setItem('playlistSongs', data);
+                        window.localStorage.setItem('playlistSongs', JSON.stringify(data));
                         let play_all = document.querySelector('.play_all');
                         play_all.addEventListener('click', function() {
                             // alert(1);
@@ -529,7 +511,7 @@ window.addEventListener('load', function() {
             <div class="song_ar">${data.songs[i].ar[0].name}</div>
             <div class="song_operation" style="right: 12px;">
                                 <i class="icon-play2 playBtn"></i>
-                                <i class="icon-heart1"></i>
+                                <i class="icon-heart1 song_item_flipped"></i>
                                 <i class="song_item_add">+</i>
                                 <i class="icon-file_download"></i>
                             </div>
@@ -571,12 +553,12 @@ window.addEventListener('load', function() {
                 AjaxRequest_lyric(lyricUrl,index);
 
 
-
-                // let mv_con = JSON.parse(window.localStorage.getItem('singerSong'));
                 if(data.songs[index].mv) {
                     mv_btn.style.display = 'block';
                     let mvUrl = Header + '/mv/url?id=' + data.songs[index].mv;
                     AjaxRequest_mv(mvUrl);
+                } else {
+                    mv_btn.style.display = 'none';
                 }
 
                 let commentUrl = Header + `/comment/music?id=${data.songs[index].id}`;
@@ -584,18 +566,17 @@ window.addEventListener('load', function() {
                 
                 AjaxRequest_comment(commentUrl);
             
+                
             })
+
+            
         }
+
+        addSongs('searchPlaylistSongs');
+        flippedSongs('searchPlaylistSongs');
     }
 
 // 搜索歌单 end 
-
-
-
-
-
-
-
 
 
     function clearMore(arr) {
@@ -611,16 +592,6 @@ window.addEventListener('load', function() {
         }
         return arr;
     }
-
-    // function singerName(item, index) {
-    //     if(item[index].ar) {
-    //         return item[index].ar[0].name;
-    //     } else if(item[index].artists) {
-    //         return item[index].artists[0].name;
-    //     } else {
-    //         return '佚名';
-    //     }
-    // }
 
     function list_record(data) {
         // let data = JSON.parse(window.localStorage.getItem('songRecord'))
@@ -779,50 +750,17 @@ window.addEventListener('load', function() {
 
             for(let i = 0; i < result.length; i++) {
                 if(this.currentTime > result[i][0]) {
-                    // lyricDrag(lyric_ul,lyric_area);
-                    if(lyricDragFlag == false) {
-                        lyric_ul.style.top = `${-heigh*i + 'px'}`;
-                    }
+                    lyric_ul.style.top = `${-heigh*i + 'px'}`;
                     for(let k = 0; k < lyric_li.length; k++) {
-                        lyric_li[k].style.backgroundColor = 'rgba(255, 255, 255, 0)';
-                        lyric_li[k].style.color = '#fff';
+                        lyric_li[k].style.color = '#333';
                     } 
-                    lyric_li[i].style.backgroundColor = 'rgba(255, 255, 255, 0.4)';
-                    lyric_li[i].style.color = 'chartreuse';
+                    lyric_li[i].style.color = ' rgba(19, 2, 250, 0.603)';
                 }
             }
         }
 
         
     }
-
-
-    function lyricDrag(item1, item2) {
-        item1.onmousedown = function(e) {
-            lyricDragFlag = true;
-
-            var dargY = item1.offsetTop -  e.clientY;
-            item2.onmousemove = function(e) {
-                let top = dargY - e.clientY;
-                if(top >= 0) {
-                    top = 0;
-                } else if(top <= -item1.offsetHeight) {
-                    top = -item1.offsetHeight
-                }
-                console.log(top);
-                item1.style.top = top + 'px';
-            }
-        }
-    
-        item2.onmouseup = function(e) {
-            this.onmousedown = null;
-            this.onmousemove = null;
-            lyricDragFlag = false;
-
-            // audio.currentTime = audio.duration * progress_inner.offsetLeft / progress_bar.offsetWidth;
-        }
-    }
-    
 
     function AjaxRequest_mv(url) {
         let xhr = new XMLHttpRequest();

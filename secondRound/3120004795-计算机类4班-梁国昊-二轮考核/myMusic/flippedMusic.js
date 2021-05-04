@@ -17,27 +17,83 @@ function idFun_f() {
     return ids;
 }
 
-function flippedSongs() {
-    let list_song_box = document.querySelector('.list_song_box');
-    let song_item = list_song_box.querySelectorAll('.song_item');
-    var song_item_flipped = list_song_box.querySelectorAll('.song_item_flipped')
-        for(let i = 0; i < song_item.length; i++) {
-            // 心动歌曲列表 start
-            song_item_flipped[i].setAttribute('index', i);
-            song_item_flipped[i].addEventListener('click', function() {
-                clickFlipped(song_item_flipped[i]);
-            })
-            // 放入心动歌曲列表 end 
+function flippedSongs(module) {
+    let search_interface = document.querySelector('.search_interface');
+    let user_interface = document.querySelector('.user_interface');
+
+        if(module == 'user') {
+            let list_song_box = user_interface.querySelector('.list_song_box');
+            let song_item = list_song_box.querySelectorAll('.song_item');
+            var song_item_flipped = list_song_box.querySelectorAll('.song_item_flipped')
+            for(let i = 0; i < song_item.length; i++) {
+                // 心动歌曲列表 start
+                song_item_flipped[i].setAttribute('index', i);
+                song_item_flipped[i].addEventListener('click', function() {
+                    clickFlipped(song_item_flipped[i], module);
+                })
+                // 放入心动歌曲列表 end 
+            }
+        } else if (module == 'searchSongs') {
+            let list_song_box = search_interface.querySelector('.list_song_box');
+            let song_item = list_song_box.querySelectorAll('.song_item');
+            var song_item_flipped = list_song_box.querySelectorAll('.song_item_flipped')
+            for(let i = 0; i < song_item.length; i++) {
+                // 放入当前播放列表 start
+                song_item_flipped[i].setAttribute('index', i);
+                song_item_flipped[i].addEventListener('click', function() {
+                    clickFlipped(song_item_flipped[i], module);
+                })
+                // 放入当前列表 end 
+            }
+        } else if (module == 'searchSingerSongs') {
+            let list_singerSong_box = search_interface.querySelector('.list_singerSong_box');
+            let song_item = list_singerSong_box.querySelectorAll('.song_item');
+            var song_item_flipped = list_singerSong_box.querySelectorAll('.song_item_flipped')
+            for(let i = 0; i < song_item.length; i++) {
+                // 放入当前播放列表 start
+                song_item_flipped[i].setAttribute('index', i);
+                song_item_flipped[i].addEventListener('click', function() {
+                    clickFlipped(song_item_flipped[i], module);
+                })
+                // 放入当前列表 end 
+            }
+        } else if(module == 'searchPlaylistSongs') {
+            let list_playlistSong_box = search_interface.querySelector('.list_playlistSong_box');
+            let song_item = list_playlistSong_box.querySelectorAll('.song_item');
+            var song_item_flipped = list_playlistSong_box.querySelectorAll('.song_item_flipped')
+            for(let i = 0; i < song_item.length; i++) {
+                // 放入当前播放列表 start
+                song_item_flipped[i].setAttribute('index', i);
+                song_item_flipped[i].addEventListener('click', function() {
+                    clickFlipped(song_item_flipped[i], module);
+                })
+                // 放入当前列表 end 
+            }
         }
+        
+        
+    
 }
 
-function clickFlipped(item) {
+function clickFlipped(item, module) {
     var flipped_list = [];
-    var data = JSON.parse(window.localStorage.getItem('addNeed'));
+    var data;
+    switch(module) {
+        case 'user':
+            data = JSON.parse(window.localStorage.getItem('addNeed'));
+            break;
+        case 'searchSongs':
+            data = JSON.parse(window.localStorage.getItem('search')).result.songs;
+            break;
+        case 'searchSingerSongs':
+            data = JSON.parse(window.localStorage.getItem('singerSong')).songs;
+            break;
+        case 'searchPlaylistSongs':
+            data = JSON.parse(window.localStorage.getItem('playlistSongs')).songs;
+    }
     let index = parseInt(item.getAttribute('index'));
     if(window.localStorage.getItem('flipped_list')) {
         flipped_list = JSON.parse(window.localStorage.getItem('flipped_list'));//解析搜索记录并用新数组保存
-        // console.log(flipped_list);
         flipped_list.push(data[index]); //将点击的歌曲推入新数组
         flipped_list = clearMore(flipped_list);//数组去重
         window.localStorage.removeItem('flipped_list');//移除原数据

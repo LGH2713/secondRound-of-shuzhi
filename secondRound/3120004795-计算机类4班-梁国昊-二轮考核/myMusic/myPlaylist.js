@@ -61,7 +61,6 @@ function myPlaylistFun() {
             let index = this.getAttribute('index');
             myplaylist_con.style.display = 'none';
             myplaylist_song_con.style.display = 'block';
-            // alert(1);
             if(myplaylists_data[index].trackIds) {
                 let playlistSongPlayUrl = Header + '/song/detail?ids=' + playlist_songs(myplaylists_data[index].trackIds);
                 console.log(playlistSongPlayUrl);
