@@ -109,13 +109,10 @@ window.addEventListener('load', function() {
     }
     // 进度条控制 end
 
-    // 音量控制 start
-    // const volume_control = document.querySelector('.volume_control');
-    
+    // 音量控制 start    
     const volume_control_box = document.querySelector('.volume_control_box');
     const volume_progress_bar = document.querySelector('.volume_progress_bar');
     const volume_progress_inner = document.querySelector('.volume_progress_inner');
-    // let audio = document.querySelector('audio');
     const volume_progress_go = document.querySelector('.volume_progress_go');
 
     volume_progress_inner.style.bottom = '42%';
@@ -135,6 +132,44 @@ window.addEventListener('load', function() {
         this.onmousedown = null;
     }
     // 音量控制 end 
+
+    // 歌词拖拽 start
+    const playingLine = document.querySelector('.playingLine');
+    const lyric_ul = document.getElementById('lyric_ul');
+    var dragMove;
+    lyric_ul.onmousedown = function(e) {
+        playingLine.style.display = 'block';
+        let dragFlag = 1;
+        window.localStorage.setItem('dragFlag', dragFlag);
+        var dragPrevious = e.clientY;
+        var top = lyric_ul.offsetTop;
+        lyric_area.onmousemove = function(e) {
+            dragMove = top - (dragPrevious - e.clientY);
+            if(dragMove <= -lyric_ul.offsetHeight) {
+                lyric_ul.style.top = -lyric_ul.offsetHeight + 'px';
+            } else if (dragMove >= 0) {
+                lyric_ul.style.top = 0 + 'px';
+            } else {
+                lyric_ul.style.top = dragMove + 'px';
+            }
+
+            
+        }
+    }
+    
+    var lyric_li = lyric_ul.getElementsByTagName('li');
+    lyric_area.onmouseup = function() {
+        playingLine.style.display = 'none';
+            let now = lyric_li[-(dragMove - dragMove % 80) / 80].getAttribute('time');
+            console.log(lyric_ul.style.top);
+            audio.currentTime = now;
+            this.onmousemove = null;
+            this.onmousedown = null;
+            let dragFlag = 0;
+            window.localStorage.removeItem('dragFlag');
+            window.localStorage.removeItem('dragFlag', dragFlag);
+    }
+    // 歌词拖拽 end 
 
 })
 

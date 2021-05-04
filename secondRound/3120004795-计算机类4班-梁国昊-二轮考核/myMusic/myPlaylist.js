@@ -108,6 +108,7 @@ function AjaxRequest_myplaylist_song_detail(url) {
 }
 
 function callback_myplaylist_song_play(data) {
+    const Header = 'http://localhost:3000';
     let myplaylist_song_con = document.querySelector('.myplaylist_song_con');
     console.log(myplaylist_song_con);
     myplaylist_song_con.innerHTML = '';
@@ -131,9 +132,11 @@ function callback_myplaylist_song_play(data) {
         myplaylist_song_item[i].addEventListener('click', function() {
             let index = this.getAttribute('index');
             audio.src = `https://music.163.com/song/media/outer/url?id=${data.songs[index].id}.mp3`;
-
+            let lyricUrl = Header + '/lyric?id=' + data.songs[index].id;
+            AjaxRequest_lyric(lyricUrl);
             progress_container_songName.innerHTML = `${data.songs[index].name}`;
             progress_container_singerName.innerHTML = `${singerName(data, index)}`;
+
         })
     }
 }

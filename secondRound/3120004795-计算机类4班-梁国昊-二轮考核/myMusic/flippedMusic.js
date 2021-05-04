@@ -124,6 +124,7 @@ function AjaxRequest_flippedList(url) {
 }
 
 function callback_flippedList(data) {
+    const Header = 'http://localhost:3000';
     const flipped = document.querySelector('.flipped');
     flipped.innerHTML = '';
     for(let i = 0; i < data.songs.length; i++) {
@@ -150,6 +151,9 @@ function callback_flippedList(data) {
             let index = this.getAttribute('index');
             var flippedList = JSON.parse(window.localStorage.getItem('flippedList'));
             audio.src = `https://music.163.com/song/media/outer/url?id=${flippedList[index].id}.mp3`;
+            player_con(flippedList, index);
+            let lyricUrl = Header + '/lyric?id=' + flippedList[index].id;
+            AjaxRequest_lyric(lyricUrl);
         })
     };
 

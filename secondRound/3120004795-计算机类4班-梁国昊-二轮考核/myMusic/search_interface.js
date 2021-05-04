@@ -691,17 +691,6 @@ window.addEventListener('load', function() {
         var lines = data.split('\n');
         pattern = /\[\d{2}:\d{2}.(\d{2}|\d{3})\]/g;
         result = [];
-        // while (!pattern.test(lines[0])) {
-        //     lines = lines.slice(1);
-        // };
-        // let lyric_length = lines.length;
-        // for(let i = 0; i <lyric_length; i++) {
-        //     // console.log(lines[i]);
-        //     if(pattern.test(lines[i])) {
-        //         console.log(lines[i]);
-        //         lines = lines.slice(i+1);
-        //     }
-        // }
         
         lines[lines.length - 1].length === 0 && lines.pop();
         lines.forEach(function (v /*数组元素值*/ , i /*元素索引*/ , a /*数组本身*/ ) {
@@ -722,9 +711,6 @@ window.addEventListener('load', function() {
         result.sort(function (a, b) {
             return a[0] - b[0];
         });
-        // console.log(result);
-
-
 
         lyric_ul.innerHTML = '';
         
@@ -745,18 +731,21 @@ window.addEventListener('load', function() {
         let progress_go = document.querySelector('.progress_go');
         audio.ontimeupdate = function(e) {
             progress_container_time.innerHTML = playerTime(audio.currentTime, audio.duration);
-            progress_inner.style.left = progressBarWidth * audio.currentTime / audio.duration + 'px';
+            if(parseInt(window.localStorage.getItem('dragFlag')) != 1) {
+                progress_inner.style.left = progressBarWidth * audio.currentTime / audio.duration + 'px';
+                for(let i = 0; i < result.length; i++) {
+                    if(this.currentTime > result[i][0]) {
+                        lyric_ul.style.top = `${-heigh*i + 'px'}`;
+                        for(let k = 0; k < lyric_li.length; k++) {
+                            lyric_li[k].style.color = '#333';
+                        } 
+                        lyric_li[i].style.color = ' rgba(19, 2, 250, 0.603)';
+                    }
+                }
+            }            
             progress_go.style.width = progress_inner.style.left;
 
-            for(let i = 0; i < result.length; i++) {
-                if(this.currentTime > result[i][0]) {
-                    lyric_ul.style.top = `${-heigh*i + 'px'}`;
-                    for(let k = 0; k < lyric_li.length; k++) {
-                        lyric_li[k].style.color = '#333';
-                    } 
-                    lyric_li[i].style.color = ' rgba(19, 2, 250, 0.603)';
-                }
-            }
+            
         }
 
         

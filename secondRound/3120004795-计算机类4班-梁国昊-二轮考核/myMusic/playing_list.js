@@ -202,16 +202,10 @@ function callback_playingList(data) {
 
 
             window.localStorage.setItem('now_index',index)//保存当前索引号
-            let lyricUrl = Header + '/lyric?id=' + nowPlaying[index].id
+            let lyricUrl = Header + '/lyric?id=' + nowPlaying[index].id;
             AjaxRequest_playingListLyric(lyricUrl, 'list');
             audio.src = `https://music.163.com/song/media/outer/url?id=${playing_songs[index].id}.mp3`;
             player_con(playing_songs, index);
-
-            // if(mv_con.result.songs[index].mvid) {
-            //         mv_btn.style.display = 'block';
-            //         let mvUrl = Header + '/mv/url?id=' + mv_con.result.songs[index].mvid;
-            //         AjaxRequest_mv(mvUrl);
-            // }
 
             let comment_btn = document.querySelector('.comment_btn'); 
             comment_btn.style.display = 'block';
@@ -227,22 +221,17 @@ function callback_playingList(data) {
 
 
     delete_all.addEventListener('click', function() {
-        let audio = document.querySelector('audio');
         if(window.localStorage.getItem('playing_list')) {
             playing_songs = null;
             window.localStorage.removeItem('playing_list');
             window.localStorage.removeItem('nowPlaying');
             console.log(JSON.parse(window.localStorage.getItem('playing_list')));
             console.log(JSON.parse(window.localStorage.getItem('nowPlaying')));
-            // audio.pause();
             playing_list.innerHTML = '';
             addSongs();
-            // AjaxRequest_playingList(playingUrl(idFun()));
-            // location.reload();
         }
     })
 
-    // let switchModule = ['list', 'loop', 'random'];
     let order_control = document.querySelector('.order_control');
     let module = document.querySelector('.module');
 
@@ -570,43 +559,41 @@ function callback_playingListLyric(data, module) {
     let previousBtn = document.querySelector('.previousBtn');//上一首
     let nowPlaying = window.localStorage.getItem('nowPlaying');
     audio.ontimeupdate = function(e) {
+        let lyric_ul = document.querySelector('#lyric_ul');
         progress_container_time.innerHTML = playerTime(audio.currentTime, audio.duration);
-        progress_inner.style.left = progressBarWidth * audio.currentTime / audio.duration + 'px';
+        if(parseInt(window.localStorage.getItem('dragFlag')) != 1) {
+            progress_inner.style.left = progressBarWidth * audio.currentTime / audio.duration + 'px';
+            for(let i = 0; i < result.length; i++) {
+                if(this.currentTime > result[i][0]) {
+                    lyric_ul.style.top = `${-heigh*i + 'px'}`;
+                    for(let k = 0; k < lyric_li.length; k++) {
+                        lyric_li[k].style.color = '#333';
+                    } 
+                    lyric_li[i].style.color = ' rgba(19, 2, 250, 0.603)';
+                }
+            }
+        }
+        progress_go.style.width = progress_inner.style.left;
         progress_go.style.width = progress_inner.style.left;
 
         switchSong(module);
         if(audio.ended) {
-            if(module == 'list') {
-                // nextBtn.onclick = null;
-                // previousBtn.onclick = null;
-                
+            if(module == 'list') {                
                 console.log(module);
                 let now_index = parseInt(window.localStorage.getItem('now_index'));
                 audio.src = `https://music.163.com/song/media/outer/url?id=${nowPlaying[now_index].id}.mp3`;
                 nextBtn.onclick();
-                // console.log(1);
-
             } else if(module == 'random') {
                 nextBtn.onclick = null;
                 previousBtn.onclick = null;
-                // switchSong(module);
                 let now_index = parseInt(window.localStorage.getItem('now_index'));
                 audio.src = `https://music.163.com/song/media/outer/url?id=${nowPlaying[now_index].id}.mp3`;
                 nextBtn.onclick();
             }
         }
 
-        for(let i = 0; i < result.length; i++) {
-            if(this.currentTime > result[i][0]) {
-                lyric_ul.style.top = `${-heigh*i + 'px'}`;
-                for(let k = 0; k < lyric_li.length; k++) {
-                    lyric_li[k].style.color = '#333';
-                } 
-                lyric_li[i].style.color = ' rgba(19, 2, 250, 0.603)';
-            }
-        }
+        
     }
-
     
 } 
 

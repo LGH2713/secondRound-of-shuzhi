@@ -310,6 +310,7 @@ function callback_lyric(data, songIndex) {
     let lyric_li = lyric_ul.querySelectorAll('.lyric_li');
     for(let i = 0; i < result.length; i++) {
         lyric_li[i].setAttribute('index', i);
+        lyric_li[i].setAttribute('time', result[i][0]);
     }
 
     let heigh = 80;//每句歌词的高度
@@ -318,24 +319,21 @@ function callback_lyric(data, songIndex) {
     let progress_go = document.querySelector('.progress_go');
     let progress_container_time = document.querySelector('.progress_container_time');
     audio.ontimeupdate = function(e) {
-        // let lyric_ul = document.querySelector('.lyric_ul');
-        console.log(lyric_ul.style.top);
+        let lyric_ul = document.querySelector('#lyric_ul');
         progress_container_time.innerHTML = playerTime(audio.currentTime, audio.duration);
         if(parseInt(window.localStorage.getItem('dragFlag')) != 1) {
             progress_inner.style.left = progressBarWidth * audio.currentTime / audio.duration + 'px';
-        }
-        progress_go.style.width = progress_inner.style.left;
-
-
-        for(let i = 0; i < result.length; i++) {
-            if(this.currentTime > result[i][0]) {
-                lyric_ul.style.top = `${-heigh*i + 'px'}`;
-                for(let k = 0; k < lyric_li.length; k++) {
-                    lyric_li[k].style.color = '#333';
-                } 
-                lyric_li[i].style.color = ' rgba(19, 2, 250, 0.603)';
+            for(let i = 0; i < result.length; i++) {
+                if(this.currentTime > result[i][0]) {
+                    lyric_ul.style.top = `${-heigh*i + 'px'}`;
+                    for(let k = 0; k < lyric_li.length; k++) {
+                        lyric_li[k].style.color = '#333';
+                    } 
+                    lyric_li[i].style.color = ' rgba(19, 2, 250, 0.603)';
+                }
             }
         }
+        progress_go.style.width = progress_inner.style.left;
     }
 
     
