@@ -1,54 +1,23 @@
 window.addEventListener('load', function() {
-    const main_container = document.querySelector('.main-container');
-    const user_info_content = document.querySelector('.user_info_content');
     const now_control = document.querySelector('.now_control');
     const lyric_area = document.querySelector('.lyric_area');
-    const list_songs = document.querySelector('.list_songs');
     const now_playlist = document.querySelector('.now_playlist');
     const now_playListBtn = document.querySelector('.now_playListBtn');
-    var back;
     
     const audio = document.querySelector('.progress_container').querySelector('audio');
     const pause = document.querySelector('.pauseOrNot');
     const pause_icon = pause.querySelector('i');
     var flag = false;
-    var now_playListBtn_flag = false;
 
     now_playlist.addEventListener('mouseover', function() {
-        now_playListBtn.className = 'now_playListBtn_c now_playListBtn'
+        now_playListBtn.className = 'now_playListBtn_c now_playListBtn';
     })
 
     now_playlist.addEventListener('mouseout', function() {
         now_playListBtn.className = ' now_playListBtn'
     })
 
-    now_playListBtn.addEventListener('click', function() {
-        var step;
-        if(now_playListBtn_flag == false) {
-            step = -42;
-            let timer = setInterval(function(){
-                if(step == 0) {
-                    clearInterval(timer);
-                    now_playListBtn_flag = true;
-                }
-                step += 1;
-                now_playlist.style.right = `${step}%`;
-            },5)
-        } else {
-            step = 0;
-            let timer = setInterval(function(){
-                if(step <= -42) {
-                    clearInterval(timer);
-                    now_playListBtn_flag = false;
-                }
-                step -= 1;
-                now_playlist.style.right = `${step}%`;
-            },5)
-        }
-        
-    });
     
-
 
 
 

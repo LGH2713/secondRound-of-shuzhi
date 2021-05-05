@@ -115,7 +115,6 @@ function AjaxRequest_playingList(url) {
         if (xhr.readyState == 4) {
             if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
                 let result = JSON.parse(xhr.responseText);
-                console.log(result);
                 window.localStorage.setItem('nowPlaying', JSON.stringify(result.songs));
                 callback_playingList(result);
             } else {
@@ -154,7 +153,6 @@ function callback_playingList(data) {
     let delete_all = document.querySelector('.delete_all');
     const playing_all = document.querySelector('.playing_all');
     let audio = document.querySelector('audio');
-    // console.log(delete_all);
     playing_list.innerHTML = '';
     for(let i = 0; i < data.songs.length; i++) {
         playing_list.innerHTML += `<li class="playing_list_item">
@@ -263,13 +261,11 @@ function callback_playingList(data) {
                 break;
             case 'loop':
                 audio.loop = false;
-                // switchSong('random')
                 random_playing();
                 module.className = `icon-shuffle module`
                 order_control.setAttribute('moduleBtn', 'random');
                 break;
             case 'random':
-                // switchSong('list');
                 list_playing();
                 module.className = `icon-menu module`;
                 order_control.setAttribute('moduleBtn', 'list');
@@ -289,8 +285,6 @@ function delete_oneFun() {
     var nowPlaying = JSON.parse(window.localStorage.getItem('nowPlaying'));
     let audio = document.querySelector('audio');
     
-    // var now_index = parseInt(window.localStorage.getItem('now_index'));
-
 
     for(let i = 0; i < playing_list_item.length; i++) {
         delete_one[i].setAttribute('index', i);//给元素添加索引号
@@ -306,9 +300,7 @@ function delete_oneFun() {
             for(let i = 0; i < playing_list_item_con.length; i++) {
                 delete_one[i].setAttribute('index', i);//给元素添加索引号
             }
-            
-            // nowPlaying.splice(index, 1);//点击单曲删除后删除该元素
-            
+                        
             if(delete_one.length == 1) {
                 index = this.getAttribute('index');
                 nowPlaying = [];//点击单曲删除后删除该元素
@@ -318,11 +310,9 @@ function delete_oneFun() {
                 nowPlaying.splice(index, 1);//点击单曲删除后删除该元素
                 playing_list_item[index].remove();//删除该节点
             }
-            // var playing_list_item_con = document.querySelectorAll('.playing_list_item_con');
             delete_one = document.querySelectorAll('.delete_one');
             playing_list_item_num = document.querySelectorAll('.playing_list_item_num');
             playing_list_item = document.querySelectorAll('.playing_list_item');
-            // var nowPlaying = JSON.parse(window.localStorage.getItem('nowPlaying'));
             
             if(playing_list_item.length && playing_list_item_con.length) {
                 for(let i = 0; i < playing_list_item.length; i++) {
@@ -338,7 +328,6 @@ function delete_oneFun() {
                 }
                 for(let i = 0; i < playing_list_item_num.length; i++) {
                     playing_list_item_num[i].textContent = i + 1;
-                    // console.log(playing_list_item_num[i].textContent);
                 }
             }
 

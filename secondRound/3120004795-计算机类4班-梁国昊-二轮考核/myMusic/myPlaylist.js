@@ -20,7 +20,7 @@ function dataConcat(arr1, arr2) {
 
 function myPlaylistFun() {
     let Header = 'http://localhost:3000';
-
+    const myplaylist_interface = document.querySelector('.myplaylist_interface');
     let myplaylistInitUrl = Header + `/user/playlist?uid=${JSON.parse(window.localStorage.getItem('logined'))}`;
     AjaxRequest_myplaylist_init(myplaylistInitUrl);
     let myplaylists_data = dataConcat(JSON.parse(window.localStorage.getItem('playlistInit')), JSON.parse(window.localStorage.getItem('myplaylists')));
@@ -28,6 +28,8 @@ function myPlaylistFun() {
     let myplaylist_con = document.querySelector('.myplaylist_con');
     let myplaylist_song_con = document.querySelector('.myplaylist_song_con');
     clearMore(myplaylists_data);
+
+
 
     myplaylist_con.innerHTML = '';
     for(let i = 0; i < myplaylists_data.length; i++) {
@@ -46,7 +48,6 @@ function myPlaylistFun() {
     for(let i = 0; i < list_playlist_item.length; i++) {
         list_playlist_item[i].setAttribute('index', i);
         list_playlist_item[i].addEventListener('click', function() {
-            const myplaylist_interface = document.querySelector('.myplaylist_interface');
             let myplaylist_playAll = myplaylist_interface.querySelector('.myplaylist_playAll');
             myplaylist_playAll.style.display = 'block';
             myplaylist_interface.addEventListener('mouseover', function() {

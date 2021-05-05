@@ -99,6 +99,7 @@ window.addEventListener('load', function() {
             user_interface.style.display = 'none'; //用户界面隐藏
             search_interface.style.display = 'none';//搜索界面隐藏
             lyric_area.style.display = 'none';//歌词区域隐藏
+            now_playlist_appear(myplaylist_interface);
         })
         // 各模块的显示与隐藏 end
 
@@ -204,7 +205,6 @@ function record(data) {
         
     </div>`;
         }
-    // recordNum = i + 1;
     }
     
     
