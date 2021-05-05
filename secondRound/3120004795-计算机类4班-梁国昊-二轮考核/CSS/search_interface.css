@@ -1,0 +1,198 @@
+/* 搜索模块 start */
+.search_interface .list_songs {
+    height: 85.2%;
+}
+
+.search_interface {
+    position: absolute;
+    z-index: 200;
+    top: 5px;
+    right: 20px;
+    width: 580px;
+    height: 86.6%;
+    border-radius: 5% 5% 0 0;
+    /*border-left: 2px solid #fff;
+    */border-top: 2px solid #fff;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.205);
+    -webkit-border-radius: 5% 5% 0 0;
+    -moz-border-radius: 5% 5% 0 0;
+    -ms-border-radius: 5% 5% 0 0;
+    -o-border-radius: 5% 5% 0 0;
+}
+
+.search_input {
+    margin-top: 15px;
+    background: transparent!important;
+    border: transparent;
+    border-bottom: 1px solid hsla(0,0%,100%,.5)!important;
+    background-color: #fff;
+    color: #fff;
+    font-size: 20px;
+    outline: none!important;
+    width: 385px;
+    vertical-align: -5px;
+    margin-left: 20px;
+}
+
+.search_input::-webkit-input-placeholder {
+    color: #fff;
+}
+
+.search_tab {
+    width: 80%;
+    height: 24px;
+    margin: 10px 0 20px 10px;
+}
+
+.search_tab_item {
+    cursor: pointer;
+    width: 50px;
+    float: left;
+    text-align: center;
+    margin-left: 5px;
+    margin-right: 15px;
+    height: 20px;
+}
+
+.search_interface .song_order {
+    float: left;
+    margin-top: 0;
+    width: 20px ;
+    height: 100%;
+    line-height:  56px;
+    padding-left: 20px;
+}
+
+.search_interface .song_item_img {
+    float: left;
+    margin-top: 2px;
+    width: 50px ;
+    height: 50px ;
+}
+
+.search_interface .song_item_img img {
+    width: 100%;
+    height: 100%;
+}
+
+.search_interface .song_item_name {
+    margin-left: 10px;
+    margin-top: 7px;
+    float: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.search_interface .song_ar {
+    margin-left: 10px;
+    margin-top: 4px;
+    float: left;
+}
+/* 搜索模块 end */
+
+/* 歌手搜索模块 start  */
+.list_singer_item {
+    float: left;
+    margin-left: 27px;
+    width: 250px;
+    height: 280px;
+    text-align: center;
+    transition: all 0.4s;
+    -webkit-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    -ms-transition: all 0.4s;
+    -o-transition: all 0.4s;
+}
+
+.list_singer_item:hover {
+    transform: scale(1.04);
+    -webkit-transform: scale(1.04);
+    -moz-transform: scale(1.04);
+    -ms-transform: scale(1.04);
+    -o-transform: scale(1.04);
+}
+
+.list_singer_item img {
+    width: 180px;
+    height: 180px;
+    margin-top: 20px;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+}
+
+.list_singer_item_name {
+    font-size: 20px;
+    color: #fff;
+}
+/* 歌手搜索模块 end  */
+
+
+/* 歌单搜索模块 start  */
+.list_playlist_item {
+    cursor: pointer;
+    position: relative;
+    float: left;
+    width: 100%;
+    padding: 15px 20px;
+    border-bottom: 1px solid #999999;
+    transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+}
+
+.list_playlist_item:hover {
+    transform: scale(1.04);
+    -webkit-transform: scale(1.04);
+    -moz-transform: scale(1.04);
+    -ms-transform: scale(1.04);
+    -o-transform: scale(1.04);
+}
+
+.list_playlist_item img {
+    float: left;
+    width: 70px;
+    height: 70px;
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+}
+
+.list_playlist_item_name {
+    margin-left: 20px;
+    margin-top: 2px;
+    width: 60%;
+    float: left;
+    color: azure;
+    font-weight: 800;
+}
+
+.playlist_item_author {
+    margin-left: 20px;
+    margin-top: 18px;
+    float: left;
+    width: 60%;
+}
+
+.playlist_item_author span {
+    font-size: 12px;
+}
+
+.playlist_trackcount {
+    font-size: 50px;
+    float: left;
+    width: 50px;
+    height: 100%;
+    margin-left: 50px;
+    color: rgba(0, 0, 0, .2);
+    
+}
+/* 歌单搜索模块 end  */

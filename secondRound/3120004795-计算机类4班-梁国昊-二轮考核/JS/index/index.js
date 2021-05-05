@@ -11,22 +11,12 @@ window.addEventListener('load', function() {
 
 
     const new_song = document.querySelector('#new_song');
-    // const new_song_playlist__list = new_song.querySelector('.playlist__list');
     let new_song_left = new_song.querySelector('.arrow_left');
     let new_song_right = new_song.querySelector('.arrow_right');
     arrow(new_song, new_song_left, new_song_right);
 
-    
-
-    // const mv = document.querySelector('#mv');
-    // // const mv_playlist__list = mv.querySelector('.playlist__list');
-    // let mv_left = mv.querySelector('.arrow_left');
-    // let mv_right = mv.querySelector('.arrow_right');
 
     arrow(song_list, song_list_left, song_list_right);
-    // arrow(new_song, new_song_left, new_song_right);
-    // arrow(recommend, recommend_left, recommend_right);
-    // arrow(mv, mv_left, mv_right);
 
     function arrow(obj1,arrow_left,arrow_right) {
         let pos = -80;
@@ -42,7 +32,6 @@ window.addEventListener('load', function() {
             }, 20);
 
             obj1.addEventListener('mouseleave', function() {
-                // let pos = 0;
                 let timer = setInterval(function() {
                     if(pos == -80) {
                         clearInterval(timer);
@@ -54,20 +43,11 @@ window.addEventListener('load', function() {
                 }, 10)
             })
         })
-    
-        
+
     }
-
-
-
-
-
-
 
     let body = document.querySelector('body');
     body.onscroll = function() {
-        // console.log(window.pageYOffset);
-        let height = window.pageYOffset;
         if(window.pageYOffset > 200 && window.pageYOffset <= 1200) {
             clumn_newSong();
         } else if(window.pageYOffset > 1200 && window.pageYOffset <= 2700) {
@@ -76,40 +56,6 @@ window.addEventListener('load', function() {
             clumn_mv();
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
 
 
     var num = 0;
@@ -177,13 +123,10 @@ window.addEventListener('load', function() {
     function AjaxRequest_songList(url,fn,num1,num2) {
         let xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {
-            // alert(xhr.readyState);
             if(xhr.readyState == 4) {
                 if(xhr.status >= 200 && xhr.status < 300 || xhr.status == 304) {
                     let data = JSON.parse(xhr.responseText);
-                    console.log(data);
                     fn(playlist_con,playlist__list_1,song_list_switch,data,num1,num2);
-                    // callback();
                 } else {
                     alert("Request was unsuccessful：" + xhr.status);
                 }
@@ -197,9 +140,6 @@ window.addEventListener('load', function() {
     
 
 
-    // obj1 = playlist_con;
-    // obj2 = playlist__list_1;
-    // obj3 = mod_slide_switch;
     function song_msg(obj1,obj2,obj3,result,num1,num2) {
         obj1.style.left = 0;
         obj1.innerHTML = '';
@@ -245,51 +185,6 @@ window.addEventListener('load', function() {
         callback(obj1,obj_3);
     };
 
-    // function song(obj1,obj2,obj3,result,num1,num2) {
-    //     obj1.style.left = 0;
-    //     obj1.innerHTML = '';
-    //     console.log(obj1.innerHTML);
-    //     for(let i = 0; i < num1; i++) {
-    //         obj1.innerHTML += `<ul class="playlist__list_1 slide__list"></ul>`;
-    //     }
-
-    //     let j = 0;
-    //     let obj_2 = document.querySelectorAll(`.${obj2}`);
-    //     obj_2.innerHTML = '';
-    //     for(let i = 0; i < num1; i++) {
-    //         for(j = 0; j < num2; j++) {
-    //             obj_2[i].innerHTML += `<li class="playlist__item slide__item">
-    //             <div class="playlist__item_box">
-    //                 <div class="playlist__cover mod_cover">
-    //                     <a href="#" class="js_playlist">
-    //                         <img src=${result.playlists[i*num2 + j].coverImgUrl} alt=""
-    //                             class="playlist__pic">
-    //                         <i class="mod_cover__mask"></i>
-    //                         <i class="icon-play2 f"></i>
-    //                     </a>
-    //                 </div>
-    //                 <h4 class="playlist__title"><span class="playlist__title_txt">
-    //                         <a href="#" class="js_playlist">${result.playlists[i*num2 + j].name}</a></span>
-    //                     <div class="playlist__other">播放量：${result.playlists[i*num2 + j].playCount}</div>
-    //                 </h4>
-    //             </div>
-    //         </li>`
-    //         }
-    //     };
-        
-    //     let obj_3 = document.querySelector(`.${obj3}`);
-    //     obj_3.innerHTML = '';
-
-    //     for(let i = 0; i < num1; i++) {
-    //         obj_3.innerHTML += `<a><i class="slide_switch__item "></i></a>`;
-    //     }
-
-    //     // 克隆节点
-    //     let copy = obj_2[0].cloneNode(true);
-    //     obj1.appendChild(copy);
-
-    //     callback(obj1,obj_3);
-    // };
     // 歌单推荐模块 end
 
     function callback(item1,item2) {

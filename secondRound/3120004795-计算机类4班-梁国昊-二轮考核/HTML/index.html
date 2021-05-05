@@ -27,10 +27,10 @@
     <div class="body_mask"></div>
 
     <!-- 下载客户端粘性盒子 start -->
-    <div class="popup_guide"><img src="../image/logo.png" alt="QQ音乐" class="popup_guide__logo">
+    <!-- <div class="popup_guide"><img src="../image/logo.png" alt="QQ音乐" class="popup_guide__logo">
         <p class="popup_guide__txt">千万高品质曲库尽享</p>
         <a href="#" class="popup_guide__btn "><i class="icon-windows8">客户端下载</i></a>
-    </div>
+    </div> -->
     <!-- 下载客户端粘性盒子 end -->
 
 
@@ -41,7 +41,7 @@
         style="position: fixed;z-index: 100000;top: 116.5px;margin: 10px;left: 417px;display: none;">
         <div class="popup">
             <h2 class="popup__tit">
-                <a href="#" class="popup__tit_item" style="color: #31c27c;" id="qq">QQ登录</a>
+                <a href="#" class="popup__tit_item" style="color: #31c27c;" id="qq">手机号登录</a>
                 <a href="#" class="popup__tit_item" id="wx">微信登录</a>
             </h2>
 
@@ -67,21 +67,22 @@
                     <div class="combine_page" style="display: none;">
                         <div class="page_login">
                             <div class="qtitle">
-                                <div class="title_0">帐号密码登录</div>
+                                <div class="title_0">手机号&密码登录</div>
                                 <div class="title_1">推荐使用<a href="#" id="link">快速安全登录</a>，防止盗号。</div>
                             </div>
                             <div class="login_form">
                                 <form action method="post" id="loginform">
                                     <div class="uinArea">
                                         <div class="inputOuter">
-                                            <label for="" class="input_tips" id="uin_tips">支持网易邮箱/手机号登录</label>
-                                            <input type="text" class="inputstyle uin" id="u">
+                                            <label for="" class="input_tips" id="uin_tips"></label>
+                                            <input type="text" class="inputstyle uin" id="u" placeholder="支持手机号登录">
                                             <a href="" class="uin_del"></a>
                                         </div>
                                         <div class="pwdArea">
                                             <div class="inputOuter">
-                                                <label for="" class="input_tips" id="password_tips">密码</label>
-                                                <input type="password" class="inputstyle password" id="p">
+                                                <label for="" class="input_tips" id="password_tips"></label>
+                                                <input type="password" class="inputstyle password" id="p"
+                                                    placeholder="密码">
                                             </div>
                                         </div>
                                         <div class="submit">
@@ -118,11 +119,10 @@
                         </div>
                     </div>
 
-                    <div class="bottom_qlogin" id="bq_1"><a class="link_1">帐号密码登录</a> | <a href="#">注册新帐号</a> | <a
-                            href="#">意见反馈</a>
+                    <div class="bottom_qlogin" id="bq_1" style="display: none;"><a class="link_1">帐号密码登录</a> | <a
+                            href="#">注册新帐号</a> | <a href="#">意见反馈</a>
                     </div>
-                    <div class="bottom_qlogin" id="bq_2" style="display: none;"><a class="link_2">忘了密码？</a> | <a
-                            href="#">注册新帐号</a>
+                    <div class="bottom_qlogin" id="bq_2"><a class="link_2">忘了密码？</a> | <a href="#">注册新帐号</a>
                         |
                         <a href="#">意见反馈</a>
                     </div>

@@ -1,0 +1,47 @@
+/* 歌词区域 start */
+.playingLine {
+    position: absolute;
+    top: 43.5%;
+    left: 5%;
+    color: #797575;
+}
+
+.lyric_area {
+    position: absolute;
+    top: 7%;
+    left: 3%;
+    width: 58%;
+    height: 80%;
+    text-align: center;
+    /* background-color: wheat; */
+    overflow: hidden;
+}
+
+#lyric_ul {
+    width: 920px;
+    position: absolute;
+    top: 0;
+    transform: translateY(235px);
+    transition-duration: 100ms;
+    -webkit-transform: translateY(235px);
+    -moz-transform: translateY(235px);
+    -ms-transform: translateY(235px);
+    -o-transform: translateY(235px);
+}
+
+.lyric_li {
+    user-select: none;
+    width: 100%;
+    height: 80px;
+    line-height: 80px;
+    /*background-color: blueviolet;
+    */font-size: 20px;
+    color: #999999;
+    /* background-color: rgba(255, 255, 255, 0.3); */
+}
+
+.lineHigh {
+    color: rgba(2, 159, 250, 0.603) !important;
+}
+
+/* 歌词区域 end */

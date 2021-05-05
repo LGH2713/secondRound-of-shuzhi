@@ -1,0 +1,171 @@
+/* 我的歌单 start  */
+.playlist_control {
+    display: none;
+    position: absolute;
+    top: 8%;
+    right: 0;
+    width: 20%;
+    height: 30px;
+}
+
+.playlist_control div {
+    float: right;
+    width: 40%;
+    padding-top: 2.5px;
+    color: #fff;
+    transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+}
+
+.playlist_control div:hover {
+    color: rgba(27, 164, 228, 0.678) !important;
+}
+
+.playlist_control i {
+    cursor: pointer;
+    font-size: 25px;
+    /* color: #fff; */
+}
+
+.myplaylist_interface {
+    position: absolute;
+    right: 0;
+    top: 6px;
+    background-color: rgba(11, 208, 252, 0.315);
+    width: 41%;
+    height: 86.5%;
+}
+
+.myplaylist_playAll {
+    position: absolute;
+    opacity: 0;
+    top: 0px;
+    left: -35px;
+    width: 35px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 18px;
+    overflow: hidden;
+    color: #fff;
+    background-color:rgba(11, 208, 252, 0.315);
+    transition: all 0.4s;
+    -webkit-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    -ms-transition: all 0.4s;
+    -o-transition: all 0.4s;
+}
+
+.myplaylist_playAll:hover {
+    width: 130px;
+    left: -130px;
+}
+
+.myplaylist_playAll i {
+    padding-left: 5px;
+    vertical-align: -5px;
+    font-size: 25px;
+    color: #ffffff;
+}
+
+.myplaylist_con,
+.myplaylist_song_con {
+    display: none;
+    position: absolute;
+    overflow-y: auto;
+    width: 100%;
+    height: 624px;
+    border-left: 0.5px solid rgba(255, 255, 255, 0.521);
+}
+
+.myplaylist_con::-webkit-scrollbar,
+.myplaylist_song_con::-webkit-scrollbar {
+    display: none;
+}
+
+.myplaylist_song_item {
+    cursor: pointer;
+    position: relative;
+    width: 100%;
+    height: 12%;
+    background-color: rgba(10, 10, 10, 0.103);
+    border-bottom: 0.5px solid #ffffff83;
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    overflow: hidden;
+    -o-transition: all 0.5s;
+}
+
+.myplaylist_song_item:hover {
+    transform: scale(1.08);
+    -webkit-transform: scale(1.08);
+    -moz-transform: scale(1.08);
+    -ms-transform: scale(1.08);
+    -o-transform: scale(1.08);
+}
+
+.myplaylist_song_order {
+    position: absolute;
+    font-size: 40px;
+    font-weight: 600;
+    top: 15px;
+    left: 20px;
+    color: rgb(139, 131, 131);
+}
+
+.myplaylist_song_item_img {
+    position: absolute;
+    width: 55px;
+    height: 55px;
+    top: 11px;
+    left: 100px;
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    -o-transition: all 0.5s;
+}
+
+.myplaylist_song_item:hover .myplaylist_song_item_img {
+    opacity: 0.3;
+    transform: rotate(-60deg) scale(1.5);
+    -webkit-transform: rotate(-60deg) scale(1.5);
+    -moz-transform: rotate(-60deg) scale(1.5);
+    -ms-transform: rotate(-60deg) scale(1.5);
+    -o-transform: rotate(-60deg) scale(1.5);
+}
+
+.myplaylist_song_item_img img {
+    width: 100%;
+    height: 100%;
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -ms-border-radius: 6px;
+    -o-border-radius: 6px;
+}
+
+.myplaylist_song_item_name {
+    position: absolute;
+    top: 11px;
+    left: 220px;
+    width: 200px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.myplaylist_song_ar {
+    position: absolute;
+    top: 38px;
+    left: 220px;
+    width: 200px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+/* 我的歌单 end  */

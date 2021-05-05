@@ -1,0 +1,65 @@
+/* 进度条控制 start */
+.control_btn {
+    float: left;
+    width: 150px;
+    height: 50px;
+    margin-top: 25px;
+    margin-left: 30px;
+    display: inline-block;
+}
+
+.control_btn div {
+    cursor: pointer;
+    float: left;
+    width: 50px;
+}
+
+.control_btn div i {
+    font-size: 40px;
+    cursor: pointer;
+    line-height: 50px;
+    color: #ffffff;
+}
+
+.progress_container {
+    position: relative;
+    float: left;
+    width: 700px;
+    height: 60px;
+    margin-left: 15px;
+    margin-top: 10px;
+}
+
+
+.other_control {
+    float: left;
+    margin-left: 0;
+    margin-top: 27px;
+}
+
+.other_control div {
+    cursor: pointer;
+    width: 20px;
+    margin-right: 20px;
+    padding: 7px;
+}
+
+.other_control div i {
+    line-height: 30px;
+    font-size: 20px;
+    color: #ffffff;
+}
+
+.other_control div {
+    position: relative;
+    float: left;
+}
+
+#m_player {
+    display: block;
+    float: left;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+/* 进度条控制 end */

@@ -5,7 +5,6 @@
     top: 8px;
     width: 41%;
     height: 86.3%;
-    /* background-color: #fff; */
     transition: all 0.6s;
     -webkit-transition: all 0.6s;
     -moz-transition: all 0.6s;
@@ -18,7 +17,6 @@
     z-index: 0;
     width: 100%;
     height: 100%;
-    /* background-color:  rgba(18, 18, 78, 0.699); */
     background: -webkit-linear-gradient(top left, rgba(250, 249, 253, 0.541), rgba(15, 172, 235, 0.699));
     background-size: 100% 100%;
 }
@@ -33,10 +31,7 @@
     top: 50%;
     left: -7%;
     border-left: 5px solid rgba(29, 177, 29, 0.932);
-    /* background-color: rgba(246, 250, 247, 0.432); */
-    /*text-align: center;
-    *//*line-height: 62px;
-    */-webkit-border-radius: 50%;
+    -webkit-border-radius: 50%;
     -moz-border-radius: 60px;
     -ms-border-radius: 60px;
     -o-border-radius: 60px;
@@ -97,6 +92,7 @@
 }
 
 .playing_all {
+    cursor: pointer;
     position: absolute;
     z-index: 0;
     text-align: center;
@@ -104,7 +100,6 @@
     right: 70px;
     font-size: 20px;
     color: #f51111a1;
-    background-color: rgba(255, 255, 255, 0.418);
     transition: all 0.5s;
     -webkit-transition: all 0.5s;
     -moz-transition: all 0.5s;
@@ -113,7 +108,11 @@
 }
 
 .playing_all:hover {
-    background-color: rgba(48, 180, 21, 0.603);
+    transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    -o-transform: scale(1.1);
 }
 
 .playing_all i {
@@ -125,16 +124,24 @@
     position: absolute;
     z-index: 5;
     height: 50px;
-    /* background-color: hotpink; */
     top: 6px;
     right: 12px;
     line-height: 50px;
 }
 
 .delete_all i {
+    cursor: pointer;
     font-size: 35px;
-    /* font-weight: 600; */
     vertical-align: -7px;
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    -o-transition: all 0.5s;
+}
+
+.delete_all:hover i {
+    font-size: 40px;
 }
 
 
@@ -170,6 +177,7 @@
 }
 
 .playing_list_item {
+    cursor: pointer;
     position: relative;
     width: 100%;
     height: 80px;

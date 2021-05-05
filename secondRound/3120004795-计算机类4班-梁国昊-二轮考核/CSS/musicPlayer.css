@@ -7,9 +7,7 @@ body {
     position: relative;
     height: 100vh;
     min-width: 1200px;
-    /* background-color: rgb(10, 28, 112); */
     background: url(../image/OIP.png) no-repeat ;
-    /* background: url(../image/burst.jpg) no-repeat ; */
     background-size: 100% 100%;
 }
 
@@ -31,6 +29,7 @@ body {
 }
 
 .nav_line {
+    cursor: pointer;
     z-index: 100;
     margin-left: 7px;
     margin-top: 30px;
@@ -40,16 +39,29 @@ body {
     font-size: 20px;
 }
 
+.nav_line:hover i,
+.nav_line:hover a {
+    color: rgb(23, 95, 230);
+}
+
 .nav_line a {
     font-size: 20px;
     color: #fff;
     vertical-align: 10px;
+    transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
 }
 
 .nav_line a i {
-    /* line-height: 40px; */
     font-size: 30px;
-    color: #ffffff;
+    transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
 }
 
 .nav_line img {
@@ -64,23 +76,7 @@ body {
 
 /* 左侧边栏 start  */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/* 下方歌曲控制栏 */
 .player_container {
     z-index: 1000;
     width: 100vw;
@@ -115,8 +111,6 @@ body {
     left: 0;
     padding-left: 260px;
     z-index: 2;
-    /* opacity: 0.2; */
-    /* background-color: royalblue; */
 }
 
 .user_info_list div {
@@ -161,18 +155,6 @@ body {
     padding-left: 21px;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
 /* 歌曲列表 start */
 .user_right_list,
 .comment_interface {
@@ -181,7 +163,6 @@ body {
     right: 0%;
     width: 38%;
     height: 86.6%;
-    /* background-color: aquamarine; */
 }
 
 .right_select_tab_list {
@@ -192,6 +173,7 @@ body {
 }
 
 .right_select_tab_list_item {
+    cursor: pointer;
     position: relative;
     overflow: hidden;
     left: 0;
@@ -257,6 +239,8 @@ body {
     /* color: #fff; */
 }
 
+
+
 .list_songs,
 .list_comment,
 .flipped {
@@ -267,13 +251,9 @@ body {
     height: 100%;
     overflow-y: auto;
     background-color: rgba(0, 0, 0, 0.205);
-    /* border-left: 1px solid #ffffff; */
-    /* overflow: scroll; */
 }
 
-.search_interface .list_songs {
-    height: 85.2%;
-}
+
 
 .list_songs::-webkit-scrollbar {
     display: none;
@@ -299,11 +279,6 @@ body {
     -ms-transition: all 0.2s;
     -o-transition: all 0.2s;
 }
-
-/* .playBtn i {
-    font-size: 35px;
-    color: #999999;
-} */
 
 .playBtn:hover {
     color: #fff !important;
@@ -331,19 +306,15 @@ body {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    /* position: absolute; */
-    /* left: 40px; */
 }
 
 .song_item div {
     width: 240px;
     margin-top: 9px;
     margin-left: 15px;
-    /* background-color: bisque; */
 }
 
 .song_ar {
-    /* position: absolute; */
     width: 30%;
     bottom: 5px;
     opacity: .6;
@@ -360,13 +331,21 @@ body {
 }
 
 .song_operation i {
-    /* display: block; */
     margin-left: 10px;
+    cursor: pointer;
     line-height: 30px;
+    transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+}
+
+.song_operation i:hover {
+    color: rgba(196, 45, 58, 0.712) !important;
 }
 
 .song_item_add {
-    /* vertical-align: 2px; */
     font-size: 30px;
 }
 
@@ -433,7 +412,6 @@ body {
     margin-left: 10px;
     width: 490px;
     color: #faf9f9;
-    /* background-color: aliceblue; */
 }
 /* 评论列表 end */
 
@@ -455,6 +433,10 @@ body {
 
 
 /* 搜索模块 start */
+.search_interface .list_songs {
+    height: 85.2%;
+}
+
 .search_interface {
     position: absolute;
     z-index: 200;
@@ -497,10 +479,6 @@ body {
     margin: 10px 0 20px 10px;
     /* background-color: teal; */
 }
-
-/* .search_interface .list_songs::-webkit-scrollbar {
-    display: none;
-} */
 
 .search_tab_item {
     cursor: pointer;
@@ -548,9 +526,6 @@ body {
     margin-top: 4px;
     float: left;
 }
-
-
-
 /* 搜索模块 end */
 
 /* 歌手搜索模块 start  */
@@ -597,6 +572,7 @@ body {
 
 /* 歌单搜索模块 start  */
 .list_playlist_item {
+    cursor: pointer;
     position: relative;
     float: left;
     width: 100%;
@@ -704,6 +680,7 @@ body {
 }
 
 .control_btn div {
+    cursor: pointer;
     float: left;
     width: 50px;
 }
@@ -733,6 +710,7 @@ body {
 }
 
 .other_control div {
+    cursor: pointer;
     width: 20px;
     margin-right: 20px;
     padding: 7px;
@@ -748,15 +726,6 @@ body {
     position: relative;
     float: left;
 }
-
-
-
-
-
-
-
-
-
 
 #m_player {
     display: block;
@@ -818,6 +787,8 @@ body {
     color: rgba(2, 159, 250, 0.603) !important;
 }
 
+/* 歌词区域 end */
+
 .mv_btn {
     z-index: 100;
     position: relative;
@@ -844,7 +815,7 @@ body {
     background-color: rgba(255, 255, 255, 0.1);
     color: rgb(99, 227, 236);
 }
-/* 歌词区域 end */
+
 
 
 .video_play {
@@ -899,13 +870,23 @@ body {
     float: right;
     width: 40%;
     padding-top: 2.5px;
+    color: #fff;
+    transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+}
+
+.playlist_control div:hover {
+    color: rgba(27, 164, 228, 0.678) !important;
 }
 
 .playlist_control i {
+    cursor: pointer;
     font-size: 25px;
-    color: #fff;
+    /* color: #fff; */
 }
-
 
 .myplaylist_interface {
     position: absolute;
@@ -928,7 +909,7 @@ body {
     font-size: 18px;
     overflow: hidden;
     color: #fff;
-    background-color: aqua;
+    background-color:rgba(11, 208, 252, 0.315);
     transition: all 0.4s;
     -webkit-transition: all 0.4s;
     -moz-transition: all 0.4s;
@@ -945,7 +926,7 @@ body {
     padding-left: 5px;
     vertical-align: -5px;
     font-size: 25px;
-    color: #999999;
+    color: #ffffff;
 }
 
 .myplaylist_con,
@@ -955,6 +936,7 @@ body {
     overflow-y: auto;
     width: 100%;
     height: 624px;
+    border-left: 0.5px solid rgba(255, 255, 255, 0.521);
 }
 
 .myplaylist_con::-webkit-scrollbar,
@@ -963,11 +945,26 @@ body {
 }
 
 .myplaylist_song_item {
+    cursor: pointer;
     position: relative;
     width: 100%;
     height: 12%;
     background-color: rgba(10, 10, 10, 0.103);
-    border-bottom: 1px solid #999999;
+    border-bottom: 0.5px solid #ffffff83;
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    overflow: hidden;
+    -o-transition: all 0.5s;
+}
+
+.myplaylist_song_item:hover {
+    transform: scale(1.08);
+    -webkit-transform: scale(1.08);
+    -moz-transform: scale(1.08);
+    -ms-transform: scale(1.08);
+    -o-transform: scale(1.08);
 }
 
 .myplaylist_song_order {
@@ -976,19 +973,39 @@ body {
     font-weight: 600;
     top: 15px;
     left: 20px;
+    color: rgb(139, 131, 131);
 }
 
 .myplaylist_song_item_img {
     position: absolute;
-    width: 50px;
-    height: 50px;
+    width: 55px;
+    height: 55px;
     top: 11px;
     left: 100px;
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    -o-transition: all 0.5s;
+}
+
+.myplaylist_song_item:hover .myplaylist_song_item_img {
+    opacity: 0.3;
+    transform: rotate(-60deg) scale(1.5);
+    -webkit-transform: rotate(-60deg) scale(1.5);
+    -moz-transform: rotate(-60deg) scale(1.5);
+    -ms-transform: rotate(-60deg) scale(1.5);
+    -o-transform: rotate(-60deg) scale(1.5);
 }
 
 .myplaylist_song_item_img img {
-    width: 50px;
-    height: 50px;
+    width: 100%;
+    height: 100%;
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -ms-border-radius: 6px;
+    -o-border-radius: 6px;
 }
 
 .myplaylist_song_item_name {

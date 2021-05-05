@@ -110,39 +110,9 @@ popup__close.addEventListener('click', function() {
 
 // 登录框 end
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     const Header = "http://localhost:3000";  // 默认URL头部1
 
     let phoneUrl = Header + '/login/cellphone?';
-    let emailUrl = Header + '/login';
-    let playlist_detail = Header + '/playlist/detail?uid=';
 
 
     var userCookie = '?cookie=';
@@ -150,15 +120,11 @@ popup__close.addEventListener('click', function() {
     // 账号密码登录 start
     const btn = document.querySelector('.btn');
     
-    // AjaxRequest_login(login_status);
-    // AjaxRequest_login(user_account);
 
     btn.addEventListener('click', function() {
-        // alert('已提交')
         let url = password_login();
         console.log(url);
         AjaxRequest_login(url);
-        // alert(1111);
     });
 
     function password_login() {
@@ -167,8 +133,6 @@ popup__close.addEventListener('click', function() {
         window.localStorage.setItem('phone',u.value);
         window.localStorage.setItem('password', p.value);
         let result = `${phoneUrl}phone=${u.value}&password=${p.value}`;
-        // console.log(result);
-        // console.log(result);
         return result; 
     }
 
@@ -184,7 +148,6 @@ popup__close.addEventListener('click', function() {
         }
     }
     
-    // console.log(userCookie);
 
     function AjaxRequest_login(url) {
         let xhr = new XMLHttpRequest();
@@ -204,42 +167,6 @@ popup__close.addEventListener('click', function() {
         xhr.open("GET", url, false);
         xhr.send();
     }
-
-    
-    
-
-    // function AjaxRequest_Detail(url) {
-    //     let xhr = new XMLHttpRequest();
-    //     xhr.onreadystatechange = function () {
-    //         if (xhr.readyState == 4) {
-    //             // alert(xhr.readyState);
-    //             if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
-    //                 let data = JSON.parse(xhr.responseText);
-    //                 console.log(data);
-    //             } else {
-    //                 alert("Request was unsuccessful：" + xhr.status);
-    //             }
-    //         }
-    //     }
-    //     xhr.open("GET", url, true);
-    //     xhr.send();
-    // }
-
-    // function AjaxRequest_reFresh(url) {
-    //     let xhr = new XMLHttpRequest();
-    //     xhr.onreadystatechange = function() {
-    //         if(xhr.readyState == 4) {
-    //             if(xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
-    //                 let data = JSON.parse(xhr.responseText);
-    //                 console.log(data);
-    //             } else {
-    //                 alert("Request was unsuccessful：" + xhr.status);
-    //             }
-    //         }
-    //     }
-    //     xhr.open("GET", url, false);
-    //     xhr.send();
-    // }
 
     
     // 账号密码登陆 end

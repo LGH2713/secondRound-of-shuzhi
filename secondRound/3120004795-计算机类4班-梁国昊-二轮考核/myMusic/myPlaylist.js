@@ -1,5 +1,4 @@
 function dataConcat(arr1, arr2) {
-    console.log(arr1, arr2);
     let result = [];
     if(arr2) {
         for(let i = 0; i < arr1.length; i++) {
@@ -28,7 +27,6 @@ function myPlaylistFun() {
     
     let myplaylist_con = document.querySelector('.myplaylist_con');
     let myplaylist_song_con = document.querySelector('.myplaylist_song_con');
-    console.log(myplaylists_data);
     clearMore(myplaylists_data);
 
     myplaylist_con.innerHTML = '';
@@ -86,11 +84,8 @@ function AjaxRequest_myplaylist_song_detail(url) {
     let xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
-                // alert(xhr.readyState);
                 if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
                     let data = JSON.parse(xhr.responseText);
-                    console.log(data);
-                    // window.localStorage.setItem('playlistSongs', data);
                     let myplaylist_playAll = document.querySelector('.myplaylist_playAll');
                     myplaylist_playAll.addEventListener('click', function() {
                         window.localStorage.removeItem('playing_list');
@@ -110,7 +105,6 @@ function AjaxRequest_myplaylist_song_detail(url) {
 function callback_myplaylist_song_play(data) {
     const Header = 'http://localhost:3000';
     let myplaylist_song_con = document.querySelector('.myplaylist_song_con');
-    console.log(myplaylist_song_con);
     myplaylist_song_con.innerHTML = '';
     for(let i = 0; i < data.songs.length; i++) {
         myplaylist_song_con.innerHTML += `<div class="myplaylist_song_item">
@@ -127,10 +121,12 @@ function callback_myplaylist_song_play(data) {
     let audio = document.querySelector('audio');
     let progress_container_songName = document.querySelector('.progress_container_songName');
     let progress_container_singerName = document.querySelector('.progress_container_singerName');
+    let lyric_area = document.querySelector('.lyric_area'); 
     for(let i = 0; i < myplaylist_song_item.length; i++) {
         myplaylist_song_item[i].setAttribute('index', i);
         myplaylist_song_item[i].addEventListener('click', function() {
             let index = this.getAttribute('index');
+            lyric_area.style.display = 'block';
             audio.src = `https://music.163.com/song/media/outer/url?id=${data.songs[index].id}.mp3`;
             let lyricUrl = Header + '/lyric?id=' + data.songs[index].id;
             AjaxRequest_lyric(lyricUrl);
@@ -155,11 +151,8 @@ function AjaxRequest_myplaylist_init(url) {
     let xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
-                // alert(xhr.readyState);
                 if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
                     let data = JSON.parse(xhr.responseText);
-                    console.log(data);
-                    // window.localStorage.setItem('playlistInit', JSON.stringify(data.playlist));
                     callback_myplaylist_init(data.playlist);
                 } else {
                     alert("Request was unsuccessful：" + xhr.status);
@@ -172,7 +165,6 @@ function AjaxRequest_myplaylist_init(url) {
 
 function callback_myplaylist_init(data) {
     let Header = 'http://localhost:3000';
-    console.log(data);
     for(let i = 0; i < data.length; i++) {
         let myplaylistInitDetailUrl = Header + `/playlist/detail?id=${data[i].id}`;
         AjaxRequest_myplaylist_initDetail(myplaylistInitDetailUrl);
@@ -183,10 +175,8 @@ function AjaxRequest_myplaylist_initDetail(url) {
     let xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
-                // alert(xhr.readyState);
                 if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
                     let data = JSON.parse(xhr.responseText);
-                    console.log(data);
                     let initDetail = [];
                     if(window.localStorage.getItem('playlistInit')) {
                         initDetail = JSON.parse(window.localStorage.getItem('playlistInit'));

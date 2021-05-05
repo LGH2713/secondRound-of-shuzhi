@@ -453,7 +453,6 @@ function switchSong(module) {
 
         // }
 
-        console.log(now_index);
         window.localStorage.setItem('now_index_all', now_index);
         audio.src = `https://music.163.com/song/media/outer/url?id=${nowPlaying[now_index].id}.mp3`;
         let lyricUrl = Header + '/lyric?id=' + nowPlaying[now_index].id
@@ -548,6 +547,7 @@ function callback_playingListLyric(data, module) {
     let lyric_li = lyric_ul.querySelectorAll('.lyric_li');
     for(let i = 0; i < result.length; i++) {
         lyric_li[i].setAttribute('index', i);
+        lyric_li[i].setAttribute('time', result[i][0]);
     }
 
     let heigh = 80;
@@ -559,6 +559,21 @@ function callback_playingListLyric(data, module) {
     let previousBtn = document.querySelector('.previousBtn');//上一首
     let nowPlaying = window.localStorage.getItem('nowPlaying');
     audio.ontimeupdate = function(e) {
+        switchSong(module);
+        if(audio.ended) {
+            if(module == 'list') {                
+                let now_index = parseInt(window.localStorage.getItem('now_index'));
+                audio.src = `https://music.163.com/song/media/outer/url?id=${nowPlaying[now_index].id}.mp3`;
+                nextBtn.onclick();
+            } else if(module == 'random') {
+                nextBtn.onclick = null;
+                previousBtn.onclick = null;
+                let now_index = parseInt(window.localStorage.getItem('now_index'));
+                audio.src = `https://music.163.com/song/media/outer/url?id=${nowPlaying[now_index].id}.mp3`;
+                nextBtn.onclick();
+            }
+        }
+
         let lyric_ul = document.querySelector('#lyric_ul');
         progress_container_time.innerHTML = playerTime(audio.currentTime, audio.duration);
         if(parseInt(window.localStorage.getItem('dragFlag')) != 1) {
@@ -574,24 +589,6 @@ function callback_playingListLyric(data, module) {
             }
         }
         progress_go.style.width = progress_inner.style.left;
-        progress_go.style.width = progress_inner.style.left;
-
-        switchSong(module);
-        if(audio.ended) {
-            if(module == 'list') {                
-                console.log(module);
-                let now_index = parseInt(window.localStorage.getItem('now_index'));
-                audio.src = `https://music.163.com/song/media/outer/url?id=${nowPlaying[now_index].id}.mp3`;
-                nextBtn.onclick();
-            } else if(module == 'random') {
-                nextBtn.onclick = null;
-                previousBtn.onclick = null;
-                let now_index = parseInt(window.localStorage.getItem('now_index'));
-                audio.src = `https://music.163.com/song/media/outer/url?id=${nowPlaying[now_index].id}.mp3`;
-                nextBtn.onclick();
-            }
-        }
-
         
     }
     

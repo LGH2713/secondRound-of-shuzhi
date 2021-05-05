@@ -19,7 +19,6 @@ window.addEventListener('load', function() {
             if (xhr.readyState == 4) {
                 if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
                     let result = JSON.parse(xhr.responseText);
-                    console.log(result);
                     window.localStorage.setItem('logined', result.data.account.id);
                     if(result.data.profile) {
                         callback_logined(result.data);
@@ -64,30 +63,34 @@ window.addEventListener('load', function() {
         const myplaylist_con = document.querySelector('.myplaylist_con');
         const myplaylist_song_con = myplaylist_interface.querySelector('.myplaylist_song_con');
         const searchMusicBtn = document.querySelector('.searchMusic');
+        const mv_btn = document.querySelector('.mv_btn');
+        const comment_btn = document.querySelector('.comment_btn');
         searchMusicBtn.onclick = function() {
+            mv_btn.style.display = 'none';
+            comment_btn.style.display = 'none';
             now_playlist.onmouseover = null;
             now_playlist.onmouseout = null;
             myplaylist_interface.style.display = 'none';//我的歌单模块隐藏
             user_interface.style.display = 'none'; //用户界面模块隐藏
             search_interface.style.display = 'block';//搜索界面模块显示
-            // u_list_songs.style.display = 'block';//
             lyric_area.style.display = 'block';//歌词模块显示
             now_playlist_appear(search_interface)
-            // audio.pause();
         }
 
         pic.onclick = function() {
-            // user_info_content = document.querySelector('.user_info_content');
+            mv_btn.style.display = 'none';
+            comment_btn.style.display = 'none';
             user_interface.style.display = 'block';//用户界面显示 
             search_interface.style.display = 'none';//搜索界面隐藏
             myplaylist_interface.style.display = 'none';//我的歌单模块隐藏
             lyric_area.style.display = 'none';//歌词区域隐藏
-            // user_info_content.display = 'block';
             now_playlist_appear(user_right_list);
         }
 
         const myplaylistBtn = document.querySelector('.myplaylistBtn');
         myplaylistBtn.addEventListener('click', function() {
+            mv_btn.style.display = 'none';
+            comment_btn.style.display = 'none';
             let myplaylist_playAll = myplaylist_interface.querySelector('.myplaylist_playAll');
             myplaylist_playAll.style.display = 'none';//播放全部按钮显示
             myplaylist_interface.style.display = 'block';//我的歌单模块显示
@@ -102,7 +105,6 @@ window.addEventListener('load', function() {
 
         pic.onclick();//初始时点击进入用户界面
         AjaxRequest_flippedList(flippedUrl(idFun_f()));//导入心动歌曲模块
-        // AjaxRequest_flippedList
         
 
         
@@ -262,7 +264,6 @@ function AjaxRequest_lyric(url,index) {
                 // alert(xhr.readyState);
                 if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
                     let data = JSON.parse(xhr.responseText);
-                    console.log(data);
                     callback_lyric(data.lrc.lyric, index);
                 } else {
                     alert("Request was unsuccessful：" + xhr.status);
@@ -392,10 +393,8 @@ function AjaxRequest_subcount(url) {
     let xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
-            // alert(xhr.readyState);
             if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
                 let data = JSON.parse(xhr.responseText);
-                console.log(data);
                 window.localStorage.setItem('subcount', data);
                 callback_subcount(data);
             } else {
@@ -421,7 +420,6 @@ function AjaxRequest_level(url) {
             // alert(xhr.readyState);
             if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
                 let data = JSON.parse(xhr.responseText);
-                // console.log(data);
                 window.localStorage.setItem('level', data);
                 callback_level(data);
             } else {
@@ -444,10 +442,7 @@ function AjaxRequest_loginOut(url) {
     let xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
-            // alert(xhr.readyState);
             if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
-                let data = JSON.parse(xhr.responseText);
-                // console.log(data);
                 callback_loginedOut();
             } else {
                 alert("Request was unsuccessful：" + xhr.status);
@@ -460,106 +455,10 @@ function AjaxRequest_loginOut(url) {
 
 // 退出登录回调函数
 function callback_loginedOut() {
-    // window.localStorage.clear();
-    // window.localStorage.removeItem('playlistInit');
     window.localStorage.removeItem('cookie');
     window.localStorage.removeItem('playing_list');
-    // window.localStorage.removeItem('myplaylists');
     let login_refresh = Header + '/login/refresh';
     AjaxRequest_logined(login_refresh);
     window.location.replace('../HTML/index.html');
 }
 
-
-// function AjaxRequest_mv(url) {
-//     let xhr = new XMLHttpRequest();
-//     xhr.onreadystatechange = function () {
-//         if (xhr.readyState == 4) {
-//             // alert(xhr.readyState);
-//             if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
-//                 let result = JSON.parse(xhr.responseText);
-//                 console.log(result);
-//                 callback_mv(result.data.url)
-//             } else {
-//                 alert("Request was unsuccessful：" + xhr.status);
-//             }
-//         }
-//     }
-//     xhr.open("GET", url, true);
-//     xhr.send();
-// }
-
-// function callback_mv(data) {
-//     let video_play = document.querySelector('.video_play');
-//     let main_container = document.querySelector('.main-container');
-//     let video = video_play.querySelector('video');
-//     let back = document.querySelector('.back');
-//     mv_btn.addEventListener('click', function() {
-//         main_container.style.display = 'none';
-//         video_play.style.display = 'block';
-//         lyric_area.style.display = 'none';
-//         audio.pause();
-//         player_container.style.display = 'none';
-//         video.src = `${data}`;
-//     });
-
-//     back.addEventListener('click', function() {
-//         main_container.style.display = 'block';
-//         video_play.style.display = 'none';
-//         player_container.style.display = 'block';
-//         lyric_area.style.display = 'block';
-//         video.pause();
-//         video.src = '';
-//     })
-    
-// }
-
-// function AjaxRequest_comment(url) {
-//     let xhr = new XMLHttpRequest();
-//     xhr.onreadystatechange = function () {
-//         if (xhr.readyState == 4) {
-//             // alert(xhr.readyState);
-//             if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
-//                 let result = JSON.parse(xhr.responseText);
-//                 console.log(result);
-//                 callback_comment(result)
-//             } else {
-//                 alert("Request was unsuccessful：" + xhr.status);
-//             }
-//         }
-//     }
-//     xhr.open("GET", url, true);
-//     xhr.send();
-// }
-
-// function callback_comment(data) {
-//     comment_btn.addEventListener('click', function() {
-//         search_interface.style.display = 'none';
-//         comment_interface.style.display = 'block';
-//         list_comment_box.innerHTML = '';
-//         for(let i = 0; i < data.comments.length; i++) {
-//             let time = timeSwitch(new Date(data.comments[i].time));
-//             // time = time.split(' ');
-//             list_comment_box.innerHTML += `<div class="list_comment_item">
-//             <img src=${data.comments[i].user.avatarUrl} alt="">
-//             <div class="comment_con">
-//                 <div class="commenter_msg">
-//                     <b>${data.comments[i].user.nickname}</b>
-//                     <span>${time}</span>
-//                 </div>
-//                 <div class="comment_text">
-//                     ${data.comments[i].content}
-//                 </div>
-//             </div>
-//         </div>`;
-//         console.log(time);
-//         console.log(typeof time);
-//         }
-//     })
-
-//     let back = document.querySelector('.back');
-//     back.addEventListener('click', function() {
-//         search_interface.style.display = 'block';
-//         comment_interface.style.display = 'none';
-//     })
-// }

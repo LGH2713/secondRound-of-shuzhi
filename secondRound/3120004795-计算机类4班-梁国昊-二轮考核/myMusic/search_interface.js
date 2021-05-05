@@ -124,7 +124,6 @@ window.addEventListener('load', function() {
                     // alert(xhr.readyState);
                     if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
                         let data = JSON.parse(xhr.responseText);
-                        console.log(data);
                         let searchArray = JSON.stringify(data);
                         window.localStorage.setItem('search', searchArray);
                         callback_searchSong(data);
@@ -224,12 +223,9 @@ window.addEventListener('load', function() {
         let xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == 4) {
-                    // alert(xhr.readyState);
                     if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
                         let data = JSON.parse(xhr.responseText);
                         console.log(data);
-                        // let searchArray = JSON.stringify(data);
-                        // window.localStorage.setItem('search', searchArray);
                         callback_searchSinger(data);
                     } else {
                         alert("Request was unsuccessful：" + xhr.status);
@@ -380,12 +376,8 @@ window.addEventListener('load', function() {
         let xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == 4) {
-                    // alert(xhr.readyState);
                     if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
                         let data = JSON.parse(xhr.responseText);
-                        console.log(data);
-                        // let searchArray = JSON.stringify(data);
-                        // window.localStorage.setItem('search', searchArray);
                         callback_searchPlaylist(data);
                     } else {
                         alert("Request was unsuccessful：" + xhr.status);
@@ -676,7 +668,6 @@ window.addEventListener('load', function() {
                     // alert(xhr.readyState);
                     if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
                         let data = JSON.parse(xhr.responseText);
-                        console.log(data);
                         callback_lyric(data.lrc.lyric, index);
                     } else {
                         alert("Request was unsuccessful：" + xhr.status);
@@ -809,7 +800,6 @@ window.addEventListener('load', function() {
                 // alert(xhr.readyState);
                 if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
                     let result = JSON.parse(xhr.responseText);
-                    console.log(result);
                     callback_comment(result)
                 } else {
                     alert("Request was unsuccessful：" + xhr.status);

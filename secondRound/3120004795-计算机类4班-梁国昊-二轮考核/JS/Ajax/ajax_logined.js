@@ -1,22 +1,20 @@
 window.addEventListener('load', function() {
-    const defaultUrlHeader_1 = "https://autumnfish.cn";  // 默认URL头部1
-    const defaultUrlHeader_2 = "http://musicapi.leanapp.cn"; // 默认URL头部2
+    const Header = 'http://localhost:3000';
     let userCookie = window.localStorage.getItem("cookie");
-    console.log(userCookie);
 
-    const login_status = defaultUrlHeader_1 + '/login/status' + userCookie;
+    const login_status = Header + '/login/status' + userCookie;
     AjaxRequest_msg(login_status);
 
 
-    function callback_logined(data) {
+    function callback_logined(result) {
         let userPic = document.querySelector('.userPic');
-        userPic.innerHTML = `<img src="${data.profile.avatarUrl}" alt="" class="pic">`;
+        userPic.innerHTML = `<img src="${result.data.profile.avatarUrl}" alt="" class="pic">`;
 
         let userDetail = document.querySelector('.userDetail');
-        userDetail.innerHTML = `<img src="${data.profile.avatarUrl}" alt="" class="list_img">
+        userDetail.innerHTML = `<img src="${result.data.profile.avatarUrl}" alt="" class="list_img">
         <div class="user_name">
             <span class="user_name_con">
-                <p style="font-size: 18px; color: #333; margin-bottom: 3px">${data.profile.nickname}</p>
+                <p style="font-size: 18px; color: #333; margin-bottom: 3px">${result.data.profile.nickname}</p>
                 <p style="font-size: 12px; color: #999999;">欢迎您的登录~</p>
             </span>
         </div>`
@@ -35,19 +33,8 @@ window.addEventListener('load', function() {
         <li s="user_select_list_item" id="comment">评论通知</li>
         <li s="user_select_list_item" id="login_out">退出登录</li>`;
 
-
-
-        const pic = document.querySelector('.pic');
-        const user_container = document.querySelector('.user_container');
-        let user_select = document.querySelector('.user_select');
-        var h = 0;
-
-
-
-
         const login_out = document.querySelector('#login_out'); 
-        // let userCookie = window.localStorage.getItem("cookie");
-        const loginOutUrl = defaultUrlHeader_1 + '/login/status' + userCookie;
+        const loginOutUrl = Header + '/login/status' + userCookie;
         login_out.addEventListener('click', function() {
             AjaxRequest_loginOut(loginOutUrl);
         })
@@ -55,9 +42,11 @@ window.addEventListener('load', function() {
     }
 
     function callback_loginedOut() {
-        localStorage.clear();
-        let login_refresh = defaultUrlHeader_1 + '/login/refresh' + userCookie;
-        AjaxRequest_msg(login_refresh);
+        window.localStorage.removeItem('cookie');
+        window.localStorage.removeItem('playing_list');
+        // let login_refresh = Header + '/login/refresh';
+        // AjaxRequest_msg(login_refresh);
+        // window.location.replace('../HTML/index.html');
         window.location.replace('index.html');
     };
 
@@ -75,9 +64,7 @@ window.addEventListener('load', function() {
                 if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
                     let data = JSON.parse(xhr.responseText);
                     console.log(data);
-                    if(data.profile) {
-                        callback_logined(data);
-                    } 
+                    callback_logined(data);
                 } else {
                     alert("Request was unsuccessful：" + xhr.status);
                 }

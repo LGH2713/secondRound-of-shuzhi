@@ -65,8 +65,12 @@ window.addEventListener('load', function() {
         
     })
 
+    var search_interface = document.querySelector('.search_interface');
+    var myplaylist_interface = document.querySelector('.myplaylist_interface');
     var user_interface = document.querySelector('.user_interface');
     now_control.addEventListener('click', function() {
+        search_interface.style.display = 'none';
+        myplaylist_interface.style.display = 'none';
         user_interface.style.display = 'none';
         lyric_area.style.display = 'block';
         
@@ -161,7 +165,6 @@ window.addEventListener('load', function() {
     lyric_area.onmouseup = function() {
         playingLine.style.display = 'none';
             let now = lyric_li[-(dragMove - dragMove % 80) / 80].getAttribute('time');
-            console.log(lyric_ul.style.top);
             audio.currentTime = now;
             this.onmousemove = null;
             this.onmousedown = null;
