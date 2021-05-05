@@ -35,6 +35,11 @@
     margin-left: 20px;
 }
 
+.search_interface .list_song_box {
+    height: 1120px !important;
+    overflow: hidden !important;
+} 
+
 .search_input::-webkit-input-placeholder {
     color: #fff;
 }

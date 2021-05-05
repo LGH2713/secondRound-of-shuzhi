@@ -144,10 +144,12 @@ window.addEventListener('load', function() {
 
     function callback_searchSong(data) {
         // list_song_box.innerHTML = '';
+        AjaxRequest_search_song_pic(searchSongUrl());
+        let picArr = JSON.parse(window.localStorage.getItem('searchSongPic'));
         for(let i = 0; i < data.result.songs.length && i < 20; i++) {
             list_song_box.innerHTML += `<div class="song_item">
         <div class="song_order">${i+1}</div>
-        <div class="song_item_img"><img src="http://p1.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg"
+        <div class="song_item_img"><img src=${picArr[i].al.picUrl}
                 alt=""></div>
         <div class="song_item_name">${data.result.songs[i].name}&nbsp &nbsp    ${songDetail(data.result.songs[i].alias[0])}</div>
         <div class="song_ar">${data.result.songs[i].artists[0].name}</div>
@@ -158,6 +160,7 @@ window.addEventListener('load', function() {
                                 <i class="icon-file_download"></i>
                             </div>
     </div>`
+    console.log(data.result.songs.length);
         }
 
         let playBtn = list_song_box.querySelectorAll('.playBtn');
@@ -211,6 +214,36 @@ window.addEventListener('load', function() {
         flippedSongs('searchSongs');
     }
 
+
+    function searchSongUrl() {
+        let search = JSON.parse(window.localStorage.getItem('search')).result.songs;
+        let ids = ''
+        for(let i = 0; i < search.length; i++) {
+            ids += search[i].id;
+            if(i < search.length - 1) {
+                ids += ',';
+            }
+        }
+        let Header = 'http://localhost:3000';
+        return Header + '/song/detail?ids=' + ids;
+    }
+
+    function AjaxRequest_search_song_pic(url) {
+        let xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
+                        let data = JSON.parse(xhr.responseText);
+                        // alert(1)
+                        window.localStorage.setItem('searchSongPic', JSON.stringify(data.songs));
+                    } else {
+                        alert("Request was unsuccessful：" + xhr.status);
+                    }
+                }
+            }
+            xhr.open("GET", url, false);
+            xhr.send();
+    }
 // 搜索单曲 end 
 
 
@@ -400,7 +433,7 @@ window.addEventListener('load', function() {
                 <span>By: ${data.result.playlists[i].creator.nickname}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <span>播放次数：${data.result.playlists[i].playCount}</span>
             </div>
-            <div class="playlist_trackcount">${i + 1 > 9 ? i + 1 : '0' + i + 1}</div>
+            <div class="playlist_trackcount">${i + 1}</div>
         </div>`
         }
 
@@ -714,6 +747,7 @@ window.addEventListener('load', function() {
         let lyric_li = lyric_ul.querySelectorAll('.lyric_li');
         for(let i = 0; i < result.length; i++) {
             lyric_li[i].setAttribute('index', i);
+            lyric_li[i].setAttribute('time', result[i][0]);
         }
 
         let heigh = lyric_li[0].offsetHeight;
