@@ -160,7 +160,6 @@ window.addEventListener('load', function() {
                                 <i class="icon-file_download"></i>
                             </div>
     </div>`
-    console.log(data.result.songs.length);
         }
 
         let playBtn = list_song_box.querySelectorAll('.playBtn');
@@ -701,7 +700,12 @@ window.addEventListener('load', function() {
                     // alert(xhr.readyState);
                     if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
                         let data = JSON.parse(xhr.responseText);
-                        callback_lyric(data.lrc.lyric, index);
+                        if(data.lrc) {
+                            callback_lyric(data.lrc.lyric, index);
+                        } else {
+                            let lyric_ul = document.querySelector('#lyric_ul');
+                            lyric_ul.innerHTML = '<p class="absMusic">请欣赏纯音乐</p>';
+                        }
                     } else {
                         alert("Request was unsuccessful：" + xhr.status);
                     }

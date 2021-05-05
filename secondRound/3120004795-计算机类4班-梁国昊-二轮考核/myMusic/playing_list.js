@@ -496,8 +496,12 @@ function AjaxRequest_playingListLyric(url, module) {
                 // alert(xhr.readyState);
                 if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
                     let data = JSON.parse(xhr.responseText);
-                    console.log(data);
-                    callback_playingListLyric(data.lrc.lyric, module);
+                    if(data.lrc) {
+                        callback_playingListLyric(data.lrc.lyric, module);
+                    } else {
+                        let lyric_ul = document.querySelector('#lyric_ul');
+                        lyric_ul.innerHTML = '<p class="absMusic">请欣赏纯音乐</p>';
+                    }
                 } else {
                     alert("Request was unsuccessful：" + xhr.status);
                 }
