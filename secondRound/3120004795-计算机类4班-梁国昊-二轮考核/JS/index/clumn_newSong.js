@@ -104,14 +104,14 @@ function clumn_newSong() {
 
     function callbacknewSong(result) {
         playlist_con.innerHTML = '';
-        for(let i = 0; i < 8; i++) {
+        for(let i = 0; i < 3; i++) {
             playlist_con.innerHTML += `<div class="column"></div>`;
         }
 
         var k = 0;
         var j = 0;
         let column = document.querySelectorAll('.column');
-        for(let i = 0; i < 8; i++) {
+        for(let i = 0; i < 3; i++) {
             for(k = i*9; k < i*9+9; k += 9) {
                 for(j = k; j < k + 9; j += 3) {
                     column[i].innerHTML += `<ul class="column_container">

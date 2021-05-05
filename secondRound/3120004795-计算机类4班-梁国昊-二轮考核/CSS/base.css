@@ -42,6 +42,10 @@ input {
     text-decoration: none;
 }
 
+input:-webkit-autofill,select:-webkit-autofill {  
+    -webkit-box-shadow: 0 0 0px 1000px #ffffff  inset !important;  
+} 
+
 .body_mask {
     display: none;
     position: relative;
@@ -52,6 +56,28 @@ input {
     background: url(../image/login.jpg) no-repeat !important; 
     background-size: 100% 100%;
     /* opacity: .2; */
+}
+
+.uin_del {
+    position: absolute;
+    display: none;
+    top: 10px;
+    right: -104px;
+    width: 100px;
+    height: 30px;
+    color: red;
+    font-size: 16px;
+}
+
+.tip {
+    position: absolute;
+    display: none;
+    width: 100px;
+    height: 30px;
+    top: 8px;
+    right: -104px;
+    color: red;
+    font-size: 16px;
 }
 
 .arrow_left,

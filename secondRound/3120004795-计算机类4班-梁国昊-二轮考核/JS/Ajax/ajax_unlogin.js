@@ -118,7 +118,24 @@ popup__close.addEventListener('click', function() {
     var userCookie = '?cookie=';
 
     // 账号密码登录 start
+    const u = document.getElementById('u');
     const btn = document.querySelector('.btn');
+    u.onblur = function () {
+        console.log(checkTel());
+        if(checkTel() == true) {
+            let uin_del = document.querySelector('.uin_del');
+            uin_del.innerHTML = '手机号正确';
+            uin_del.style.display = 'block';
+            uin_del.style.color = '#00c74c';
+            u.style.border = '2px solid #00c74c';
+        } else {
+            let uin_del = document.querySelector('.uin_del');
+            uin_del.innerHTML = '手机号错误';
+            uin_del.style.color = 'red';
+            uin_del.style.display = 'block';
+            u.style.border = '2px solid red';
+        }
+    }
     
 
     btn.addEventListener('click', function() {
@@ -130,8 +147,8 @@ popup__close.addEventListener('click', function() {
     function password_login() {
         const u = document.getElementById('u');
         const p = document.getElementById('p');
-        window.localStorage.setItem('phone',u.value);
-        window.localStorage.setItem('password', p.value);
+        // window.localStorage.setItem('phone',u.value);
+        // window.localStorage.setItem('password', p.value);
         let result = `${phoneUrl}phone=${u.value}&password=${p.value}`;
         return result; 
     }
@@ -141,10 +158,39 @@ popup__close.addEventListener('click', function() {
     function callback_login(data) {
         if(data) {
             var cookie = encodeURIComponent(data.cookie);
-        userCookie += cookie;
-        window.localStorage.setItem('cookie', userCookie);
-        window.localStorage.setItem('token', encodeURIComponent(data.token));
-        window.location.replace('index_logined.html')
+            userCookie += cookie;
+            window.localStorage.setItem('cookie', userCookie);
+            window.localStorage.setItem('token', encodeURIComponent(data.token));
+        }
+        if(data.profile == null) {
+            const p = document.getElementById('p');
+            let tip = document.querySelector('.tip');
+            tip.innerHTML = '密码错误';
+            p.style.border = '2px solid red';
+            tip.style.color = 'red';
+            tip.style.display = 'block';
+        } else {
+            const p = document.getElementById('p');
+            let tip = document.querySelector('.tip');
+            tip.innerHTML = '密码可用';
+            p.style.border = '2px solid #00c74c';
+            tip.style.color = '#00c74c';
+            tip.style.display = 'block';
+            window.location.replace('index_logined.html')
+        }
+        
+
+    }
+
+
+    function checkTel(){
+        var tel = document.getElementById('u').value;
+        // console.log(tel);
+        console.log((/^[1][3,4,5,7,8,9][0-9]{9}$/.test(tel)));
+        if((/^[1][3,4,5,7,8,9][0-9]{9}$/.test(tel))){
+        return true;
+        } else {
+            return false;
         }
     }
     
