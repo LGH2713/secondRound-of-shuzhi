@@ -21,7 +21,7 @@ window.addEventListener('load', function() {
 
 
 
-    pause.addEventListener('click', function() {
+    pause.onclick = function() {
         if(flag == false) {
             audio.pause();
             pause_icon.className = 'icon-play3';
@@ -32,7 +32,7 @@ window.addEventListener('load', function() {
             flag = false;
         }
         
-    })
+    }
 
     var search_interface = document.querySelector('.search_interface');
     var myplaylist_interface = document.querySelector('.myplaylist_interface');

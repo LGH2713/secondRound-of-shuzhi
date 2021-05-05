@@ -247,7 +247,15 @@ function callback_playingList(data) {
         let lyricUrl = Header + '/lyric?id=' + nowPlaying[0].id
         AjaxRequest_playingListLyric(lyricUrl, 'list');
         audio.src = `https://music.163.com/song/media/outer/url?id=${nowPlaying[0].id}.mp3`;
-        
+        player_con(nowPlaying, 0)
+        var playing_list_item_msg = document.querySelectorAll('.playing_list_item_msg');
+        var playing_list_item_img = document.querySelectorAll('.playing_list_item_img');
+        var playing_list_item = document.querySelectorAll('.playing_list_item');
+        var playing_list_item_num = document.querySelectorAll('.playing_list_item_num');
+        playing_list_item[0].className = 'playing_list_item playing_list_item_on';
+        playing_list_item_num[0].className = 'playing_list_item_num playing_list_item_num_on';
+        playing_list_item_img[0].className = 'playing_list_item_img playing_list_item_img_on';
+        playing_list_item_msg[0].className = 'playing_list_item_msg playing_list_item_msg_on';
     })
 
 
@@ -600,15 +608,6 @@ function list_playing() {
     const nextBtn = document.querySelector('.nextBtn');
     const playing_all = document.querySelector('.playing_all');
     let audio = document.querySelector('audio');
-    
-
-    // playing_all.addEventListener('click', function() {
-    //     user_interface.style.display = 'none';
-    //     window.localStorage.setItem('now_index', '0')
-    //     let lyricUrl = Header + '/lyric?id=' + nowPlaying[0].id
-    //     AjaxRequest_playingListLyric(lyricUrl, 'list');
-    //     audio.src = `https://music.163.com/song/media/outer/url?id=${nowPlaying[0].id}.mp3`;
-    // })
 
     let lyricUrl = Header + '/lyric?id=' + nowPlaying[parseInt(window.localStorage.getItem('now_index'))].id
     AjaxRequest_playingListLyric(lyricUrl, 'list');
@@ -658,5 +657,10 @@ function clearMore(arr) {
         }
     }
     return arr;
+}
+
+function pauseOrNotChange() {
+    let btn = document.querySelector('.pauseOrNot').querySelector('i');
+    btn.className = 'icon-pause2';
 }
 

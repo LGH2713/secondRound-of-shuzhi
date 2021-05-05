@@ -128,6 +128,8 @@ function callback_myplaylist_song_play(data) {
         myplaylist_song_item[i].addEventListener('click', function() {
             let index = this.getAttribute('index');
             lyric_area.style.display = 'block';
+            // const pause = document.querySelector('.pauseOrNot');
+            // pause.onclick();
             audio.src = `https://music.163.com/song/media/outer/url?id=${data.songs[index].id}.mp3`;
             let lyricUrl = Header + '/lyric?id=' + data.songs[index].id;
             AjaxRequest_lyric(lyricUrl);
