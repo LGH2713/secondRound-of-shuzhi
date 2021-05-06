@@ -85,6 +85,7 @@ window.addEventListener('load', function() {
             myplaylist_interface.style.display = 'none';//我的歌单模块隐藏
             lyric_area.style.display = 'none';//歌词区域隐藏
             now_playlist_appear(user_right_list);
+            record();
         }
 
         const myplaylistBtn = document.querySelector('.myplaylistBtn');
@@ -136,7 +137,7 @@ window.addEventListener('load', function() {
         // 导入用户历史播放记录 start 
         let songRecord = JSON.parse(window.localStorage.getItem('songRecord'));
         if(songRecord) {
-            record(songRecord);
+            record();
         }
         // 导入用户历史播放记录 end
 
@@ -168,7 +169,9 @@ window.addEventListener('load', function() {
 
 
 // 用户历史播放记录模块函数
-function record(data) {
+function record() {
+    let songRecord = JSON.parse(window.localStorage.getItem('songRecord'));
+    let data = songRecord;
     const audio = document.querySelector('audio');
     const Header = 'http://localhost:3000';
     const lyric_area = document.querySelector('.lyric_area');
@@ -207,7 +210,7 @@ function record(data) {
     
     
     let song_item = list_song_box.querySelectorAll('.song_item');
-    let playBtn = list_song_box.querySelectorAll('.playBtn')
+    var playBtn = list_song_box.querySelectorAll('.playBtn')
     let progress_inner = document.querySelector('.progress_inner');
     let progressBarWidth = document.querySelector('.progress_bar').offsetWidth;
     const progress_go = document.querySelector('.progress_go');
@@ -234,10 +237,7 @@ function record(data) {
             }
 
             // 再下方播放条中加入歌曲信息
-            let progress_container_songName = document.querySelector('.progress_container_songName');
-            let progress_container_singerName = document.querySelector('.progress_container_singerName');
-            progress_container_songName.innerHTML = `${data[index].name}`;
-            progress_container_singerName.innerHTML = `${singerName(data, index)}`;
+            player_con(data, index);
             
             // 歌词请求
             lyric_area.style.display = 'none';

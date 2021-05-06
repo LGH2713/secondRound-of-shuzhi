@@ -257,7 +257,6 @@ window.addEventListener('load', function() {
                 if (xhr.readyState == 4) {
                     if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
                         let data = JSON.parse(xhr.responseText);
-                        console.log(data);
                         callback_searchSinger(data);
                     } else {
                         alert("Request was unsuccessful：" + xhr.status);
@@ -308,7 +307,6 @@ window.addEventListener('load', function() {
                     // alert(xhr.readyState);
                     if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
                         let data = JSON.parse(xhr.responseText);
-                        console.log(data);
                         let searchArray = JSON.stringify(data);
                         window.localStorage.setItem('singerSong', searchArray);
                         callback_singerSong(data, name);
@@ -340,7 +338,6 @@ window.addEventListener('load', function() {
 
         let playBtn = list_singerSong_box.querySelectorAll('.playBtn');
         let singerSong = JSON.parse(window.localStorage.getItem('singerSong'));
-        console.log(singerSong);
         for(let i = 0; i < playBtn.length; i++) {
             playBtn[i].setAttribute('index', i);
         }
@@ -355,7 +352,6 @@ window.addEventListener('load', function() {
 
                 if(window.localStorage.getItem('songRecord')) {
                     songRecord = JSON.parse(window.localStorage.getItem('songRecord'));//解析搜索记录并用新数组保存
-                    console.log(songRecord);
                     songRecord.push(data.songs[index]); //将点击的歌曲推入新数组
                     songRecord = clearMore(songRecord);//数组去重
                     window.localStorage.removeItem('songRecord');//移除原数据
