@@ -41,6 +41,7 @@
 
 .myplaylist_playAll {
     position: absolute;
+    cursor: pointer;
     opacity: 0;
     top: 0px;
     left: -35px;

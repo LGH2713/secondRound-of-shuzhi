@@ -117,8 +117,6 @@ window.addEventListener('load', function() {
         const followedsUrl = Header + `/user/followeds?uid=${data.profile.userId}`;
         AjaxRequest_followeds(followedsUrl);//请求用户粉丝
 
-        const subcountUrl = Header + `/user/subcount` + userCookie;
-        AjaxRequest_subcount(subcountUrl);//请求用户歌单数
 
         const levelUrl = Header + '/user/level' + userCookie;
         AjaxRequest_level(levelUrl);//请求用户等级
@@ -393,31 +391,7 @@ function callback_followeds(data) {
     followeds.innerHTML += `粉丝 ${data.followeds.length}`;
 }
 
-// Ajax发送获取用户歌单数量请求
-function AjaxRequest_subcount(url) {
-    let xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4) {
-            if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 301 || xhr.status == 304) {
-                let data = JSON.parse(xhr.responseText);
-                window.localStorage.setItem('subcount', data);
-                callback_subcount(data);
-            } else {
-                alert("Request was unsuccessful：" + xhr.status);
-            }
-        }
-    }
-    xhr.open("GET", url, true);
-    xhr.send();
-}
 
-// 用户歌单数量回调函数
-function callback_subcount(data) {
-    let playlist = document.querySelector('.playlist');
-    playlist.innerHTML = `歌单 ${data.createdPlaylistCount}`;
-}
-
-// Ajax发送获取用户等级请求
 function AjaxRequest_level(url) {
     let xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {

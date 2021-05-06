@@ -567,8 +567,8 @@ function callback_playingListLyric(data, module) {
                 audio.src = `https://music.163.com/song/media/outer/url?id=${nowPlaying[now_index].id}.mp3`;
                 nextBtn.onclick();
             } else if(module == 'random') {
-                nextBtn.onclick = null;
-                previousBtn.onclick = null;
+                // nextBtn.onclick = null;
+                // previousBtn.onclick = null;
                 let now_index = parseInt(window.localStorage.getItem('now_index'));
                 audio.src = `https://music.163.com/song/media/outer/url?id=${nowPlaying[now_index].id}.mp3`;
                 nextBtn.onclick();

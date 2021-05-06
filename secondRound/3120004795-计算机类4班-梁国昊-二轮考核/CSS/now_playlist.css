@@ -72,7 +72,6 @@
 .now_playlist_hd {
     z-index: 5;
     user-select: none;
-    /* position: absolute; */
     width: 100%;
     height: 60px;
     line-height: 60px;
@@ -145,25 +144,10 @@
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 .now_playlist_bd {
     width: 100%;
     position: absolute;
     z-index: 5;
-    /* background: url(../image/OIP.jfif) no-repeat; */
-    /* background-size: 100% 100%; */
 }
 
 .playing_list {
@@ -182,7 +166,7 @@
     width: 100%;
     height: 80px;
     overflow: hidden;
-    background-color: rgba(12, 208, 243, 0.459);
+    background-color: rgba(12, 208, 243, 0.26);
     transition: all 0.5s;
     -webkit-transition: all 0.5s;
     -moz-transition: all 0.5s;
@@ -345,7 +329,6 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    /* background-color: gray; */
 }
 
 .delete_one {
@@ -354,7 +337,6 @@
     top: 0;
     width: 50px;
     height: 100%;
-    /* background-color: indianred; */
     line-height: 90px;
     font-weight: lighter;
     text-align: center;

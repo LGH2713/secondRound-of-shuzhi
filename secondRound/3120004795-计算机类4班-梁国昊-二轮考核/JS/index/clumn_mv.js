@@ -12,8 +12,8 @@ function clumn_mv() {
     let mv_right = mv.querySelector('.arrow_right');
 
 
-    const defaultUrlHeader = "https://autumnfish.cn/";
-    let mvUrl = defaultUrlHeader + '/mv/all?limit=40';
+    const Header = "http://localhost:3000"; // 默认URL头部1
+    let mvUrl = Header + '/mv/all?limit=40';
 
     
     AjaxRequest_mv(mvUrl);
@@ -36,42 +36,42 @@ function clumn_mv() {
                     circle = 0;
                     num = 0;
                     mv_con.style.left = 0;
-                    mvUrl = defaultUrlHeader + '/mv/all?limit=40';
+                    mvUrl = Header + '/mv/all?limit=40';
                     AjaxRequest_mv(mvUrl);
                     break;
                 case '1':
                     circle = 0;
                     num = 0;
                     mv_con.style.left = 0;
-                    mvUrl = defaultUrlHeader + '/mv/all?area=内地&limit=40';
+                    mvUrl = Header + '/mv/all?area=内地&limit=40';
                     AjaxRequest_mv(mvUrl);
                     break;
                 case '2':
                     circle = 0;
                     num = 0;
                     mv_con.style.left = 0;
-                    mvUrl = defaultUrlHeader + '/mv/all?area=港台&limit=40';
+                    mvUrl = Header + '/mv/all?area=港台&limit=40';
                     AjaxRequest_mv(mvUrl);
                     break;
                 case '3':
                     circle = 0;
                     num = 0;
                     mv_con.style.left = 0;
-                    mvUrl = defaultUrlHeader + '/mv/all?area=欧美&limit=40';
+                    mvUrl = Header + '/mv/all?area=欧美&limit=40';
                     AjaxRequest_mv(mvUrl);
                     break;
                 case '4':
                     circle = 0;
                     num = 0;
                     mv_con.style.left = 0;
-                    mvUrl = defaultUrlHeader + '/mv/all?area=韩国&limit=40';
+                    mvUrl = Header + '/mv/all?area=韩国&limit=40';
                     AjaxRequest_mv(mvUrl);
                     break;
                 case '5':
                     circle = 0;
                     num = 0;
                     mv_con.style.left = 0;
-                    mvUrl = defaultUrlHeader + '/mv/all?area=日本&limit=40';
+                    mvUrl = Header + '/mv/all?area=日本&limit=40';
                     AjaxRequest_mv(mvUrl);
                     break;
             }
@@ -94,7 +94,6 @@ function clumn_mv() {
             if(xhr.readyState == 4) {
                 if(xhr.status >= 200 && xhr.status < 300 || xhr.status == 304) {
                     let data = JSON.parse(xhr.responseText);
-                    console.log(data);
                     callbackMv(data);
                 } else {
                     alert("Request was unsuccessful：" + xhr.status);

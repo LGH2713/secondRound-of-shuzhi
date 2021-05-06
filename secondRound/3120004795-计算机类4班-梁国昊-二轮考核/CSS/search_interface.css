@@ -11,8 +11,6 @@
     width: 580px;
     height: 86.6%;
     border-radius: 5% 5% 0 0;
-    /*border-left: 2px solid #fff;
-    */border-top: 2px solid #fff;
     overflow: hidden;
     background-color: rgba(0, 0, 0, 0.205);
     -webkit-border-radius: 5% 5% 0 0;
@@ -99,19 +97,22 @@
 
 /* 歌手搜索模块 start  */
 .list_singer_item {
+    cursor: pointer;
     float: left;
+    margin-top: 10px !important;
     margin-left: 27px;
     width: 250px;
     height: 280px;
     text-align: center;
     transition: all 0.4s;
-    -webkit-transition: all 0.4s;
+    -webkit-transition: all 0.3s;
     -moz-transition: all 0.4s;
     -ms-transition: all 0.4s;
     -o-transition: all 0.4s;
 }
 
 .list_singer_item:hover {
+    background-color:  rgba(0, 0, 0, 0.527);
     transform: scale(1.04);
     -webkit-transform: scale(1.04);
     -moz-transform: scale(1.04);

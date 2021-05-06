@@ -12,8 +12,8 @@ function clumn_newDisc() {
     let new_disc_right = new_disc.querySelector('.arrow_right');
 
 
-    const defaultUrlHeader = "https://autumnfish.cn";
-    let new_discUrl = defaultUrlHeader + '/album/new?limit=20';
+    const Header = "http://localhost:3000"; // 默认URL头部1
+    let new_discUrl = Header + '/album/new?limit=20';
 
     mod_slide_switch.innerHTML = '';
     AjaxRequest_newDisc(new_discUrl);
@@ -35,35 +35,35 @@ function clumn_newDisc() {
                     circle = 0;
                     num = 0;
                     new_disc_con.style.left = 0;
-                    new_discUrl = defaultUrlHeader + '/album/new?limit=20';
+                    new_discUrl = Header + '/album/new?limit=20';
                     AjaxRequest_newDisc(new_discUrl);
                     break;
                 case '1':
                     circle = 0;
                     num = 0;
                     new_disc_con.style.left = 0;
-                    new_discUrl = defaultUrlHeader + '/album/new?area=ZH&limit=20';
+                    new_discUrl = Header + '/album/new?area=ZH&limit=20';
                     AjaxRequest_newDisc(new_discUrl);
                     break;
                 case '2':
                     circle = 0;
                     num = 0;
                     new_disc_con.style.left = 0;
-                    new_discUrl = defaultUrlHeader + '/album/new?area=EA&limit=20';
+                    new_discUrl = Header + '/album/new?area=EA&limit=20';
                     AjaxRequest_newDisc(new_discUrl);
                     break;
                 case '3':
                     circle = 0;
                     num = 0;
                     new_disc_con.style.left = 0;
-                    new_discUrl = defaultUrlHeader + '/album/new?area=KR&limit=20';
+                    new_discUrl = Header + '/album/new?area=KR&limit=20';
                     AjaxRequest_newDisc(new_discUrl);
                     break;
                 case '4':
                     circle = 0;
                     num = 0;
                     new_disc_con.style.left = 0;
-                    new_discUrl = defaultUrlHeader + '/album/new?area=JP&limit=20';
+                    new_discUrl = Header + '/album/new?area=JP&limit=20';
                     AjaxRequest_newDisc(new_discUrl);
                     break;
             }
@@ -72,21 +72,15 @@ function clumn_newDisc() {
 
 
 
-    let new_disc_list = document.querySelectorAll('.new_disc_list');
 
     const boxWidth = 1220;//获取轮播图盒子宽度
-
-    
-
 
     function AjaxRequest_newDisc(url) {
         let xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {
-            // alert(xhr.readyState);
             if(xhr.readyState == 4) {
                 if(xhr.status >= 200 && xhr.status < 300 || xhr.status == 304) {
                     let data = JSON.parse(xhr.responseText);
-                    // console.log(data);
                     callbackNewDisc(data);
                 } else {
                     alert("Request was unsuccessful：" + xhr.status);

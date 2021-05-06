@@ -12,8 +12,8 @@ function clumn_newSong() {
     let newSong_right = new_song.querySelector('.arrow_right');
 
 
-    const defaultUrlHeader = "https://autumnfish.cn";
-    let newSongUrl = defaultUrlHeader + '/top/song?type=0';
+    const Header = "http://localhost:3000"; // 默认URL头部1
+    let newSongUrl = Header + '/top/song?type=0';
 
     AjaxRequest_newSong(newSongUrl);
     
@@ -36,35 +36,35 @@ function clumn_newSong() {
                     circle = 0;
                     num = 0;
                     playlist_con.style.left = 0;
-                    newSongUrl = defaultUrlHeader + '/top/song?type=0';
+                    newSongUrl = Header + '/top/song?type=0';
                     AjaxRequest_newSong(newSongUrl);
                     break;
                 case '1':
                     circle = 0;
                     num = 0;
                     playlist_con.style.left = 0;
-                    newSongUrl = defaultUrlHeader + '/top/song?type=7';
+                    newSongUrl = Header + '/top/song?type=7';
                     AjaxRequest_newSong(newSongUrl);
                     break;
                 case '2':
                     circle = 0;
                     num = 0;
                     playlist_con.style.left = 0;
-                    newSongUrl = defaultUrlHeader + '/top/song?type=96';
+                    newSongUrl = Header + '/top/song?type=96';
                     AjaxRequest_newSong(newSongUrl);
                     break;
                 case '3':
                     circle = 0;
                     num = 0;
                     playlist_con.style.left = 0;
-                    newSongUrl = defaultUrlHeader + '/top/song?type=8';
+                    newSongUrl = Header + '/top/song?type=8';
                     AjaxRequest_newSong(newSongUrl);
                     break;
                 case '4':
                     circle = 0;
                     num = 0;
                     playlist_con.style.left = 0;
-                    newSongUrl = defaultUrlHeader + '/top/song?type=16';
+                    newSongUrl = Header + '/top/song?type=16';
                     AjaxRequest_newSong(newSongUrl);
                     break;
             }
@@ -91,7 +91,6 @@ function clumn_newSong() {
             if(xhr.readyState == 4) {
                 if(xhr.status >= 200 && xhr.status < 300 || xhr.status == 304) {
                     let data = JSON.parse(xhr.responseText);
-                    console.log(data);
                     callbacknewSong(data);
                 } else {
                     alert("Request was unsuccessful：" + xhr.status);

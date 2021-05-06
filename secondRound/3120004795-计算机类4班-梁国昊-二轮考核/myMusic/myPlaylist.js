@@ -25,6 +25,10 @@ function myPlaylistFun() {
     AjaxRequest_myplaylist_init(myplaylistInitUrl);
     let myplaylists_data = dataConcat(JSON.parse(window.localStorage.getItem('playlistInit')), JSON.parse(window.localStorage.getItem('myplaylists')));
     
+    let playlist = document.querySelector('.playlist');
+    playlist.innerHTML = `歌单 ${myplaylists_data.length}`;
+
+
     let myplaylist_con = document.querySelector('.myplaylist_con');
     let myplaylist_song_con = document.querySelector('.myplaylist_song_con');
     clearMore(myplaylists_data);
